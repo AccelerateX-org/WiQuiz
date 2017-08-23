@@ -16,3 +16,6 @@ build_script:
     - ps: .\build.ps1
 
 test: off
+
+cache:
+    -  Sources\WiQuest\WIQuest.Web\packages -> **\packages.config  

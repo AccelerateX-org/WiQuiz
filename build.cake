@@ -21,6 +21,7 @@ var buildSettings = new MSBuildSettings
 		{
 			Verbosity = Verbosity.Minimal,
 			Configuration = "Release",
+			DetailedSummary = true
 		};
 buildSettings.WithTarget("Build");
 buildSettings.WithLogger("C:/Program Files/AppVeyor/BuildAgent/Appveyor.MSBuildLogger.dll");
@@ -44,7 +45,7 @@ Task("Restore-NuGet-Packages")
 	.Does(() => 
 	{
 		Information("Restore-NuGet-Packages");	
-		//NuGetRestore(parentSolutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
+		NuGetRestore(parentSolutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
 		NuGetRestore(solutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
 	}
 );
