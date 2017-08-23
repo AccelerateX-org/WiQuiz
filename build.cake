@@ -6,10 +6,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-var projectName = "WiQuest";
+
+var isAppVeyorBuild = AppVeyor.IsRunningOnAppVeyor;
+var isLocal = BuildSystem.IsLocalBuild;
+
+var projectName = "WiQuiz";
 var version =  EnvironmentVariable("APPVEYOR_BUILD_VERSION");
 
-
+if (isLocal) 
+{
+	version = "1.0.112";
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
@@ -25,7 +32,10 @@ var buildSettings = new MSBuildSettings
 			DetailedSummary = true
 		};
 buildSettings.WithTarget("Build");
-buildSettings.WithLogger("C:/Program Files/AppVeyor/BuildAgent/Appveyor.MSBuildLogger.dll");
+if (isAppVeyorBuild)
+{
+	buildSettings.WithLogger("C:/Program Files/AppVeyor/BuildAgent/Appveyor.MSBuildLogger.dll");
+}
 buildSettings.WithProperty("RunOctoPack", "true");
 buildSettings.WithProperty("OctoPackPackageVersion", version);
 
@@ -33,10 +43,14 @@ buildSettings.WithProperty("OctoPackPackageVersion", version);
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
-Setup(ctx =>
+Setup(context =>
 {
-	Information("");
+	Information("1");
 	Information(Figlet("WiQuiz"));
+
+	Information(isAppVeyorBuild);
+	Information(isLocal);
+	Information(version);
 });
 
 Teardown(context =>
@@ -98,12 +112,54 @@ Task("Packaging")
 	}
 );
 
+Task("Octopus-Push")
+	.IsDependentOn("Build")
+	.Does(() => 
+	{
+		Information("Octopus-Push");
+		if (isLocal) {
+			OctoPush("http://192.168.2.240", "API-T5HX0K7HBUOQKMFBR2KTTK4", new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg"),
+      			new OctopusPushSettings {
+        			ReplaceExisting = true
+      		});
+		}
+	}
+);
+
+Task("Octopus-Release")
+	.IsDependentOn("Octopus-Push")
+	.Does(() => 
+	{
+		Information("Octopus-Release");
+		if (isLocal) {
+			OctoCreateRelease(projectName, new CreateReleaseSettings {
+        		Server = "http://192.168.2.240",
+        		ApiKey = "API-T5HX0K7HBUOQKMFBR2KTTK4",
+        		ReleaseNumber = version
+      		});
+		}
+	}
+);
+
+Task("Octopus-Deploy")
+	.IsDependentOn("Octopus-Release")
+	.Does(() => 
+	{
+		Information("Octopus-Deploy");
+		if (isLocal) {
+			 OctoDeployRelease("http://192.168.2.240", "API-T5HX0K7HBUOQKMFBR2KTTK4", projectName, "Testing", version, new OctopusDeployReleaseDeploymentSettings {
+         		ShowProgress = true,
+    		 });
+		}
+	}
+);
+
 Task("Upload-Artifacts")
-	.IsDependentOn("Packaging")
+	.IsDependentOn("Octopus-Deploy")
 	.Does(() => 
 	{
 		Information("Upload-Artifacts");	
-		if (AppVeyor.IsRunningOnAppVeyor)
+		if (isAppVeyorBuild)
 		{
 			AppVeyor.UploadArtifact("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg");
 		}
