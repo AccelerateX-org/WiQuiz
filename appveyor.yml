@@ -34,6 +34,4 @@ notifications:
     auth_token:
       secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
     room: RPS-TestRoom
-    template: "{{#passed}}(successful){{/passed}}{{#failed}}(failed){{/failed}}
-            <a href=""{{buildUrl}}"">Build {{projectName}} {{buildVersion}} {{status}}</a><br/>
-            Commit <a href=""{{commitUrl}}"">{{commitId}}</a> by {{commitAuthor}} on {{commitDate}}: <i>{{commitMessage}}</i>" 
+    template: "{{#passed}}(successful){{/passed}}{{#failed}}(failed){{/failed}}<a href=""{{buildUrl}}"">Build {{projectName}} {{buildVersion}} {{status}}</a><br/>Commit <a href=""{{commitUrl}}"">{{commitId}}</a> by {{commitAuthor}} on {{commitDate}}: <i>{{commitMessage}}</i>"
