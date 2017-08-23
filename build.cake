@@ -98,7 +98,7 @@ Task("Upload-Artifacts")
 		Information("Upload-Artifacts");	
 		if (AppVeyor.IsRunningOnAppVeyor)
 		{
-			AppVeyor.UploadArtifact(".Sources/WiQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg");
+			AppVeyor.UploadArtifact("./Sources/WiQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg");
 		}
 		//AppVeyor.UploadArtifact("./nuget/" + projectName + "." + version + ".nupkg");
 	}
