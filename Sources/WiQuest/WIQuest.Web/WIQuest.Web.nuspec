@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>WIQuest.Web</id>
+    <id>WiQuiz</id>
     <title>WiQuiz</title>
     <version>$version$</version>
     <authors>AX</authors>
