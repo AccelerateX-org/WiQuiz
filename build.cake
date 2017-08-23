@@ -25,7 +25,16 @@ var buildSettings = new MSBuildSettings
 buildSettings.WithTarget("Build");
 buildSettings.WithLogger("C:/Program Files/AppVeyor/BuildAgent/Appveyor.MSBuildLogger.dll");
 buildSettings.WithProperty("RunOctoPack", "true");
-buildSettings.WithProperty("OctoPackPackageVersion", version);		
+buildSettings.WithProperty("OctoPackPackageVersion", version);
+
+///////////////////////////////////////////////////////////////////////////////
+// SETUP / TEARDOWN
+///////////////////////////////////////////////////////////////////////////////
+
+Teardown(context =>
+{
+    Information("Finished running tasks.");
+});		
 
 ///////////////////////////////////////////////////////////////////////////////
 // TASKS
@@ -35,10 +44,8 @@ Task("Restore-NuGet-Packages")
 	.Does(() => 
 	{
 		Information("Restore-NuGet-Packages");	
-		//NuGetRestore(parentSolutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Quiet });
-		//NuGetRestore(solutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Quiet });
-		NuGetRestore(parentSolutionPath);
-		NuGetRestore(solutionPath);
+		//NuGetRestore(parentSolutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
+		NuGetRestore(solutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
 	}
 );
 /*
@@ -55,7 +62,7 @@ Task("Build")
 	.Does(() => 
 	{
 		Information("Building Solution");	
-		MSBuild(parentSolutionPath, buildSettings);
+		MSBuild(solutionPath, buildSettings);
 	}
 );
 
