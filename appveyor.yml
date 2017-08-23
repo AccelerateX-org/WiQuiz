@@ -10,7 +10,17 @@ platform:
   - Any CPU
 
 install:
-    - ps: Invoke-WebRequest https://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
+    - ps: >-
+        try {
+            $cake = Invoke-WebRequest https://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1 
+        } catch {
+            Write-Warning -Message "Error obtaining latest CakeBuild Bootstrapper"
+            Write-Warning -Message $_.Exception.Message
+            Write-Warning -Message "Switching to Backup-Bootstrapper"
+            Copy-item .\build\build.ps1 .\
+        }
+        
+        
 
 build_script:
     - ps: .\build.ps1
