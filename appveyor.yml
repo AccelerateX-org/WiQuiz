@@ -20,12 +20,11 @@ install:
             Copy-item .\build\build.ps1 .\
         }
         
-        
-
 build_script:
     - ps: .\build.ps1
 
 test: off
 
 cache:
-    -  Sources\WiQuest\WIQuest.Web\packages -> Sources\WiQuest\WIQuest.Web\packages.config  
+    -  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
