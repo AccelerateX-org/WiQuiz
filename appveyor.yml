@@ -28,3 +28,9 @@ test: off
 cache:
     -  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
     -  .\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+
+notifications:
+  - provider: HipChat
+    auth_token:
+      secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
+    room: RPS-TestRoom 
