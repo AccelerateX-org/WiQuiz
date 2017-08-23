@@ -18,4 +18,4 @@ build_script:
 test: off
 
 cache:
-    -  Sources\WiQuest\WIQuest.Web\packages -> **\packages.config  
+    -  Sources\WiQuest\WIQuest.Web\packages -> Sources\WiQuest\WIQuest.Web\packages.config  
