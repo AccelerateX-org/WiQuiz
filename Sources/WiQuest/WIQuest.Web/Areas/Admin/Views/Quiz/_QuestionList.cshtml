@@ -1,0 +1,8 @@
+﻿@model IEnumerable<WIQuest.Web.Data.Question>
+
+@foreach (var item in Model)
+{
+    @Html.Partial("_QuestionDetails", item)
+}
+
+

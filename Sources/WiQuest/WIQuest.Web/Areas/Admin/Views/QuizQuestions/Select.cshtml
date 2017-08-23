@@ -1,0 +1,91 @@
+﻿@model  WIQuest.Web.Data.QuizSection
+@{
+    ViewBag.Title = "Select";
+}
+
+<h2>Fragen auswählen</h2>
+<div class="row">
+    <div class="col-md-4">
+
+
+        @using (Ajax.BeginForm("Search", "QuizQuestions", null,
+            new AjaxOptions
+            {
+                HttpMethod = "Post",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "questionList"
+            },
+            new {@class = "form-inline", role = "form"}))
+        {
+            <div class="form-group">
+                <label for="searchString">Suche nach:</label>
+                <input type="text" name="searchString" id="searchString" class="form-control" placeholder="Bitte Schlagwort eingeben"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Suchen" class="btn btn-primary"/>
+            </div>
+        }
+
+        @Html.HiddenFor(model => model.Id)
+
+        <button onclick="addQuestions()">Fragen hinzufügen</button>
+    </div>
+
+
+    <div class="col-md-8">
+        <div id="questionList">
+        </div>
+    </div>
+</div>
+
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+
+            <script>
+
+                function toggleCheckState(elem) {
+                    // das elem ist das HTML-Element
+                    // aus dem mache ich ein jQuery Element
+                    // dann erst kann ich die DOM Eigenschaft über attr ändern
+                    // damit sie später auch wieder über jQuery ausgewertet werden kann
+                    $("#" + elem.id).attr("checked", elem.checked);
+                }
+
+
+                function addQuestions() {
+                    var list = $("#questionList > table > tbody > tr input[type='checkbox'][checked='checked']").get();
+                    var n = list.length;
+
+                    if (n > 0) {
+                        var dateList = new Array();
+
+                        for (var i = 0; i < n; i++) {
+                            dateList[i] = list[i].id;
+                        }
+
+                        var secId = $("#Id").val();
+
+                        $.ajax(
+                        {
+                            type: "POST",
+                            url: '@Url.Action("AddQuestions")',
+                            data: {
+                                sectionId: secId,
+                                questionIds: dateList
+                            },
+                            success: function(data, success, xhr) {
+                                alert("Es wurden " + n + " Fragen hinzugefügt.");
+                            }
+                        });
+                    }
+                }
+
+
+            </script>
+        }
+
+
+
+

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WIQuest.Web.Data.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Fragenkatalog</h2>
+
+<p>
+    @Html.ActionLink("Neue Frage anlegen", "Create")
+</p>
+
+@using (Ajax.BeginForm("Search", "Question", null,
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "Post",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "questionList"
+                                },
+                                new { @class = "form-inline", role = "form" }))
+{
+    <div class="form-group">
+        <label for="searchString">Suche nach:</label>
+        <input type="text" name="searchString" id="searchString" class="form-control" placeholder="Bitte Schlagwort eingeben"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Suchen" class="btn btn-primary" />
+    </div>
+}
+
+
+@Ajax.ActionLink("Alle anzeigen", "List", new AjaxOptions(){HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "questionList"})
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="questionList">
+            @Html.Partial("_QuestionList", Model)
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
+            

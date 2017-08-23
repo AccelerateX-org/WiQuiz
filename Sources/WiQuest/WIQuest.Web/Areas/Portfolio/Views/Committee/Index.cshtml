@@ -1,0 +1,57 @@
+﻿@model ICollection<WIQuest.Web.Data.PortfolioApplication>
+@{
+    Layout = "~/Areas/Portfolio/Views/Shared/_LayoutInternal.cshtml";
+    ViewBag.Title = "Index";
+}
+
+@section styles
+{
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/DataTables/css/jquery.dataTables.css")">
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/DataTables/css/dataTables.bootstrap.css")">
+}
+
+
+<h2>Alle Bewerbungen</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#tabFD" aria-controls="fd" role="tab" data-toggle="tab">Fotodesign</a></li>
+            <li role="presentation"><a href="#tabID" aria-controls="id" role="tab" data-toggle="tab">Industriedesign</a></li>
+            <li role="presentation"><a href="#tabKD" aria-controls="kd" role="tab" data-toggle="tab">Kommunikationsdesign</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tabFD">
+                @{ ViewBag.TabId = "dataTabFD"; }
+                @Html.Partial("_ApplicationList", Model.Where(m => m.Curriculum == 1).ToList())
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tabID">
+                @{ ViewBag.TabId = "dataTabID"; }
+                @Html.Partial("_ApplicationList", Model.Where(m => m.Curriculum == 2).ToList())
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tabKD">
+                @{ ViewBag.TabId = "dataTabKD"; }
+                @Html.Partial("_ApplicationList", Model.Where(m => m.Curriculum == 3).ToList())
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript" charset="utf8" src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.js")"></script>
+    <script type="text/javascript" charset="utf8" src="@Url.Content("~/Scripts/DataTables/dataTables.bootstrap.js")"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#dataTabFD').DataTable();
+            $('#dataTabID').DataTable();
+            $('#dataTabKD').DataTable();
+        });
+    </script>
+}

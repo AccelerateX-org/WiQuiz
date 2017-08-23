@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WIQuest.Web.Data.Question>
+
+@{
+    ViewBag.Title = "Fragen";
+}
+
+<h2>
+    Liste der Fragen
+</h2>
+
+@Html.Partial("_QuestionList", Model)

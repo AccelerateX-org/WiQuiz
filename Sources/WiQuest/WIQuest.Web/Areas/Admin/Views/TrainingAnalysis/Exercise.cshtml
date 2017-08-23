@@ -1,0 +1,47 @@
+﻿@using WIQuest.Web.Services
+@model WIQuest.Web.Data.TrainingExercise
+@{
+    ViewBag.Title = "Exercise";
+}
+
+
+<div class="page-header">
+    <h2>Auswertung Übung @Model.Name <small>Quiz: @Model.Quiz.Name</small></h2>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Durchgeführte Übungen</h4>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Zeitstempel Spiel</th>
+            <th>Zeitstempel Eintragung</th>
+            <th>UserId</th>
+            <th>Anzahl gegebene Antworten</th>
+            <th>Anzahl korrekte Antworten</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        @foreach (var practice in Model.Practices)
+        {
+            var statisticService = new GameStatisticsService(practice.Exercise.Quiz.Id, practice.Subscription.Userid);
+            var statistics = statisticService.GetStatistics(practice.Game.Id);
+            
+            <tr>
+                <td>@practice.Game.CreatedAt</td>
+                <td>@practice.Subscription.TimeStamp</td>
+                <td>@practice.Subscription.Userid</td>
+                <td>@statistics.AnswerCount</td>
+                <td>@statistics.CorrectAnswerCount</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>
+
+
+

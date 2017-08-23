@@ -1,0 +1,102 @@
+﻿@model WIQuest.Web.Areas.Quiz.Models.QuestionAnswerViewModel
+    
+@{
+    var i = 65;
+}
+<div class="list-group">
+    @foreach (var answer in Model.Answers)
+    {
+        var letter = Convert.ToChar(i++); 
+        
+        if (answer.Id == Model.GivenAnswer.Id)
+        {
+            var liBackGround = "list-group-item-danger";
+            if (answer.IsCorrect)
+            {
+                liBackGround = "list-group-item-success";
+            }
+            <div class="list-group-item @liBackGround">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="list-group-item-heading">
+                            <h4>@letter)</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div>
+                            @Html.Raw(answer.Text)
+                            <a href="javascript:nextQuestion()" class="btn btn-default">Weiter</a>
+                        </div>
+                        @if (answer.Image != null)
+                        {
+                            <div class="thumbnail">
+                                <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                                     alt="@answer.Text" />
+                            </div>
+                        }
+                        <div>@Html.Raw(answer.Explanation)</div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            if (answer.Id == Model.CorrectAnswer.Id)
+            {
+                <div class="list-group-item list-group-item-success">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="list-group-item-heading">
+                                <h4>@letter)</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div>
+                                @Html.Raw(answer.Text)
+                            </div>
+                            @if (answer.Image != null)
+                            {
+                                <div class="thumbnail">
+                                    <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                                         alt="@answer.Text" />
+                                </div>
+                            }
+                            <div>@Html.Raw(answer.Explanation)</div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="list-group-item-heading">
+                                <h4>@letter)</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div>
+                                @Html.Raw(answer.Text)
+                            </div>
+                            @if (answer.Image != null)
+                            {
+                                <div class="thumbnail">
+                                    <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                                         alt="@answer.Text" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+
+
+
+
+
+

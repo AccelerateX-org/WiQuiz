@@ -1,0 +1,31 @@
+﻿@model WIQuest.Web.Areas.Quiz.Models.QuizGameStatisticsViewModel
+@{
+    ViewBag.Title = "Personal";
+}
+
+<h2>Persönliches Ranking</h2>
+<h4>@Model.Quiz.Name</h4>
+
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <th>Datum</th>
+        <th>Anzahl Antworten</th>
+        <th>Anzahl korrekte Antworten</th>
+        <th>Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var game in Model.Games.OrderByDescending(x => x.CorrectAnswerCount))
+    {
+        <tr>
+            <td>@game.Game.CreatedAt</td>
+            <td>@game.AnswerCount</td>
+            <td>@game.CorrectAnswerCount</td>
+            <td>@game.Percentage</td>
+        </tr>
+    }
+    </tbody>
+
+</table>
+

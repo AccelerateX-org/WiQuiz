@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WIQuest.Web.Data.Quiz>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level)
+        </th>
+        <th>Sektionen</th>
+        <th>Fragen</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @if (item.IsPubslished)
+        {
+            <td><i class="fa fa-exclamation-circle text-danger"></i></td>
+        }
+        else
+        {
+            <td></td>
+        }
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level)
+        </td>
+        <td>
+            @item.Sections.Count
+        </td>
+        <td>
+            @{
+                var c = 0;
+                foreach (var section in item.Sections)
+                {
+                    c += section.Questions.Count;
+                }
+            }
+            @c
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Questions", "Questions", new { id = item.Id }) |
+            @Html.ActionLink("Sections", "Index", "QuizSections", new {id = item.Id}, null)
+        </td>
+    </tr>
+}
+
+</table>

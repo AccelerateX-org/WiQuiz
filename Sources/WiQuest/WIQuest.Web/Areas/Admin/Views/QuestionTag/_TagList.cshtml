@@ -1,0 +1,35 @@
+﻿@model WIQuest.Web.Data.Question
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width:66%">Schlagwort</th>
+            <th style="width:33%">Option</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tags)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    @Ajax.ActionLink("Löschen", "DeleteTag", "QuestionTag",
+                    new { questionId = Model.Id, tagId = item.Id },
+                    new AjaxOptions()
+                    {
+                        HttpMethod = "Post",
+                        UpdateTargetId = "TagList",
+                        InsertionMode = InsertionMode.Replace,
+                        OnSuccess = "RemoveTag",
+                    },
+                    new
+                    {
+                        @class = "btn btn-danger",
+                    })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

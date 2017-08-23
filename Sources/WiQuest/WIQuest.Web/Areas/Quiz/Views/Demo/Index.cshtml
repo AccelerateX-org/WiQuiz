@@ -1,0 +1,28 @@
+﻿@model ICollection<WIQuest.Web.Data.Quiz>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Verfügbare Quizzes</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    @foreach (var game in Model)
+                    {
+                        <a class="list-group-item" href="@Url.Action("Launch", "Demo", new { area = "Quiz", id = game.Id })">
+                        @game.Name</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

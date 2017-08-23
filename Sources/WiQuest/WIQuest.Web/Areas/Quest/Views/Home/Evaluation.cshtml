@@ -1,0 +1,234 @@
+﻿@model ICollection<WIQuest.Web.Data.QuestLog>
+@{
+    ViewBag.Title = "Evaluation";
+}
+
+
+<div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@ViewBag.ResultMathe" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ResultMathe%">
+        Mathematik @ViewBag.ResultMathe%
+    </div>
+</div>
+<div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@ViewBag.ResultTech" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ResultTech%">
+        Technik @ViewBag.ResultTech%
+    </div>
+</div>
+<div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@ViewBag.ResultNatur" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ResultNatur%">
+        Naturwissenschaften @ViewBag.ResultNatur%
+    </div>
+</div>
+<div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@ViewBag.ResultWirt" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ResultWirt%">
+        Wirtschaft @ViewBag.ResultWirt%
+    </div>
+
+</div>
+<br>
+<div class="progress">
+    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="@ViewBag.Result" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.Result%">
+        Gesamtergebnis @ViewBag.Result%
+    </div>
+</div>
+<br />
+<br />
+
+
+<div class="container">
+    <div class="col-md-2">
+    </div>
+
+    <div class="col-md-12">
+        <!--
+        <br/>
+        <p>
+        Von @ViewBag.AnzahlFragen Fragen haben Sie @ViewBag.IsCorrect Fragen richtig beanwortet.
+        <br/>
+        -->
+
+
+        @if (ViewBag.Result > 75)
+        {
+            <p> Herzlichen Glückwunsch zu Ihrem ausgezeichneten Ergebnis! Sie haben den Orientierungstest sehr gut abgeschlossen. Im dargestellten Diagramm sehen Sie Ihre Resultate in Bezug auf die einzelnen Disziplinen. Diese deuten darauf hin, dass Sie sehr gute Voraussetzungen für ein Studium im Wirtschaftsingenieurwesen mitbringen. Falls diese Ergebnisse mit Ihrer Selbsteinschätzung übereinstimmen, geben sie Ihnen möglicherweise eine gute Indikation auf Ihre Stärken bzw. Schwächen. Möglicherweise sehen Sie die Ergebnisse auch als wenig aussagekräftig an oder diese haben Zweifel in Ihnen geweckt. Dann haben Sie für Ihre Entscheidungsfindung die Möglichkeit, weitere Orientierungstests durchzuführen oder die Studienberatung zu kontaktieren (siehe Links unten).</p>
+            <br/>
+            <p> Für unsere Fakultät stellt dieser Orientierungstest ein wichtiges Mittel dar, um Studierende über Studieninhalte und einen Teil des benötigten Basiswissens zu informieren. Zudem wollen wir den Studieninteressenten damit aufzeigen, was in einem Wirtschaftsingenieur-Studium auf sie zukommt. Alle abgefragten Bereiche werden eine wichtige Rolle in einem Studium an unserer Fakultät spielen. Wir möchten explizit betonen, dass dieser Test keine Aussagen über eine Eignung zum Studium oder gar über dementsprechende Erfolgsgarantien liefern kann. Sollten Sie aufgrund des Tests und / oder anderen Erfahrungen dennoch Zweifel an Ihrer Eignung für ein Studium im Wirtschaftsingenieurwesen haben, empfehlen wie Ihnen ein Gespräch bei unserer Studienberatung.</p>
+            <br/>
+            <p> Vielen Dank für Ihr Interesse an einem Studium im Wirtschaftsingenieurwesen!</p>
+            <br/>
+            <br/>
+
+        }
+        else
+        {
+            if (ViewBag.Result < 50)
+            {
+                <p>Vielen Dank für Ihre Teilnahme. Sie haben den Orientierungstest damit abgeschlossen. Im dargestellten Diagramm sehen Sie Ihre Resultate in Bezug auf die einzelnen Disziplinen. Diese deuten darauf hin, dass Sie an Ihren Voraussetzungen für ein Studium im Wirtschaftsingenieurwesen in den entsprechenden Bereichen noch arbeiten müssen. Falls diese Aussage mit Ihrer Selbsteinschätzung übereinstimmt, gibt sie Ihnen zusammen mit den Ergebnissen möglicherweise eine gute Indikation auf Ihre Stärken bzw. Schwächen. Möglicherweise sehen Sie die Ergebnisse auch als wenig aussagekräftig an oder diese haben Zweifel in Ihnen geweckt. Dann haben Sie für Ihre Entscheidungsfindung die Möglichkeit, weitere Orientierungstests durchzuführen oder die Studienberatung zu kontaktieren (siehe Links unten). Aufgrund dieses Testergebnisses würden wir Ihnen zu einem dieser Schritte raten.</p>
+                <p> Für unsere Fakultät stellt dieser Orientierungstest ein wichtiges Mittel dar, um Studierende über Studieninhalte und einen Teil des benötigten Basiswissens zu informieren. Zudem wollen wir den Studieninteressenten damit aufzeigen, was in einem Wirtschaftsingenieur-Studium auf sie zukommt. Alle abgefragten Bereiche werden eine wichtige Rolle in einem Studium an unserer Fakultät spielen. Wir möchten explizit betonen, dass dieser Test keine Aussagen über eine Eignung zum Studium oder gar über dementsprechende Erfolgsgarantien liefern kann. Sollten Sie aufgrund des Tests und / oder anderen Erfahrungen dennoch Zweifel an Ihrer Eignung für ein Studium im Wirtschaftsingenieurwesen haben, empfehlen wie Ihnen ein Gespräch bei unserer Studienberatung.</p>
+                <br/>
+                <p> Vielen Dank für Ihr Interesse an einem Studium im Wirtschaftsingenieurwesen!</p>
+                <br/>
+                <br/>
+            }
+            else
+            {
+                <p> Herzlichen Glückwunsch! Sie haben den Orientierungstest ordentlich abgeschlossen. Im dargestellten Diagramm sehen Sie Ihre Resultate in Bezug auf die einzelnen Disziplinen. Diese deuten darauf hin, dass Ihre Voraussetzungen für ein Studium im Wirtschaftsingenieurwesen in Ordnung sind. Falls die Ergebnisse mit Ihrer Selbsteinschätzung übereinstimmen, geben sie Ihnen möglicherweise eine gute Indikation auf Ihre Stärken bzw. Schwächen. Möglicherweise sehen Sie die Ergebnisse auch als wenig aussagekräftig an oder diese haben Zweifel in Ihnen geweckt. Dann haben Sie für Ihre Entscheidungsfindung die Möglichkeit, weitere Orientierungstests durchzuführen oder die Studienberatung zu kontaktieren (siehe Links unten). </p>
+                <p> Für unsere Fakultät stellt dieser Orientierungstest ein wichtiges Mittel dar, um Studierende über Studieninhalte und einen Teil des benötigten Basiswissens zu informieren. Zudem wollen wir den Studieninteressenten damit aufzeigen, was in einem Wirtschaftsingenieur-Studium auf sie zukommt. Alle abgefragten Bereiche werden eine wichtige Rolle in einem Studium an unserer Fakultät spielen. Wir möchten explizit betonen, dass dieser Test keine Aussagen über eine Eignung zum Studium oder gar über dementsprechende Erfolgsgarantien liefern kann. Sollten Sie aufgrund des Tests und / oder anderen Erfahrungen dennoch Zweifel an Ihrer Eignung für ein Studium im Wirtschaftsingenieurwesen haben, empfehlen wie Ihnen ein Gespräch bei unserer Studienberatung.</p>
+                <br/>
+                <p> Vielen Dank für Ihr Interesse an einem Studium im Wirtschaftsingenieurwesen!</p>
+                <br/>
+                <br/>
+            }
+        }
+
+
+        <p><b>Weitere WI-spezifische Tests:</b></p>
+        <p>HAW-Navigator des Hochschulübergreifenden Studiengang Wirtschaftsingenieurwesen (Der Test hat einen WI-spezifischen Fragenteil, liefert Informationen zum Studium, zu Absolventen und zu Berufsperspektiven)</p>
+        <p> <a href="http://haw-navigator.de/hwi/">http://haw-navigator.de/hwi/</a> </p>
+        <p>Online - Studienorientierung des Fachbereichs Wirtschaftsingenieurwesen der Hochschule Niederrhein</p>
+        <p> <a href="http://www.hn-navigator.de/navigator/wirtschaftsingenieurwesen/">http://www.hn-navigator.de/navigator/wirtschaftsingenieurwesen/</a> </p>
+        <p>Allgemeine Studientests in Baden Württemberg:</p>
+        <p> <a href="https://www.studieninfo-bw.de/entscheiden/interessen_und_studierfaehigkeitstests/">https://www.studieninfo-bw.de/entscheiden/interessen_und_studierfaehigkeitstests/</a> </p>
+        <br />
+        <p><b>Kontakte:</b></p>
+        <p>Fachstudienberatung Bachelor:</p>
+        <p> <a href="http://www.wi.hm.edu/die_fakultaet/personen/wichtige_ansprechpartner/fachstudienberatung_bachelor.de.html">http://www.wi.hm.edu/die_fakultaet/personen/wichtige_ansprechpartner/fachstudienberatung_bachelor.de.html</a> </p>
+        <p>Fachschaft 09:</p>
+        <p> <a href="https://fs09.de/de/">https://fs09.de/de/</a> </p>
+
+
+
+
+        <br/>
+        <br/>
+        <p>
+        <b>Ihre Ergebnisse im Detail</b>
+        <br/>
+
+        <div class="col-md-12">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td><strong>Mathematik</strong></td>
+
+                    @foreach (var questLog in Model
+                        .Where(logEntry => logEntry.Question.Category.Name.Equals("Mathematik"))
+                        .OrderBy(logEntry => logEntry.Question.Reihenfolge))
+                    {
+                        if (questLog.Answer != null)
+                        {
+                            if (questLog.Answer.IsCorrect)
+                            {
+                                <td><input type="button" class="btn btn-success" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                            else
+                            {
+                                <td><input type="button" class="btn btn-danger" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                        }
+                        else
+                        {
+                            <td><input type="button" class="btn btn-warning" value="N"></td>
+                        }
+                    }
+
+                </tr>
+
+                <tr>
+                    <td><strong>Technik</strong></td>
+
+                    @foreach (var questLog in Model
+                        .Where(logEntry => logEntry.Question.Category.Name.Equals("Technik"))
+                        .OrderBy(logEntry => logEntry.Question.Reihenfolge))
+                    {
+                        if (questLog.Answer != null)
+                        {
+                            if (questLog.Answer.IsCorrect)
+                            {
+                                <td><input type="button" class="btn btn-success" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                            else
+                            {
+                                <td><input type="button" class="btn btn-danger" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                        }
+                        else
+                        {
+                            <td><input type="button" class="btn btn-warning" value="N"></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td><strong> Naturwissenschaften</strong></td>
+
+                    @foreach (var questLog in Model
+                        .Where(logEntry => logEntry.Question.Category.Name.Equals("Naturwissenschaften"))
+                        .OrderBy(logEntry => logEntry.Question.Reihenfolge))
+                    {
+                        if (questLog.Answer != null)
+                        {
+                            if (questLog.Answer.IsCorrect)
+                            {
+                                <td><input type="button" class="btn btn-success" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                            else
+                            {
+                                <td><input type="button" class="btn btn-danger" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                        }
+                        else
+                        {
+                            <td><input type="button" class="btn btn-warning" value="N"></td>
+                        }
+                    }
+
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Wirtschaft</strong>
+                    </td>
+
+                    @foreach (var questLog in Model
+                        .Where(logEntry => logEntry.Question.Category.Name.Equals("Wirtschaft"))
+                        .OrderBy(logEntry => logEntry.Question.Reihenfolge))
+                    {
+                        if (questLog.Answer != null)
+                        {
+                            if (questLog.Answer.IsCorrect)
+                            {
+                                <td><input type="button" class="btn btn-success" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                            else
+                            {
+                                <td><input type="button" class="btn btn-danger" value="@questLog.Question.Reihenfolge"></td>
+                            }
+                        }
+                        else
+                        {
+                            <td><input type="button" class="btn btn-warning" value="N"></td>
+                        }
+                    }
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+<!--
+<div>
+    <img src="@Url.Action("ShowChart", "Home", new {area = "Quest", id = Model.First().User.Id})"
+         alt="Bild"
+         style="height: auto; width: auto" />
+    
+</div>
+-->
+@{
+    Layout = "~/Areas/Quest/Views/Shared/_Evaluation_Layout.cshtml";
+}

@@ -1,0 +1,38 @@
+﻿@model ICollection<WIQuest.Web.Data.PortfolioApplication>
+
+<div class="row">
+<div class="col-md-12">
+
+    <table id="@ViewBag.TabId" class="display">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Angemeldet</th>
+            <th>Name</th>
+            <th>Vorname</th>
+            <th>Mail</th>
+            <th>Abgegeben</th>
+            <th>Ergebnis</th>
+            <th>Abgeholt</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.RegistrationDate</td>
+                <td>@item.LastName</td>
+                <td>@item.FirstName</td>
+                <td>@item.EMail</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a href="@Url.Action("Edit", new {id = item.Id})">bearbeiten</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+</div>

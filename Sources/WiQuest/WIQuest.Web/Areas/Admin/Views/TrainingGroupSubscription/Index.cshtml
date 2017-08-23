@@ -1,0 +1,34 @@
+﻿@model WIQuest.Web.Data.TrainingGroup
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Benutzer
+        </th>
+        <th>
+            Eintragung
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Subscriptions) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Userid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStamp)
+        </td>
+        <td>
+            <a href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+}
+
+</table>

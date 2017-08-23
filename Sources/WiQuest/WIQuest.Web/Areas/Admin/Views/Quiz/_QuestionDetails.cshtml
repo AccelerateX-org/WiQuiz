@@ -1,0 +1,95 @@
+﻿@model WIQuest.Web.Data.Question
+
+
+@if (Model.Tags.Any())
+{
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            @foreach (var tag in Model.Tags)
+            {
+                @Html.Raw(tag.Name)
+                if (tag != Model.Tags.Last())
+                {
+                    @Html.Raw(", ")
+                }
+            }
+        </div>
+        <div class="panel-body">
+            @if (Model.Image != null)
+            {
+                <div class="thumbnail">
+                    <img src="@Url.Action("ShowImage", "Image", new {area = "", id = Model.Image.Id})"
+                         alt="@Model.Title"
+                         style="height: 80px" />
+                </div>
+            }
+            @Html.Raw(Model.Text)
+            @foreach (var answer in Model.Answers)
+            {
+                if (answer.IsCorrect)
+                {
+                    <p><i class="fa fa-check text-success"></i> @answer.Text</p>
+                }
+                else
+                {
+                    <p><i class="fa fa-bolt text-danger"></i> @answer.Text</p>
+                }
+            }
+
+
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Edit", "Edit", "Question", new { id = Model.Id }, null) |
+            @Html.ActionLink("Bild hochladen", "UploadImage", new { id = Model.Id }) |
+            @Html.ActionLink("Antworten", "Index", "Answer", new { id = Model.Id }, null) |
+            @Html.ActionLink("Schlagworte", "Index", "QuestionTag", new { id = Model.Id }, null) |
+            @Html.ActionLink("Details", "Details", new { id = Model.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+            @Html.ActionLink("Download", "Download", new { id = Model.Id })
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            keine Schlagworte
+        </div>
+        <div class="panel-body">
+            @if (Model.Image != null)
+            {
+                <div class="thumbnail">
+                    <img src="@Url.Action("ShowImage", "Image", new {area = "", id = Model.Image.Id})"
+                         alt="@Model.Title"
+                         style="height: 80px" />
+                </div>
+            }
+            @Html.Raw(Model.Text)
+            @foreach (var answer in Model.Answers)
+            {
+                if (answer.IsCorrect)
+                {
+                    <p><i class="fa fa-check text-success"></i> @answer.Text</p>
+                }
+                else
+                {
+                    <p><i class="fa fa-bolt text-danger"></i> @answer.Text</p>
+                }
+            }
+
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Edit", "Edit", "Question", new { id = Model.Id }, null) |
+            @Html.ActionLink("Bild hochladen", "UploadImage", new { id = Model.Id }) |
+            @Html.ActionLink("Antworten", "Index", "Answer", new { id = Model.Id }, null) |
+            @Html.ActionLink("Schlagworte", "Index", "QuestionTag", new { id = Model.Id }, null) |
+            @Html.ActionLink("Details", "Details", new { id = Model.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+            @Html.ActionLink("Download", "Download", new { id = Model.Id })
+        </div>
+    </div>
+}
+
+
+

@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Startseite";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1>Willkommen zu wiQuiz</h1>
+            <p>Diese Webseite gehört zum BUSY-Lab der Fakultät 09.
+                Hier stehen (angehenden) Studierenden in den Studiengängen Wirtschaftsingenieurwesen verschiedene "QuizApps" zum Experimentieren zur Verfügung.
+                Die Apps wurden von verschiedenen Studierendenteams entwickelt, z.B. in den Lehrveranstaltungen der Studienrichtung "Informationstechnik".
+            </p>
+        </div>
+    </diV>
+</div>
+
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="center-block">wiQuiz</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <p>Eine QuizApp mit Gamingeffekten zur Prüfungsvorbereitung. Registrierung mit lokalen Benutzerkonten erforderlich. 
+                        Auch für die Nutzung der App! Die Nutzung ist anonym.</p>
+                        <p>
+                            <a class="btn btn-success" href="@Url.Action("Index", "Home", new {area = "Quiz"})">Zur Anmeldung/Registrierung &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="center-block">wiQuest</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <p>
+                            Ein Orientierungstest für Studieninteressierte. Keine Anmeldung erforderlich.
+                        </p>
+                        <p>
+                            <a class="btn btn-default btn-info" href="@Url.Action("Index", "Home", new {area = "Quest"})">weiter &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="center-block">Administration</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <p>Nur für Admins: Eingabe der Fragenkataloge, Zusammenstellung der Quizzes und mehr....</p>
+                        <p>
+                            <a class="btn btn-danger" href="@Url.Action("Index", "Home", new {area = "Admin"})">Anmelden &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="center-block">Entwickler</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <p>APIs zur App Entwicklung.</p>
+                        <p>
+                            <a class="btn btn-default" href="@Url.Action("Index", "Help")">Weiter &raquo;</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+

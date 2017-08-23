@@ -1,0 +1,111 @@
+﻿@model WIQuest.Web.Areas.Quiz.Models.QuestionViewModel
+@{
+    ViewBag.Title = "PlayGame";
+    Layout = "~/Areas/Quiz/Views/Shared/_LayoutQuiz.cshtml";
+    
+}
+
+<div id="questionArea">
+    @Html.HiddenFor(m => Model.Question.Id)
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Frage @Model.Index von @Model.Total</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>@Model.Question.Text</p>
+                    @if (Model.Question.Image != null)
+                    {
+                        <div class="thumbnail">
+                            <img src="@Url.Action("ShowImage", "Image", new {area = "", id = Model.Question.Image.Id})"
+                                 alt="@Model.Question.Title" />
+                        </div>
+                    }
+
+                    <div id="answerArea">
+                        @foreach (var answer in Model.Answers)
+                        {
+                            <p>@Html.RadioButton("Antwort", answer.Id, false) @answer.Text</p>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-primary center-block" onclick="answerQuestion()">Antworten</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script>
+
+
+        function answerQuestion() {
+
+        // alle radio buttons auf der Seite
+        //var list = $("#answerArea > p input[type='radio']").get();
+        //var n = list.length;
+
+        // Anzahl der selektierten Radiobuttons
+        var list2 = $("#answerArea > p input[type='radio']:checked").get();
+        var n2 = list2.length;
+
+        var qid = $("#Question_Id").val();
+
+        if (n2 == 1) {
+
+            // beantwortet
+            var aid = list2[0].value;
+
+            $.ajax(
+            {
+                type: 'POST',
+                url: '@Url.Action("Answer")',
+                    data: {
+                        questionId: qid,
+                        answerId: aid
+                        },
+                    success: function (data, success, xhr) {
+                        $('#questionArea').html(data);
+                        //$('#loading').hide();
+                    },
+                    error: function (data, type, ex) {
+                        alert("Fehler beim laden der Daten." + ex);
+                        //$('#loading').hide();
+                    }
+            });
+        }
+        else if (n2 == 0) {
+            // nicht beantwortet
+            $.ajax(
+            {
+                type: 'POST',
+                url: '@Url.Action("NextQuestion", "Quiz")',
+                data: {
+                    questionId: qid,
+                    userId: uid,
+                    answerId: null
+                },
+                success: function (data, success, xhr) {
+                    $('#questionArea').html(data);
+                    $('#loading').hide();
+                },
+                error: function (data, type, ex) {
+                    alert("Fehler beim laden der Daten." + ex);
+                    $('#loading').hide();
+                }
+            });
+        }
+    }
+
+
+
+    </script>
+}
+
+
+
+
+

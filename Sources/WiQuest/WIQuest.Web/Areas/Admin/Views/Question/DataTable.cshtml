@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WIQuest.Web.Data.Question>
+
+@{
+    ViewBag.Title = "Fragenkatalog";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Content/DataTables/css/jquery.dataTables.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/DataTables/css/datatables.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+}
+
+
+
+
+<h2>Fragenkatalog</h2>
+
+<p>
+    @Html.ActionLink("Neue Frage anlegen", "Create")
+</p>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="questionList">
+            @Html.Partial("_QuestionList", Model)
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/DataTables/dataTables.bootstrap.min.js")" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tabQuestions').DataTable();
+        });
+    </script>
+}

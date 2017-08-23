@@ -1,0 +1,45 @@
+﻿@model WIQuest.Web.Data.TrainingPlan
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { id = Model.Id })
+</p>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Beschreibung</th>
+        <th>Ist Öffentlich</th>
+        <th>Zugangsschlüssel</th>
+        <th><i class="fa fa-pencil"></i></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Groups) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsPublic)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccessToken)
+        </td>
+        <td>@item.Subscriptions.Count</td>
+        <td>
+            <a href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-edit"></i></a>
+            <a href="@Url.Action("Index", "TrainingGroupSubscription", new { id = item.Id })"><i class="fa fa-pencil"></i></a>
+            <a href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+}
+
+</table>

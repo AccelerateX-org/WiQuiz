@@ -1,0 +1,36 @@
+﻿@model ICollection<WIQuest.Web.Areas.Admin.Models.HighScoreViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Hisghscores</h2>
+
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <th>Quiz</th>
+        <th>Partien</th>
+        <th>Spieler</th>
+        <th>Antworten</th>
+        <th>Korrekt</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@game.Quiz.Name</td>
+                <td>@game.Games.Count</td>
+                <td>@game.Players.Count</td>
+                <td>@game.Logs.Count</td>
+                <td>@game.Logs.Count(x => x.Answer.IsCorrect)</td>
+                <td>
+                    @Html.ActionLink("Clear Log", "ClearLog", new { id = game.Quiz.Id }) |
+                    @Html.ActionLink("Statistics", "Statistics", new { id = game.Quiz.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

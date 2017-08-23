@@ -1,0 +1,18 @@
+version: 1.0.{build}
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+image: Visual Studio 2017 
+
+platform:
+  - Any CPU
+
+install:
+    - ps: Invoke-WebRequest https://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
+
+build_script:
+    - ps: .\build.ps1
+
+test: off

@@ -1,0 +1,110 @@
+﻿@model WIQuest.Web.Areas.Quiz.Models.PersonalGameList
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Meine Trainingspläne</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    @foreach (var exercise in Model.Exercises)
+                    {
+
+                        var liBackground = "list-group-item-success";
+                        if (exercise.Exercise.Quiz.Level > 100)
+                        {
+                            liBackground = "list-group-item-warning";
+                        }
+                        else if (exercise.Exercise.Quiz.Level > 200)
+                        {
+                            liBackground = "list-group-item-danger";
+                        }
+                        <a href="@Url.Action("StartExercise", new { exId = exercise.Exercise.Id, subId=exercise.Subscription.Id })" class="list-group-item @liBackground">
+                            <span class="badge">@exercise.Exercise.Quiz.Sections.Sum(x => x.Questions.Count) Fragen</span>
+                            <h4 class="list-group-item-heading">@exercise.Exercise.Quiz.Name</h4>
+                            <p class="list-group-item-text">@exercise.Exercise.Quiz.Description</p>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Verfügbare Trainingspläne</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    @foreach (var game in Model.AvailablePlans)
+                    {
+                        foreach (var trainingGroup in game.Groups)
+                        {
+                            if (trainingGroup.IsPublic)
+                            {
+                                <a href="@Url.Action("SubscribeGroup", new {id = trainingGroup.Id})" class="list-group-item">
+                                    <span class="badge"><i class="fa fa-2x fa-pencil"></i></span>
+                                    <h4 class="list-group-item-heading">@game.Name: @trainingGroup.Name</h4>
+                                    <p class="list-group-item-text">@trainingGroup.Description</p>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("SubscribeGroup", new {id = trainingGroup.Id})" class="list-group-item">
+                                    <span class="badge"><i class="fa fa-2x fa-key"></i><i class="fa fa-2x fa-pencil"></i></span>
+                                    <h4 class="list-group-item-heading">@game.Name: @trainingGroup.Name</h4>
+                                    <p class="list-group-item-text">@trainingGroup.Description</p>
+                                </a>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Verfügbare Quizzes</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        @foreach (var game in Model.GameStats)
+                        {
+                            var liBackground = "list-group-item-success";
+                            if (game.Quiz.Level > 100)
+                            {
+                                liBackground = "list-group-item-warning";
+                            }
+                            else if (game.Quiz.Level > 200)
+                            {
+                                liBackground = "list-group-item-danger";
+                            }
+                            <a href="@Url.Action("StartGame", new {id = game.Quiz.Id})" class="list-group-item @liBackground">
+                                <span class="badge">@game.Questions.Count Fragen</span>
+                                <h4 class="list-group-item-heading">@game.Quiz.Name</h4>
+                                <p class="list-group-item-text">@game.Quiz.Description</p>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+*@
+
+
+
+

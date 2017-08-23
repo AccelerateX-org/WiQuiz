@@ -1,0 +1,77 @@
+﻿@model WIQuest.Web.Areas.Quiz.Models.QuestionAnswerViewModel
+    
+@{
+    var i = 65;
+}
+<div class="list-group">
+    @foreach (var answer in Model.Answers)
+    {
+        var letter = Convert.ToChar(i++); 
+        
+        if (answer.Id == Model.GivenAnswer.Id)
+        {
+            var liBackGround = "list-group-item-danger";
+            if (answer.IsCorrect)
+            {
+                liBackGround = "list-group-item-success";
+            }
+            <div class="list-group-item @liBackGround">
+                <h4 class="list-group-item-heading">@letter: @answer.Text
+                    <a href="javascript:nextQuestion()" class="btn btn-default">Weiter</a>
+                </h4>
+                @if (answer.Image != null)
+                {
+                    <div class="thumbnail">
+                        <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                             alt="@answer.Text" />
+                    </div>
+                }
+                <p class="list-group-item-text">@answer.Explanation</p>                
+                
+            </div>
+        }
+        else
+        {
+            if (answer.Id == Model.CorrectAnswer.Id)
+            {
+                <div class="list-group-item list-group-item-success">
+                    <h4 class="list-group-item-heading">
+                        @letter: @answer.Text
+                    </h4>
+                    @if (answer.Image != null)
+                    {
+                        <div class="thumbnail">
+                            <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                                 alt="@answer.Text" />
+                        </div>
+                    }
+                    <p class="list-group-item-text">@answer.Explanation</p>
+                </div>
+            }
+            else
+            {
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">
+                        @letter: @answer.Text
+                    </h4>
+                    @if (answer.Image != null)
+                    {
+                        <div class="thumbnail">
+                            <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                                 alt="@answer.Text" />
+                        </div>
+                    }
+                    <p class="list-group-item-text">@answer.Explanation</p>
+                </div>
+            }
+
+        }
+    }
+</div>
+
+
+
+
+
+
+

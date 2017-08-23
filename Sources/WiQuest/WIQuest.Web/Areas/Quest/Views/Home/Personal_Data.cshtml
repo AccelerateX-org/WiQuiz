@@ -1,0 +1,59 @@
+﻿@model WIQuest.Web.Data.User
+
+
+@{
+    ViewBag.Title = "Personal_Data";
+    Layout = "~/Areas/Quest/Views/Shared/_Question_Section.cshtml";
+}
+
+<div class="row">
+
+    <div class="well">
+        <div class="pull-right"><img src="https://upload.wikimedia.org/wikipedia/de/thumb/e/e8/Hochschule_Muenchen_Logo.svg/320px-Hochschule_Muenchen_Logo.svg.png" alt="HS München" style="width:200px;height:90px;"> </div>
+        <h2>WI-Quest</h2>
+        <h3><small>Studien-Orientierungstest für den Bachelorstudiengang Wirtschaftsingenieurwesen an der Hochschule München</small></h3>
+        <h4>Angaben zu Ihrer Person</h4>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>Bitte füllen Sie die allgemeinen Angaben zu ihrer Person aus.</h2>
+        <p>Die Daten werden anonym erhoben und nach den Richtlinien des Datenschutzgesetz behandelt. Für eine statische Auswertung der Daten benötigen wir jedoch noch einige allgemeine Informationen.</p>
+
+
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Geschlecht, new {@class = "control-label col-md-4"})
+                <div class="col-md-8">
+                    @Html.EnumDropDownListFor(model => model.Geschlecht, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Altersgruppe, new {@class = "control-label col-md-4"})
+                <div class="col-md-8">
+                    @Html.EnumDropDownListFor(model => model.Altersgruppe, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Hochschulzugangsberechtigung, new {@class = "control-label col-md-4"})
+                <div class="col-md-8">
+                    @Html.EnumDropDownListFor(model => model.Hochschulzugangsberechtigung, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" value="Weiter" class="btn btn-default"/>
+                </div>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+
+
+

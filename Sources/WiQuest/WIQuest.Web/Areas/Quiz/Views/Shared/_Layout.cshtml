@@ -1,0 +1,54 @@
+﻿@using WIQuest.Web.Data
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wiQuiz | @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">wiQuiz</a>
+            </div>            
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="container-fluid body-content">
+            <div class="row">
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+            <hr />
+            <footer>
+                <ul class="list-inline">
+                    <li>&copy; @DateTime.Now.Year</li>
+                    <li><a href="http://www.wi.hm.edu">Fakultät für Wirtschaftsingenieurwesen</a></li>
+                    <li><a href="http://www.hm.edu">Hochschule München</a></li>
+                    <li><a href="@Url.Action("Contact", "Home", new {area = ""})">Kontakt</a></li>
+                    <li><a href="@Url.Action("Imprint", "Home", new {area = ""})">Impressum</a></li>
+                </ul>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@using WIQuest.Web.Data
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fakultät für Design, Hochschule München, Online-Anmeldung Bachelor</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="@Url.Content("~/Assets/style.css?v=1.0")">
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+<div class="container-fluid body-content">
+    <header class="cf">
+
+        <img id="logo" src="@Url.Content("~/Assets/p/FK12_Logo.jpg")"
+             alt="Fakultät für Design, Hochschule München"
+             srcset="@Url.Content("~/Assets/p/FK12_Logo.jpg") 600w, @Url.Content("~/Assets/p/FK12_Logo_pur.jpg") 317w"
+             sizes="33vw">
+        <h1>Fakultät für Design</h1>
+    </header>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                @RenderBody()
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <ul class="list-inline">
+                <li>&copy; @DateTime.Now.Year</li>
+                <li><a href="http://www.wi.hm.edu">Fakultät für Wirtschaftsingenieurwesen</a></li>
+                <li><a href="http://www.hm.edu">Hochschule München</a></li>
+                <li><a href="@Url.Action("Contact", "Home", new {area = ""})">Kontakt</a></li>
+                <li><a href="@Url.Action("Imprint", "Home", new {area = ""})">Impressum</a></li>
+            </ul>
+        </footer>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

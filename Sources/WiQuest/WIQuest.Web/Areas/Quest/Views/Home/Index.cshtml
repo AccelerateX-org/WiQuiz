@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Startseite";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="well">
+        <div class="pull-right"><img src="https://upload.wikimedia.org/wikipedia/de/thumb/e/e8/Hochschule_Muenchen_Logo.svg/320px-Hochschule_Muenchen_Logo.svg.png" alt="HS München" style="width:200px;height:90px;"> </div>
+        <h2>WI-Quest</h2>
+        <h3><small>Studien-Orientierungstest für die Bachelorstudiengänge Wirtschaftsingenieurwesen an der Hochschule München</small></h3>
+        <h4>Startseite</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Herzlich willkommen</h4>
+            </div>
+            <div class="panel-body">
+                <p>Wir freuen uns sehr, dass Sie das Angebot unseres Orientierungstests zum Studium des Wirtschaftsingenieurwesens wahrnehmen wollen.</p>
+                <p>Die folgenden Fragen und der beinhaltete Informationsteil sind als Hilfestellungen gedacht, um Sie bei der Wahl Ihres Studiums zu unterstützen. Bitte verstehen Sie den Orientierungstest als eine von vielen Möglichkeiten, um sich über das Studium des Wirtschaftsingenieurwesens zu informieren und die Frage zu beantworten, ob der Studiengang zu Ihnen passt.</p>
+                <p>Die abschließende Einschätzung aufgrund der Ergebnisse des Tests soll Ihnen Ihre Stärken und Schwächen bezüglich der befragten Themengebiete aufzeigen und insbesondere eine Rückmeldung darauf geben, wie wir Ihre Voraussetzungen für den erfolgreichen Start in das Studium sehen.</p>
+                <p>Wenn wir Ihnen aufgrund der Ergebnisse das Studium empfehlen bedeutet dies lediglich, dass Sie sehr gute Voraussetzungen für einen erfolgreichen Abschluss des Studiums mitbringen. Die Empfehlung ist kein Garant für einen erfolgreichen Abschluss! Umgekehrt bedeutet ein Testergebnis, das Zweifel an Ihren Voraussetzungen, Ihrem Wissen und Ihren Fähigkeiten nahe legt nicht, dass Sie das Studium nicht erfolgreich absolvieren können. Dennoch empfehlen wir Ihnen in diesem Fall ein Beratungsgespräch mit der Studienberatung der Hochschule.</p>
+                <p>Bitte bearbeiten Sie das Selbsteinschätzungsverfahren ohne fremde Hilfe und ehrlich. Nur dann ist das Ergebnis aussagekräftig und für Ihre Entscheidungsfindung hilfreich. Nutzen Sie diese Chance für eine persönliche Stärken- und Schwächeanalyse.</p>
+                <p>Der Test dauert je nach Bearbeitungstempo 60 bis 90 Minuten.</p>
+                <p>Die Daten werden anonym und nach den Richtlinien des Datenschutzgesetzes behandelt. Eine personenbezoge Speicherung wird nicht vorgenommen. Für eine Analyse der Daten zu Zwecken der Verbesserung unserer Studienberatung und Studieneingangsphase benötigen wir jedoch einige allgemeine Informationen.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Unsere Bachelorstudiengänge Wirtschaftsingenieurwesen</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="http://wi.hm.edu/studienangebote/bachelor_wirtschaftsingenieurwesen/index.de.html" class="list-group-item">
+                        <h4 class="list-group-item-heading">Wirtschaftsingenieurwesen</h4>
+                        <p class="list-group-item-text">mit den Studienschwerpunkten "Industrielle Technik", "Biotechnologie" und "Informationstechnik"</p>
+                    </a>
+                    <a href="http://wi.hm.edu/studienangebote/bachelor_wi_automobilindustrie/index.de.html" class="list-group-item">
+                        <h4 class="list-group-item-heading">Wirtschaftsingenieurwesen Automobilindustrie</h4>
+                        <p class="list-group-item-text"></p>
+                    </a>
+                    <a href="http://wi.hm.edu/studienangebote/bachelor_wi_logistik/index.de.html" class="list-group-item">
+                        <h4 class="list-group-item-heading">Wirtschaftsingenieurwesen Logistik</h4>
+                        <p class="list-group-item-text"></p>
+                    </a>
+                </div>
+                <p>
+                    <a href="@Url.Action("Information_Page", "Home", new {area = "Quest"})" class="btn btn-primary btn-lg">Test starten &raquo;</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+﻿@model WIQuest.Web.Areas.Portfolio.Models.RegistrationViewModel
+
+@{
+    ViewBag.Title = "Kontrolle";
+}
+
+<h2>Bitte kontrollieren Sie Ihre Angaben genau:</h2>
+
+<div class="formularResultat">
+    <h3>Bewerbung für die Studienrichtung <strong>@Model.Studienrichtung</strong></h3>
+
+    <p>@Model.FirstName <strong>@Model.LastName</strong></p>
+
+    <p>@Model.EMail<br>@Model.Phone</p>
+
+    <p>@Model.Street @Model.Number<br>@Model.PostalCode @Model.City</p>
+
+    <p>@Model.Country</p>
+
+    @if (Model.Pruefung_schon_mal_gemacht.Equals("nein"))
+    {
+        <!-- entweder noch nicht teilgenommem -->
+        <p>Die Eignungsprüfung für den Studiengang Design an der Hochschule München habe ich noch nicht abgelegt!</p>
+    }
+    else
+    {
+        <!-- oder schon teilgenommen -->
+        if (Model.Pruefung_schon_mal_bestanden.Equals("nein"))
+        {
+            <p>Ich habe bereits einmal die Eignungsprüfung für den Studiengang Design an der Hochschule München im Wintersemester @Model.Jahreszahl, Studienrichtung FD abgelegt ohne diese bestanden zu haben!</p>
+        }
+        else
+        {
+            <p>Ich habe bereits einmal die Eignungsprüfung für den Studiengang Design an der Hochschule München im Wintersemester @Model.Jahreszahl, Studienrichtung FD abgelegt und bestanden!</p>
+        }
+    }
+</div>
+
+<div class="zweibuttons">
+    <!--
+    korrigieren: zurück zur Formular-Seite
+    abschicken: zur Danke-Seite
+    -->
+    <a href="@Url.Action("Correct")" class="btn btn-default btn-block">korrigieren</a>
+    <a href="@Url.Action("Save")" class="btn btn-default btn-block">abschicken</a>
+    @*<button>korrigieren</button><button>abschicken</button>*@
+</div>
+@*
+
+        <div class="form-group">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+    *@
+
+
+

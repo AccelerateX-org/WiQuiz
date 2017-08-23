@@ -1,0 +1,71 @@
+﻿@model WIQuest.Web.Areas.Quiz.Models.QuestionViewModel
+
+@{
+    var i = 65;
+}
+
+<div id="questionArea">
+    @Html.HiddenFor(m => Model.Question.Id)
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Frage @Model.Index von @Model.Total</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div>@Html.Raw(Model.Question.Text)</div>
+                                </div>
+                            </div>
+                                    @if (Model.Question.Image != null)
+                                    {
+                                        <div class="thumbnail">
+                                            <img src="@Url.Action("ShowImage", "Image", new {area = "", id = Model.Question.Image.Id})"
+                                                 alt="@Model.Question.Title" />
+                                        </div>
+                                    }
+
+                                    <div id="answerArea">
+                                        <div class="list-group">
+                                            @foreach (var answer in Model.Answers)
+                                            {
+                                                var letter = Convert.ToChar(i++);
+
+                                                <a href="javascript:answerQuestion('@answer.Id')" class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <div class="list-group-item-heading">
+                                                                <h4>@letter)</h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div>
+                                                                @Html.Raw(answer.Text)
+                                                            </div>
+                                                            @if (answer.Image != null)
+                                                            {
+                                                                <div class="thumbnail">
+                                                                    <img src="@Url.Action("ShowImage", "Image", new {area = "", id = answer.Image.Id})"
+                                                                         alt="@answer.Text" />
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,38 @@
+﻿@model WIQuest.Web.Areas.Portfolio.Models.TestViewModel
+@{
+    Layout = "~/Areas/Portfolio/Views/Shared/_LayoutInternal.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<h2>Test für E-Mail Generierung</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Email", null, FormMethod.Post, new {@class = "form-horizontal"}))
+            {
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Pdf generieren" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Styles, new {@class = "col-md-2 control-label"})
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(m => m.Styles, new {@class = "form-control", rows = "25"})
+                        </div>
+                    </div>
+
+                </fieldset>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+
+    
+

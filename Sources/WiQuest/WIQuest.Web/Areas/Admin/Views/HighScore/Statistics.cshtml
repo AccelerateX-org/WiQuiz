@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<h2>Statistics</h2>
+
+<h4>Anzahl Antworten</h4>
+<div class="progress">
+    <div id="progressbar1" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+        0%
+    </div>
+</div>
+<h4>Anzahl korrekter Antworten</h4>
+<div class="progress">
+    <div id="progressbar2" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+        0%
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/signalr")
+
+    <!--
+    Obwohl diese Datei so nicht existieren, wird das hier benötigt
+    Wahrscheinlich wird das erst zur Laufzeit erstellt
+    -->
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var connection = $.connection.statisticsHub;
+
+            connection.client.updateStatistics = function (statistics) {
+
+                $("#progressbar1").html(statistics.TotalAnswers + "%");
+                $("#progressbar1").css("width", statistics.TotalAnswers + "%");
+
+                $("#progressbar2").html(statistics.CorrectAnswers + "%");
+                $("#progressbar2").css("width", statistics.CorrectAnswers + "%");
+
+            };
+
+
+            $.connection.hub.start();
+        })
+
+    </script>
+}
+
+
+
+
+

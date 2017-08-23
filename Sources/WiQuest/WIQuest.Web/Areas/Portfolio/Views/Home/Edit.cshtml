@@ -1,0 +1,153 @@
+﻿@model WIQuest.Web.Areas.Portfolio.Models.RegistrationViewModel
+
+<h2>Vielen Dank für Ihr Interesse an unserer Fakultät!</h2>
+<p><strong>Bitte fühlen Sie alle unten genannten Punkte sorgfältig aus</strong> – nur so können Sie sicher stellen, dass Ihre Anmeldung problemlos funktioniert!</p>
+
+@using (Html.BeginForm("Edit", null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <h3>Für welche Studienrichtung bewerben Sie sich?</h3>
+    <p class="anmerkung"><em>Wenn Sie sich für mehrere Studienrichtungen bewerben wollen, müssen Sie sich mehrmals anmelden und natürlich für jede Studienrichtung eine separate Mappe abgeben!</em></p>
+
+    <!-- Studienrichtung -->
+    <section class="studienrichtung">
+        @Html.RadioButtonFor(model => model.Studienrichtung, "Fotodesign", new { required="" })<label for="Fotodesign">Fotodesign</label><br>
+        @Html.RadioButtonFor(model => model.Studienrichtung, "Industriedesign", new { required="" })<label for="Industriedesign">Industriedesign</label><br>
+        @Html.RadioButtonFor(model => model.Studienrichtung, "Kommunikationsdesign", new { required="" } )<label for="Kommunikationsdesign">Kommunikationsdesign</label>
+    </section>
+
+    <hr>
+
+
+    <section class="adresse">
+        <div>
+            @Html.TextBoxFor(model => model.FirstName, new { placeholder="Vorname", required="" })
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.LastName, new { placeholder = "Familienname", required = "" })
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.EMail, new { placeholder = "Mail-Adresse", required = "" })
+            @Html.LabelFor(model => model.EMail)
+            @Html.ValidationMessageFor(model => model.EMail)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.EMailConfirmed, new { placeholder = "Mail-Adresse (Wiederholung)", required = "" })
+            @Html.LabelFor(model => model.EMailConfirmed)
+            @Html.ValidationMessageFor(model => model.EMailConfirmed)
+        </div>
+        <div>
+            @Html.TextBoxFor(model => model.Phone, new { placeholder = "Telefon-Nummer", required = "" })
+            @Html.LabelFor(model => model.Phone)
+        </div>
+
+        <section class="strassenkombi">
+
+            <div>
+                @Html.TextBoxFor(model => model.Street, new { placeholder = "Straße", required = "" })
+                @Html.LabelFor(model => model.Street)
+            </div>
+
+            <div>
+                @Html.TextBoxFor(model => model.Number, new { placeholder = "Hausnummer", required = "" })
+                @Html.LabelFor(model => model.Number)
+            </div>
+
+        </section><!-- /strassenkombi -->
+
+        <section class="stadtkombi">
+
+            <div>
+                @Html.TextBoxFor(model => model.PostalCode, new { placeholder = "PLZ", required = "" })
+                @Html.LabelFor(model => model.PostalCode)
+            </div>
+
+            <div>
+                @Html.TextBoxFor(model => model.City, new { placeholder = "Stadt", required = "" })
+                @Html.LabelFor(model => model.City)
+            </div>
+
+        </section><!-- /stadtkombi -->
+
+        <div>
+            @Html.TextBoxFor(model => model.Country, new { placeholder = "Land", required = "" })
+            @Html.LabelFor(model => model.Country)
+        </div>
+
+    </section>
+
+    <hr>
+
+    <section class="schon_mal_geprueft">
+
+        <p>Ich habe bereits einmal die <strong>Eignungsprüfung für den Studiengang Design</strong> an der Hochschule&#160;München abgelegt</p>
+
+        <!-- schon mal Aufnahmeprüfung? -->
+        <section class="pruefung_wiederholung cf">
+            <div>@Html.RadioButtonFor(model => model.Pruefung_schon_mal_gemacht, "nein", new { required = "" })<label for="nein">nein</label></div>
+            <div>@Html.RadioButtonFor(model => model.Pruefung_schon_mal_gemacht, "ja", new { required = "" })<label for="ja">ja</label></div>
+            <div>
+                @Html.TextBoxFor(model => model.Jahreszahl, new { placeholder = "Jahreszahl" })
+            </div>
+
+            @*
+    <div><input type="radio" id="Pruefung_nein" name="Pruefung_schon_mal_gemacht" value="nein" required><label for="Pruefung_nein">nein</label></div>
+    <div><input type="radio" id="Pruefung_ja" name="Pruefung_schon_mal_gemacht" value="ja" required><label for="Pruefung_ja">ja, im Wintersemester</label></div>
+    <div><input id="jahreszahl" name="Jahreszahl" type="text" placeholder="Jahreszahl"></div>
+            *@
+
+
+        </section>
+
+        <!-- dieser Teil erst sichtbar, wenn ja ausgewählt wurde! -->
+        <!-- =============== anfangs unsichtbar / Anfang ========== -->
+
+        <div id="jaSchonMalBeworben">
+
+            <!-- Studienrichtung schon mal Aufnahmeprüfung -->
+            <section class="studienrichtung_wiederholung">
+                @Html.RadioButtonFor(model => model.Studienrichtung_schon_mal_Aufnahmepruefung, "Fotodesign")<label for="Fotodesign">Fotodesign</label><br>
+                @Html.RadioButtonFor(model => model.Studienrichtung_schon_mal_Aufnahmepruefung, "Industriedesign")<label for="Industriedesign">Industriedesign</label><br>
+                @Html.RadioButtonFor(model => model.Studienrichtung_schon_mal_Aufnahmepruefung, "Kommunikationsdesign")<label for="Kommunikationsdesign">Kommunikationsdesign</label>
+
+            @*
+    <div><input type="radio" id="Fotodesign_schon_mal_Aufnahmepruefung" name="Studienrichtung_schon_mal_Aufnahmepruefung" value="Fotodesign"><label for="Fotodesign_schon_mal_Aufnahmepruefung">Fotodesign</label>
+    </div>
+    <div><input type="radio" id="Industriedesign_schon_mal_Aufnahmepruefung" name="Studienrichtung_schon_mal_Aufnahmepruefung" value="Industriedesign_schon_mal_Aufnahmepruefung"><label for="Industriedesign_schon_mal_Aufnahmepruefung">Industriedesign</label><br>
+    </div>
+    <div><input type="radio" id="Kommunikationsdesign_schon_mal_Aufnahmepruefung" name="Studienrichtung_schon_mal_Aufnahmepruefung" value="Kommunikationsdesign_schon_mal_Aufnahmepruefung"><label for="Kommunikationsdesign_schon_mal_Aufnahmepruefung">Kommunikationsdesign</label>
+    </div>
+            *@
+            </section>
+
+            <!-- Ergebniss der Aufnahme-Prüfung -->
+            <section class="pruefung_wiederholung">
+                <div>Ergebnis:</div>
+                <div>@Html.RadioButtonFor(model => model.Pruefung_schon_mal_bestanden, "ja")<label for="nein">bestanden</label></div>
+                <div>@Html.RadioButtonFor(model => model.Pruefung_schon_mal_bestanden, "nei")<label for="ja">nicht bestanden</label></div>
+
+            @*
+    <div><input type="radio" id="Pruefung_schon_mal_bestanden_ja" name="Pruefung_schon_mal_bestanden" value="nein"><label for="Pruefung_schon_mal_bestanden_ja">bestanden</label></div>
+    <div><input type="radio" id="Pruefung_schon_mal_bestanden_nein" name="Pruefung_schon_mal_bestanden" value="ja"><label for="Pruefung_schon_mal_bestanden_nein">nicht bestanden</label></div>
+            *@
+            </section>
+
+        </div><!-- /jaSchonMalBeworben -->
+        <!-- =============== anfangs unsichtbar / Ende ========== -->
+
+    </section><!-- /schon_mal_geprueft -->
+
+    <hr>
+
+    <section class="bewerbungsmappe cf">
+
+        <input type="checkbox" id="Bewerbungsmappe" name="Bewerbungsmappe" value="zugestimmt" required><label for="Bewerbungsmappe">Ich verpflichte mich, meine Bewerbungsmappe nicht vor Abschluss des Bewerbungsverfahren abzuholen</label>
+
+    </section>
+
+    <button id="weiter">weiter</button>
+}

@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fakultät für Design, Hochschule München, Online-Anmeldung Bachelor</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700" rel="stylesheet">
+    @*
+    @Styles.Render("~/Content/css")
+    @cripts.Render("~/bundles/modernizr")
+    *@
+    <link rel="stylesheet" href="@Url.Content("~/Assets/style.css?v=1.0")">
+</head>
+<body>
+    <main>
+        <header class="cf">
+            <img id="logo" src="@Url.Content("~/Assets/p/FK12_Logo.jpg")"
+                 alt="Fakultät für Design, Hochschule München"
+                 srcset="@Url.Content("~/Assets/p/FK12_Logo.jpg") 600w, @Url.Content("~/Assets/p/FK12_Logo_pur.jpg") 317w" 
+                 sizes="33vw">
+            <h1>Fakultät für Design</h1>
+        </header>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Hochschule München</p>
+            </footer>
+        </div>
+    </main>
+        @Scripts.Render("~/bundles/jquery")
+@*
+    @Scripts.Render("~/bundles/bootstrap")"
+*@
+        <script src="@Url.Content("~/Assets/js/scripte.js?v=1.0")"></script>
+        @RenderSection("scripts", required: false)
+</body>
+</html>

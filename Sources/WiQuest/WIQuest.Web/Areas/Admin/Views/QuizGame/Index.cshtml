@@ -1,0 +1,39 @@
+﻿@model ICollection<WIQuest.Web.Data.QuizGame>
+
+<h2>Alle Partien</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Datum</th>
+        <th>QuizId</th>
+        <th>PlayerId</th>
+        <th>UserId</th>
+        <th>Statistics</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var game in Model)
+    {
+        <tr>
+            <td>@game.Id</td>
+            <td>@game.CreatedAt</td>
+            @if (game.Levels.First().Quiz != null)
+            {
+                <td>@game.Levels.First().Quiz.Id</td>
+            }
+            else
+            {
+                <td>nix</td>
+            }
+            <td>@game.Players.First().Id</td>
+            <td>@game.Players.First().UserId</td>
+            <td>
+                <a href="@Url.Action("GetQuizGameResult", new { gameId = game.Id, playerId = game.Players.First().Id })" class="btn btn-default">Statistik</a>
+                
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

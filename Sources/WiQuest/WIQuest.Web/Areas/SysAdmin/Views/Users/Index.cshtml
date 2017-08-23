@@ -1,0 +1,45 @@
+﻿@model ICollection<WIQuest.Web.Areas.SysAdmin.Models.UserViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Benutzerverwaltung</h2>
+
+<table class="table">
+    <tr>
+        <td>UserId</td>
+        <th>Benutzername</th>
+        <th>E-Mail</th>
+        <th><i class="fa fa-question-circle text-primary"></i></th>
+        <th><i class="fa fa-users text-danger"></i></th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.User.Id</td>
+            <td>@user.User.UserName</td>
+            <td>@user.User.Email</td>
+            <td>
+                @if (user.IsQuizAdmin)
+                {
+                    <a href="@Url.Action("ToggleOff", new {id = user.User.Id, role = "QuizAdmin"})"><i class="fa fa-2x fa-toggle-on text-primary"></i></a>
+                }
+                else
+                {
+                    <a href="@Url.Action("ToggleOn", new {id = user.User.Id, role = "QuizAdmin"})"><i class="fa fa-2x fa-toggle-off text-primary"></i></a>
+                }
+            </td>
+            <td>
+                @if (user.IsUserAdmin)
+                {
+                    <a href="@Url.Action("ToggleOff", new {id = user.User.Id, role = "UserAdmin"})"><i class="fa fa-2x fa-toggle-on text-danger"></i></a>
+                }
+                else
+                {
+                    <a href="@Url.Action("ToggleOn", new {id = user.User.Id, role = "UserAdmin"})"><i class="fa fa-2x fa-toggle-off text-danger"></i></a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+

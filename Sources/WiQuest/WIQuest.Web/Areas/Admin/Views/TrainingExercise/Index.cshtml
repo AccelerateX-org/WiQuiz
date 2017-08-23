@@ -1,0 +1,72 @@
+﻿@model WIQuest.Web.Data.TrainingSession
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { id = Model.Id })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Beschreibung
+        </th>
+        <th>Quiz</th>
+        <th>
+            Verfügbar
+        </th>
+        <th>
+            Von
+        </th>
+        <th>
+            Bis
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Exercises) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @if (item.Quiz != null)
+            {
+                @item.Quiz.Name
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAvailabe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableUntil)
+        </td>
+        <td>
+            @if (!item.IsAvailabe)
+            {
+                @Html.ActionLink("Freischalten", "TurnOn", new {id = item.Id}) 
+            }
+            else
+            {
+                @Html.ActionLink("Abschalten", "TurnOff", new {id = item.Id})
+            }
+            | @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+        </td>
+    </tr>
+}
+
+</table>

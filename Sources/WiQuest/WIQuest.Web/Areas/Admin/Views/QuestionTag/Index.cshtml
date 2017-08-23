@@ -1,0 +1,113 @@
+﻿@model WIQuest.Web.Data.Question
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section styles
+{
+    @Styles.Render("~/Content/jquery-ui")
+}
+
+<h2>Eingabe Schlagworte</h2>
+
+<p>
+    @Html.ActionLink("Zurück zur Frage", "Details", "Question", new {id =Model.Id}, null)
+</p>
+
+
+<div class="row">
+    <!-- Das Bild -->
+    <div class="col-md-6 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Frage</h4>
+            </div>
+            <div class="panel-body">
+                @if (Model.Image != null)
+                {
+                    <img src="@Url.Action("ShowImage", "Image", new { area="", id = Model.Image.Id})" alt="@Model.Title" style="height: 120px; width: auto" />
+                }
+                <p>@Model.Text</p>
+                <div id="TagList">
+                    @Html.Partial("_TagList", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>neues Schlagwort</h4>
+            </div>
+            <div class="panel-body">
+                @using (Ajax.BeginForm("SendTag","QuestionTag", null,
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "Post",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "TagList",
+                                    OnSuccess = "RemoveTag",
+                                }, new { @class = "form-horizontal" }))
+                {
+                    @Html.HiddenFor(model => model.Id)
+                    <input type="text" name="tagName" id="tagName" placeholder="Bitte Schlagwort eingeben" class="form-control"/>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-ui")
+
+
+    <script>
+        $(function() {
+
+            $('#tagName').autocomplete({
+                source: function(request, response) {
+
+                    $.ajax({
+                        url: '@Url.Action("TagList")',
+                        type: 'POST',
+                        //dataType: "json",
+
+                        data: {
+                            name: request.term
+                        },
+
+                        success: function(data, success, xhr) {
+                            response($.map(data,
+                                function(item) {
+
+                                    return {
+                                        text: item.id,
+                                        label: item.name,
+                                        value: item.name
+                                    };
+                                }));
+
+                        },
+
+                        error: function(data) { alert(data); }
+                    });
+
+                }
+                /*,
+                select: function(event, ui) {
+
+                    alert(ui.item.value);
+                }*/
+            });
+        });
+
+        function RemoveTag() {
+            $('#tagName').value = "";
+        }
+    </script>
+}
+
+

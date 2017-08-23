@@ -1,0 +1,98 @@
+﻿@model IEnumerable<WIQuest.Web.Data.TrainingPlan>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <h2>Trainingspläne <small>@Html.ActionLink("Create New", "Create")</small></h2>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Struktur und Zeitpläne</h4>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Beschreibung
+            </th>
+            <th><i class="fa fa-users"></i></th>
+            <th><i class="fa fa-calendar"></i></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>@item.Groups.Count</td>
+                    <td>@item.Sessions.Count</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new {id = item.Id})"><i class="fa fa-edit"></i></a>
+                        <a href="@Url.Action("Index", "TrainingGroup", new {id = item.Id})"><i class="fa fa-users"></i></a>
+                        <a href="@Url.Action("Index", "TrainingSession", new {id = item.Id})"><i class="fa fa-calendar"></i></a>
+                        <a href="@Url.Action("Delete", new {id = item.Id})"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Auswertungen</h4>
+    </div>
+    <table class="table">
+        <tr>
+            <th>Plan</th>
+            <th>Session</th>
+            <th>Übung</th>
+            <th>Quiz</th>
+            <th><i class="fa fa-trophy"></i></th>
+            <th></th>
+        </tr>
+
+        @foreach (var plan in Model)
+        {
+            foreach (var session in plan.Sessions)
+            {
+                foreach (var exercise in session.Exercises)
+                {
+                    <tr>
+                        <td>@plan.Name</td>
+                        <td>@session.Name</td>
+                        <td>@exercise.Name</td>
+                        <td>
+                            @if (exercise.Quiz != null)
+                            {
+                                @exercise.Quiz.Name
+                            }
+                        </td>
+                        <td>
+                            @exercise.Practices.Count
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Exercise", "TrainingAnalysis", new {exId=exercise.Id})"><i class="fa fa-binoculars"></i></a>
+                        </td>
+                    </tr>
+  
+                }
+  
+            }
+        }
+
+    </table>
+</div>

@@ -1,0 +1,27 @@
+﻿@model WIQuest.Web.Data.Quiz
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>@Model.Name</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group-item">
+                    <img src="@Url.Action("GetQRCode", "Demo", new {area = "Quiz", id = Model.Id})"
+                         alt="@Model.Name"/>
+                    <a href="@Url.Action("StartGame", new { area = "Quiz", id = Model.Id })" class="btn btn-block btn-primary">Starten</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

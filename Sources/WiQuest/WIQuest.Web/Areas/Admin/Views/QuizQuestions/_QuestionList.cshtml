@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WIQuest.Web.Data.Question>
+
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" id="@item.Id" onclick="toggleCheckState(this) " />
+                </td>
+                <td>
+                    @Html.Partial("_QuestionDetails", item)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

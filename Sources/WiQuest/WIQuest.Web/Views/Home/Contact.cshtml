@@ -1,0 +1,55 @@
+﻿@model WIQuest.Web.Models.ContactMailModel
+@{
+    ViewBag.Title = "Kontakt";
+}
+<div class="row">
+
+    <div class="well">
+        <div class="pull-right"><img src="https://upload.wikimedia.org/wikipedia/de/thumb/e/e8/Hochschule_Muenchen_Logo.svg/320px-Hochschule_Muenchen_Logo.svg.png" alt="HS München" style="width:200px;height:90px;"> </div>
+        <h2>WI-Quest</h2>
+        <h3><small>Studien-Orientierungstest für den Bachelorstudiengang Wirtschaftsingenieurwesen an der Hochschule München</small></h3>
+        <h4>Kontakt</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-offset-3 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Kontakt</h4>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <fieldset>
+                        @Html.ValidationSummary()
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Subject, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Body, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(m => m.Body, new { @class = "form-control", rows = "10" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Senden" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>
