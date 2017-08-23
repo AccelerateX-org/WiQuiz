@@ -10,7 +10,7 @@ platform:
   - Any CPU
 
 install:
-    - ps: Invoke-WebRequest https://cakebuild.net/download/bootstrapper/windows -OutFile build.ps1
+    - ps: Invoke-WebRequest https://raw.githubusercontent.com/cake-build/resources/master/build.ps1 -OutFile build.ps1
 
 build_script:
     - ps: .\build.ps1
