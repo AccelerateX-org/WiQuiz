@@ -45,7 +45,6 @@ buildSettings.WithProperty("OctoPackPackageVersion", version);
 
 Setup(context =>
 {
-	Information("1");
 	Information(Figlet("WiQuiz"));
 
 	Information(isAppVeyorBuild);
