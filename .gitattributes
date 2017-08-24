@@ -61,3 +61,42 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# override vendor file recognition by Linguist
+###############################################################################
+
+# DataTables
+Sources/WiQuest/WiQuest.Web/Scripts/DataTables/* linguist-vendored
+Sources/WiQuest/WiQuest.Web/Content/DataTables/* linguist-vendored
+
+# AngularJs
+angular-*.js linguist-vendored
+Sources/WiQuest/WiQuest.Web/Scripts/i18n/* linguist-vendored
+Sources/WiQuest/WiQuest.Web/Scripts/errors.json linguist-vendored
+Sources/WiQuest/WiQuest.Web/Scripts/version.json linguist-vendored
+
+# jQuery
+jquery*.js linguist-vendored
+jquery*.css linguist-vendored
+Sources/WiQuest/WiQuest.Web/Scripts/jquery-*.js linguist-vendored
+
+# Modernizer
+modernizr*.js linguist-vendored
+
+# Respond
+respond*.js linguist-vendored
+
+# Bootstrap
+Sources/WiQuest/WiQuest.Web/Scripts/bootstrap*.js linguist-vendored
+
+# Fonts
+Sources/WiQuest/WiQuest.Web/fonts/* linguist-vendored
+
+# Rotativa 
+Sources/WiQuest/WiQuest.Web/Rotativa/* linguist-vendored
+
+# Misc
+Sources/WiQuest/WiQuest.Web/Content/themes/* linguist-vendored
+Sources/WiQuest/WiQuest.Web/Content/font*.css linguist-vendored
+Sources/WiQuest/WiQuest.Web/Content/bootstrap*.css linguist-vendored
