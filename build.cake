@@ -45,7 +45,6 @@ buildSettings.WithProperty("OctoPackPackageVersion", version);
 
 Setup(context =>
 {
-	Information("1");
 	Information(Figlet("WiQuiz"));
 
 	Information(isAppVeyorBuild);
@@ -70,6 +69,18 @@ Task("Restore-NuGet-Packages")
 		NuGetRestore(solutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
 	}
 );
+
+Task("Version")
+    .Does(() => {
+		if (!isLocal) {
+			GitVersion(new GitVersionSettings {
+            	//UpdateAssemblyInfo = true,
+            	OutputType = GitVersionOutput.BuildServer
+        	});
+		}
+    }
+);
+
 /*
 Task("Copy-NuGet-Packages")
 	.Does(() => 
@@ -80,6 +91,7 @@ Task("Copy-NuGet-Packages")
 );*/
 
 Task("Build")
+	.IsDependentOn("Version")
 	.IsDependentOn("Restore-NuGet-Packages")
 	.Does(() => 
 	{
