@@ -39,6 +39,9 @@ if (isAppVeyorBuild)
 buildSettings.WithProperty("RunOctoPack", "true");
 buildSettings.WithProperty("OctoPackPackageVersion", version);
 
+var OCTO_URL = "http://5.175.5.136";
+var OCTO_API_KEY = EnvironmentVariable("OCTO_API_KEY");
+
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,7 +53,6 @@ Setup(context =>
 	Information(isAppVeyorBuild);
 	Information(isLocal);
 	Information(version);
-	Information(EnvironmentVariable("OCTO_API_KEY"));
 });
 
 Teardown(context =>
@@ -130,12 +132,11 @@ Task("Octopus-Push")
 	.Does(() => 
 	{
 		Information("Octopus-Push");
-		/*if (isLocal) {
-			OctoPush("http://5.175.5.136", "API-I0W8QIDB8FDLWEELZ1CUNTPEROK", new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg"),
-      			new OctopusPushSettings {
-        			ReplaceExisting = true
-      		});
-		}*/
+		OctoPush(OCTO_URL, OCTO_API_KEY, new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg"),
+      		new OctopusPushSettings {
+        		ReplaceExisting = true
+      		}
+		);
 	}
 );
 
