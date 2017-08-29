@@ -9,6 +9,10 @@ image: Visual Studio 2017
 platform:
   - Any CPU
 
+environment:
+  OCTO_API_KEY:
+    secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
+
 install:
     - ps: .\obtain_cake.ps1
         

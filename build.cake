@@ -15,7 +15,7 @@ var version =  EnvironmentVariable("APPVEYOR_BUILD_VERSION");
 
 if (isLocal) 
 {
-	version = "1.0.112";
+	version = "0.0.1";
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,6 +50,7 @@ Setup(context =>
 	Information(isAppVeyorBuild);
 	Information(isLocal);
 	Information(version);
+	Information(EnvironmentVariable("OCTO_API_KEY"));
 });
 
 Teardown(context =>
@@ -129,12 +130,12 @@ Task("Octopus-Push")
 	.Does(() => 
 	{
 		Information("Octopus-Push");
-		if (isLocal) {
-			OctoPush("http://192.168.2.240", "API-T5HX0K7HBUOQKMFBR2KTTK4", new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg"),
+		/*if (isLocal) {
+			OctoPush("http://5.175.5.136", "API-I0W8QIDB8FDLWEELZ1CUNTPEROK", new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg"),
       			new OctopusPushSettings {
         			ReplaceExisting = true
       		});
-		}
+		}*/
 	}
 );
 
@@ -143,13 +144,17 @@ Task("Octopus-Release")
 	.Does(() => 
 	{
 		Information("Octopus-Release");
-		if (isLocal) {
+		/*if (isLocal) {
 			OctoCreateRelease(projectName, new CreateReleaseSettings {
         		Server = "http://192.168.2.240",
         		ApiKey = "API-T5HX0K7HBUOQKMFBR2KTTK4",
-        		ReleaseNumber = version
+        		ReleaseNumber = version,
+				Packages = new Dictionary<string, string>
+                     {
+                         { "WiQuiz", version }
+                     },
       		});
-		}
+		}*/
 	}
 );
 
@@ -158,11 +163,11 @@ Task("Octopus-Deploy")
 	.Does(() => 
 	{
 		Information("Octopus-Deploy");
-		if (isLocal) {
+		/*if (isLocal) {
 			 OctoDeployRelease("http://192.168.2.240", "API-T5HX0K7HBUOQKMFBR2KTTK4", projectName, "Testing", version, new OctopusDeployReleaseDeploymentSettings {
          		ShowProgress = true,
     		 });
-		}
+		}*/
 	}
 );
 
