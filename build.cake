@@ -39,7 +39,7 @@ if (isAppVeyorBuild)
 buildSettings.WithProperty("RunOctoPack", "true");
 buildSettings.WithProperty("OctoPackPackageVersion", version);
 
-var OCTO_URL = "http://5.175.5.136";
+var OCTO_URL = "https://cd.acceleratex.org/octopus/";
 var OCTO_API_KEY = EnvironmentVariable("OCTO_API_KEY");
 
 ///////////////////////////////////////////////////////////////////////////////
