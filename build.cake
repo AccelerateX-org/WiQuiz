@@ -75,9 +75,6 @@ Task("Version")
             	UpdateAssemblyInfo = true,
             	OutputType = GitVersionOutput.BuildServer
         	});
-			version = EnvironmentVariable("GitVersion_FullSemVer");
-
-			Information("Version: " + version);
 		}
     }
 );
@@ -97,7 +94,7 @@ Task("Build")
 	.Does(() => 
 	{
 		Information("Building Solution");	
-		buildSettings.WithProperty("OctoPackPackageVersion", version);
+		buildSettings.WithProperty("OctoPackPackageVersion", EnvironmentVariable("GitVersion_GitVersion_SemVer");
 		MSBuild(solutionPath, buildSettings);
 	}
 );
@@ -131,7 +128,7 @@ Task("Octopus-Push")
 	.Does(() => 
 	{
 		Information("Octopus-Push");
-		OctoPush(OCTO_URL, OCTO_API_KEY, new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg"),
+		OctoPush(OCTO_URL, OCTO_API_KEY, new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + EnvironmentVariable("GitVersion_GitVersion_SemVer") + ".nupkg"),
       		new OctopusPushSettings {
         		ReplaceExisting = true
       		}
