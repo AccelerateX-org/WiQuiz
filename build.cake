@@ -79,10 +79,8 @@ Task("Version")
             	UpdateAssemblyInfo = true,
             	OutputType = GitVersionOutput.BuildServer
         	});
-		}
-			
+		}	
 		versionInfo = GitVersion(new GitVersionSettings{ OutputType = GitVersionOutput.Json });
-
 		Information("Version: " + versionInfo.SemVer);			
     }
 );
