@@ -22,9 +22,6 @@ namespace WIQuest.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<QuestDbContext, Migrations.Configuration>());
-
             log4net.Config.XmlConfigurator.Configure();
 
             Database.SetInitializer(new CreateDatabaseIfNotExists<LogDbContext>());
@@ -42,14 +39,14 @@ namespace WIQuest.Web
                 db.Log.Add(log);
                 db.SaveChanges();
             }
-            
 
-
-            // bei jedem Start der Anwendung wird die Datenbank neu angelegt
-            /*
+#if DEBUG
             var path = Server.MapPath("~/images");
             Database.SetInitializer(new TestDataInitializer(path));
-             */
+#else
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<QuestDbContext, Migrations.Configuration>());                  
+#endif
+
         }
     }
 }

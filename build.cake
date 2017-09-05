@@ -28,7 +28,7 @@ var parentSolutionPath = File("./WIQuest.sln");
 var buildSettings = new MSBuildSettings 
 		{
 			Verbosity = Verbosity.Minimal,
-			Configuration = "Release",
+			Configuration = "Debug",
 			DetailedSummary = true
 		};
 buildSettings.WithTarget("Build");
