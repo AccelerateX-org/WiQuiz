@@ -94,7 +94,7 @@ Task("Build")
 	.Does(() => 
 	{
 		Information("Building Solution");	
-		buildSettings.WithProperty("OctoPackPackageVersion", EnvironmentVariable("GitVersion_GitVersion_SemVer");
+		buildSettings.WithProperty("OctoPackPackageVersion", EnvironmentVariable("GitVersion_GitVersion_SemVer"));
 		MSBuild(solutionPath, buildSettings);
 	}
 );
