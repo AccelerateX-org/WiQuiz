@@ -19,7 +19,7 @@ namespace WIQuest.Web
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
-                AuthorizationFilters = new[] { new HangFireAuthFilter() }
+                Authorization = new[] { new HangFireAuthFilter() }
             });
 
 
