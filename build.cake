@@ -1,5 +1,6 @@
 #tool "nuget:?package=OctopusTools"
 #addin nuget:?package=Cake.AppVeyor
+#tool "nuget:?package=GitVersion.CommandLine"
 #addin "Cake.Figlet"
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
