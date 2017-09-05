@@ -11,7 +11,7 @@ var isAppVeyorBuild = AppVeyor.IsRunningOnAppVeyor;
 var isLocal = BuildSystem.IsLocalBuild;
 
 var projectName = "WiQuiz";
-var version =  EnvironmentVariable("APPVEYOR_BUILD_VERSION");
+var version =  "";
 
 if (isLocal) 
 {
@@ -37,7 +37,6 @@ if (isAppVeyorBuild)
 	buildSettings.WithLogger("C:/Program Files/AppVeyor/BuildAgent/Appveyor.MSBuildLogger.dll");
 }
 buildSettings.WithProperty("RunOctoPack", "true");
-buildSettings.WithProperty("OctoPackPackageVersion", version);
 
 var OCTO_URL = "https://cd.acceleratex.org/octopus/";
 var OCTO_API_KEY = EnvironmentVariable("OCTO_API_KEY");
@@ -77,9 +76,10 @@ Task("Version")
     .Does(() => {
 		if (!isLocal) {
 			GitVersion(new GitVersionSettings {
-            	//UpdateAssemblyInfo = true,
+            	UpdateAssemblyInfo = true,
             	OutputType = GitVersionOutput.BuildServer
         	});
+			version = EnvironmentVariable("APPVEYOR_BUILD_VERSION");
 		}
     }
 );
@@ -99,6 +99,7 @@ Task("Build")
 	.Does(() => 
 	{
 		Information("Building Solution");	
+		buildSettings.WithProperty("OctoPackPackageVersion", version);
 		MSBuild(solutionPath, buildSettings);
 	}
 );
