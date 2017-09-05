@@ -76,6 +76,8 @@ Task("Version")
             	OutputType = GitVersionOutput.BuildServer
         	});
 			version = EnvironmentVariable("GitVersion_FullSemVer");
+
+			Information("Version: " + version);
 		}
     }
 );
