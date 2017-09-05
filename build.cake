@@ -48,10 +48,6 @@ var OCTO_API_KEY = EnvironmentVariable("OCTO_API_KEY");
 Setup(context =>
 {
 	Information(Figlet("WiQuiz"));
-
-	Information(isAppVeyorBuild);
-	Information(isLocal);
-	Information(version);
 });
 
 Teardown(context =>
@@ -79,7 +75,7 @@ Task("Version")
             	UpdateAssemblyInfo = true,
             	OutputType = GitVersionOutput.BuildServer
         	});
-			version = EnvironmentVariable("APPVEYOR_BUILD_VERSION");
+			version = EnvironmentVariable("GitVersion_FullSemVer");
 		}
     }
 );
