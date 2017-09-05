@@ -42,6 +42,8 @@ buildSettings.WithProperty("RunOctoPack", "true");
 var OCTO_URL = "https://cd.acceleratex.org/octopus/";
 var OCTO_API_KEY = EnvironmentVariable("OCTO_API_KEY");
 
+GitVersion versionInfo = null;
+
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,12 +73,12 @@ Task("Restore-NuGet-Packages")
 
 Task("Version")
     .Does(() => {
-		if (!isLocal) {
-			GitVersion(new GitVersionSettings {
-            	UpdateAssemblyInfo = true,
-            	OutputType = GitVersionOutput.BuildServer
-        	});
-		}
+			versionInfo = GitVersion(new GitVersionSettings {
+            				UpdateAssemblyInfo = true
+            				/*OutputType = GitVersionOutput.BuildServer*/
+        				});
+
+			Information("Version: " + versionInfo.FullSemVer);			
     }
 );
 
@@ -95,7 +97,7 @@ Task("Build")
 	.Does(() => 
 	{
 		Information("Building Solution");	
-		buildSettings.WithProperty("OctoPackPackageVersion", EnvironmentVariable("GitVersion_SemVer"));
+		buildSettings.WithProperty("OctoPackPackageVersion", versionInfo.FullSemVer);
 		MSBuild(solutionPath, buildSettings);
 	}
 );
@@ -129,7 +131,7 @@ Task("Octopus-Push")
 	.Does(() => 
 	{
 		Information("Octopus-Push");
-		OctoPush(OCTO_URL, OCTO_API_KEY, new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + EnvironmentVariable("GitVersion_SemVer") + ".nupkg"),
+		OctoPush(OCTO_URL, OCTO_API_KEY, new FilePath("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + versionInfo.FullSemVer + ".nupkg"),
       		new OctopusPushSettings {
         		ReplaceExisting = true
       		}
@@ -176,7 +178,7 @@ Task("Upload-Artifacts")
 		Information("Upload-Artifacts");	
 		if (isAppVeyorBuild)
 		{
-			AppVeyor.UploadArtifact("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + version + ".nupkg");
+			AppVeyor.UploadArtifact("./Sources/WiQuest/WIQuest.Web/obj/octopacked/WiQuiz." + versionInfo.FullSemVer + ".nupkg");
 		}
 		//AppVeyor.UploadArtifact("./nuget/" + projectName + "." + version + ".nupkg");
 	}
