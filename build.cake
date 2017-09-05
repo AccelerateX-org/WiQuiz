@@ -73,12 +73,17 @@ Task("Restore-NuGet-Packages")
 
 Task("Version")
     .Does(() => {
-			versionInfo = GitVersion(new GitVersionSettings {
-            				UpdateAssemblyInfo = true
-            				/*OutputType = GitVersionOutput.BuildServer*/
-        				});
+		if (isAppVeyorBuild)
+		{
+			GitVersion(new GitVersionSettings{
+            	UpdateAssemblyInfo = true,
+            	OutputType = GitVersionOutput.BuildServer
+        	});
+		}
+			
+		versionInfo = GitVersion(new GitVersionSettings{ OutputType = GitVersionOutput.Json });
 
-			Information("Version: " + versionInfo.SemVer);			
+		Information("Version: " + versionInfo.SemVer);			
     }
 );
 
