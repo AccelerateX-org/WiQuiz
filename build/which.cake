@@ -12,7 +12,7 @@ public class WhichCake {
     {
         if (ctx == null)
         {
-            throw new ArgumentNullException("Missing context @ WhichCake");
+            throw new ArgumentNullException("Missing context @ WhichCake.getVersion");
         }
 
         string version = null;
