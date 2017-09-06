@@ -1,7 +1,9 @@
+#tool "nuget:?package=xunit.runner.console"
 #tool "nuget:?package=OctopusTools"
 #addin nuget:?package=Cake.AppVeyor
 #tool "nuget:?package=GitVersion.CommandLine"
 #addin "Cake.Figlet"
+
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
@@ -13,6 +15,8 @@ var isLocal = BuildSystem.IsLocalBuild;
 
 var projectName = "WiQuiz";
 var version =  "";
+
+var buildConfiguration = "Debug";
 
 if (isLocal) 
 {
@@ -29,7 +33,7 @@ var parentSolutionPath = File("./WIQuest.sln");
 var buildSettings = new MSBuildSettings 
 		{
 			Verbosity = Verbosity.Minimal,
-			Configuration = "Debug",
+			Configuration = buildConfiguration,
 			DetailedSummary = true
 		};
 buildSettings.WithTarget("Build");
@@ -67,7 +71,7 @@ Task("Restore-NuGet-Packages")
 	{
 		Information("Restore-NuGet-Packages");	
 		NuGetRestore(parentSolutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
-		NuGetRestore(solutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
+		//NuGetRestore(solutionPath, new NuGetRestoreSettings { Verbosity = NuGetVerbosity.Normal });
 	}
 );
 
@@ -105,8 +109,20 @@ Task("Build")
 	}
 );
 
+Task("Test")
+	.IsDependentOn("Restore-NuGet-Packages")
+	.IsDependentOn("Build")
+	.Does(() => 
+	{
+		Information("Testing Solution");
+		var testAssemblies = GetFiles("./Sources/WiQuest/**/bin/" + buildConfiguration + "/*.Test.dll");
+		XUnit2(testAssemblies);
+	}
+);
+
 Task("Packaging")
 	.IsDependentOn("Build")
+	.IsDependentOn("Test")
 	.Does(() => 
 	{
 		Information("Packaging");	
