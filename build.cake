@@ -147,6 +147,7 @@ Task("Packaging")
 
 Task("Octopus-Push")
 	.IsDependentOn("Build")
+	.IsDependentOn("Test")
 	.Does(() => 
 	{
 		Information("Octopus-Push");
