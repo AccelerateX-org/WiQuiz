@@ -17,12 +17,12 @@ install:
     - ps: .\obtain_cake.ps1
         
 build_script:
-    - ps: .\build.ps1
+    - ps: .\build.ps1 -Target "Default" -Configuration "Debug"
 
 test: off
 
 cache:
-    -  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    #-  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
     -  .\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
 
 notifications:

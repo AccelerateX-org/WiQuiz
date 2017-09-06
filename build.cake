@@ -1,14 +1,144 @@
-#tool "nuget:?package=xunit.runner.console"
-#tool "nuget:?package=OctopusTools"
-#addin nuget:?package=Cake.AppVeyor
-#tool "nuget:?package=GitVersion.CommandLine"
-#addin "Cake.Figlet"
-
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
+var configuration = Argument("configuration", "Debug");
+
+//////////////////////////////////////////////////////////////////////
+// TOOLS / ADDINS
+//////////////////////////////////////////////////////////////////////
+
+#tool "nuget:?package=xunit.runner.console"
+#tool "nuget:?package=OctopusTools"
+#tool "nuget:?package=GitVersion.CommandLine"
+
+#addin "Cake.Figlet"
+
+//////////////////////////////////////////////////////////////////////
+// EXTERNAL SCRIPTS
+//////////////////////////////////////////////////////////////////////
+
+#load "./build/cheese.cake"
+
+///////////////////////////////////////////////////////////////////////////////
+// GLOBAL VARIABLES
+///////////////////////////////////////////////////////////////////////////////
+
+// Local build flags
+var runMode = RunMode.Debug;
+var localBuildConfiguration = "Debug";
+
+var projectName = "WiQuiz";
+var solutionPath = File("./WIQuest.sln");
+var solution = ParseSolution(solutionPath);
+var projects = solution.Projects;
+
+// Get some nice cheese cake
+CheeseCake parameters = CheeseCake.getRecipe(Context, BuildSystem, runMode);
+
+var buildSettings = new MSBuildSettings 
+	{
+		Verbosity = (parameters.Mode == RunMode.Debug ? Verbosity.Minimal : Verbosity.Quiet),
+		Configuration = parameters.Configuration,
+		DetailedSummary = true
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// SETUP / TEARDOWN
+///////////////////////////////////////////////////////////////////////////////
+
+Setup(context =>
+{
+	Information(Figlet(projectName));
+	
+	if (parameters.IsLocalBuild) {
+		Information("This is a local build! Build configuration was automatically set from {0} to {1} \n", parameters.Configuration, localBuildConfiguration);
+		parameters.setConfiguration(localBuildConfiguration);
+	}
+
+	parameters.BuildSettings.Configuration = parameters.Configuration;
+
+	parameters.setBuildVersion(WhichCake.getVersion(Context, parameters: parameters));
+
+	Information("\nBuilding version {0} of {1} (Configuration: {2}, Target: {3}) using version {4} of Cake.",
+    	parameters.BuildVersion.SemVersion,
+        projectName,
+		parameters.Configuration,
+        parameters.Target,
+        parameters.CakeVersion
+	);
+});
+
+Teardown(context =>
+{
+    Information("Finished running tasks.");
+});		
+
+
+///////////////////////////////////////////////////////////////////////////////
+// TASKS
+///////////////////////////////////////////////////////////////////////////////
+
+Task("Clean-Output-Directories")
+    .Does(() =>
+{
+	foreach(var project in projects) {
+		
+		if (project.Type != "{2150E333-8FDC-42A3-9474-1A3956D46DE8}") {
+			
+			Information("Cleaning {0} @ {1}", project.Path, parameters.Configuration);
+			
+			var dir = project.Path.GetDirectory();
+			CleanDirectories(dir + "/bin/" + parameters.Configuration);
+			CleanDirectories(dir + "/obj/" + parameters.Configuration);
+		
+		}
+	}
+});
+
+Task("Restore-NuGet-Packages")
+	.Does(() => 
+	{
+		NuGetRestore(solutionPath, new NuGetRestoreSettings 
+		{ 
+			Verbosity = (parameters.Mode == RunMode.Debug ? NuGetVerbosity.Normal : NuGetVerbosity.Quiet)  
+		});
+	}
+);
+
+Task("PreBuild-For-Testing")
+	.IsDependentOn("Clean-Output-Directories")
+	.IsDependentOn("Restore-NuGet-Packages")
+	.Does(() => 
+	{	
+		MSBuild(solutionPath, parameters.BuildSettings);		
+	}
+);
+
+Task("Run-Unit-Tests")
+	.IsDependentOn("PreBuild-For-Testing")
+	.Does(() => 
+	{
+		var testAssemblies = GetFiles("./Sources/WiQuest/**/bin/" + parameters.Configuration + "/*.Test.dll");
+		XUnit2(testAssemblies);
+	}
+);
+
+Task("Default")
+    .IsDependentOn("Run-Unit-Tests");
+
+/*Task("AppVeyor")
+    .IsDependentOn("Clean");*/
+
+RunTarget(target);
+
+/*
+
+///////////////////////////////////////////////////////////////////////////////
+// ARGUMENTS
+///////////////////////////////////////////////////////////////////////////////
+
 
 var isAppVeyorBuild = AppVeyor.IsRunningOnAppVeyor;
 var isLocal = BuildSystem.IsLocalBuild;
@@ -98,7 +228,7 @@ Task("Copy-NuGet-Packages")
 	}
 );*/
 
-
+/*
 Task("Build")
 	.IsDependentOn("Version")
 	.IsDependentOn("Restore-NuGet-Packages")
@@ -116,7 +246,7 @@ Task("Test")
 	.Does(() => 
 	{
 		Information("Testing Solution");
-		var testAssemblies = GetFiles("./Sources/WiQuest/**/bin/" + buildConfiguration + "/*.Test.dll");
+		var testAssemblies = GetFiles("./Sources/WiQuest/**bin/" + buildConfiguration + "/*.Test.dll");
 		XUnit2(testAssemblies);
 	}
 );
@@ -142,7 +272,7 @@ Task("Packaging")
             OutFolder = "./octopacked/",
             BasePath = "./",
             Overwrite = true,
-        });*/
+        });
 	}
 );
 
@@ -175,7 +305,7 @@ Task("Octopus-Release")
                          { "WiQuiz", version }
                      },
       		});
-		}*/
+		}
 	}
 );
 
@@ -188,7 +318,7 @@ Task("Octopus-Deploy")
 			 OctoDeployRelease("http://192.168.2.240", "API-T5HX0K7HBUOQKMFBR2KTTK4", projectName, "Testing", version, new OctopusDeployReleaseDeploymentSettings {
          		ShowProgress = true,
     		 });
-		}*/
+		}
 	}
 );
 
@@ -208,4 +338,4 @@ Task("Upload-Artifacts")
 Task("Default")
 	.IsDependentOn("Upload-Artifacts");
 
-RunTarget(target);
+RunTarget(target);*/
