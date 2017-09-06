@@ -98,6 +98,7 @@ Task("Copy-NuGet-Packages")
 	}
 );*/
 
+
 Task("Build")
 	.IsDependentOn("Version")
 	.IsDependentOn("Restore-NuGet-Packages")
@@ -105,7 +106,7 @@ Task("Build")
 	{
 		Information("Building Solution");	
 		buildSettings.WithProperty("OctoPackPackageVersion", versionInfo.SemVer);
-		MSBuild(solutionPath, buildSettings);
+		MSBuild(parentSolutionPath, buildSettings);
 	}
 );
 
