@@ -195,7 +195,7 @@ Task("Upload-Coverage")
 });
 
 Task("Clean-Output-Directories")
-	.IsDependentOn("Run-Unit-Tests")
+	.IsDependentOn("Upload-Coverage")
 	.Does(() => 
 	{
 		KitchenAid.cleanOutputDirectories(Context, parameters, projects);
@@ -335,7 +335,6 @@ Task("Default")
 
 Task("AppVeyor")
 	.IsDependentOn("Deploy-Package")
-	.IsDependentOn("Upload-Coverage");
     .IsDependentOn("Upload-Artifacts");
 
 RunTarget(target);
