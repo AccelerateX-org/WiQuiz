@@ -27,6 +27,7 @@ public class CheeseCake
     public string PackageFile { get; private set; }
 
     // Git Information
+    public ScmRepository Repository { get; private set; }
     public ICollection<GitCommit> GitLog { get; private set; }
     public int GitLogDepth { get; private set; }
     public bool IsPullRequest { get; private set; }
@@ -90,19 +91,37 @@ public class CheeseCake
         BuildVersion = version;
     }
 
+    public void setRepository(ScmRepository rep) {
+        Repository = rep;
+    }
+
     public void setGitLog(int depth) 
     {
         GitLogDepth = depth;
         GitLog = _context.GitLog("./", depth);
     }
 
-    public string parseGitLog() 
+    public string parseGitLog(NoteFormat format) 
     {
-        var log = string.Format("Change History: Last {0} Commit(s)\n\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
-        foreach (var item in GitLog)
+        var log = "";
+
+        if (format == NoteFormat.Plain)
         {
-            log += string.Format("Sha: {0} - {1} ({2}) - {3} \n", item.Sha, item.Author.Name, item.Author.Email, item.Author.When);
-            log += "\t - " + item.MessageShort + " \n\n";
+            log += string.Format("Change History: Last {0} Commit(s)\n\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
+            foreach (var item in GitLog)
+            {
+                log += string.Format("Sha: {0} - {1} ({2}) - {3} - {4} \n", item.Sha, item.Author.Name, item.Author.Email, item.Author.When, item.MessageShort);
+            }
+        }
+
+        if (format == NoteFormat.Markdown) {
+            log += string.Format("### Change History: Last {0} Commit(s)\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
+            foreach (var item in GitLog)
+            {
+                log += string.Format("* __{0}__ (Commit: [{1}]({2}))\n", item.MessageShort, item.Sha, Repository.CommitUrl + item.Sha);  
+                log += string.Format("  * Author: {0} ([{1}](mailto:{1}))\n", item.Author.Name, item.Author.Email);
+                log += string.Format("  * Date: {0}\n", item.Author.When);
+            }            
         }
 
         return log;
@@ -140,6 +159,11 @@ public enum RunMode {
     Debug
 }
 
+public enum NoteFormat {
+    Plain,
+    Markdown
+}
+
 public class ApiCredentials
 {
     public string Url { get; private set; }
@@ -155,3 +179,16 @@ public class ApiCredentials
         Password = password;
     }
 }
+
+public class ScmRepository
+{
+    public string Url { get; private set; }
+    public string CommitUrl { get; private set; }
+
+    public ScmRepository(string url, string commitUrl)
+    {
+        Url = url;
+        CommitUrl = commitUrl;
+    }
+}
+

@@ -35,14 +35,15 @@ var runMode = RunMode.Debug;
 var localBuildConfiguration = "Debug";
 
 var projectName = "WiQuiz";
+var repositoryUrl = "https://github.com/AccelerateX-org/WiQuiz";
+var repositoryCommitUrl = "https://github.com/AccelerateX-org/WiQuiz/commit/";
+
 var solutionPath = File("./WIQuest.sln");
 var solution = ParseSolution(solutionPath);
 var projects = solution.Projects;
 
 var inputPath = "./Sources/WiQuest/WIQuest.Web/obj/octopacked";
 var outputPath = "./Output";
-
-var packageNotes = "";
 
 // Get some nice cheese cake
 CheeseCake parameters = CheeseCake.getRecipe(Context, BuildSystem, runMode);
@@ -74,8 +75,9 @@ Setup(context =>
 
 	parameters.setBuildVersion(WhichCake.getVersion(Context, parameters: parameters));
 
+	parameters.setRepository(new ScmRepository(repositoryUrl, repositoryCommitUrl));
+
 	parameters.setGitLog(depth: 10);
-	packageNotes = parameters.parseGitLog();
 
 	Information("\nBuilding version {0} of {1} (Configuration: {2}, Target: {3}) using version {4} of Cake.",
     	parameters.BuildVersion.SemVersion,
@@ -158,7 +160,7 @@ Task("Generate-Package-Notes")
 	{
 		var file = parameters.OutputPath + "/packagenotes.txt";
 		System.IO.File.Create(file).Dispose();
-		System.IO.File.WriteAllText(file, packageNotes);
+		System.IO.File.WriteAllText(file, parameters.parseGitLog(NoteFormat.Plain));
 	}
 );
 
@@ -238,7 +240,7 @@ Task("Create-Release-From-Package")
         	Server = parameters.OctopusDeploy.Url,
         	ApiKey = parameters.OctopusDeploy.ApiKey,
         	ReleaseNumber = parameters.BuildVersion.SemVersion,
-			ReleaseNotes = packageNotes,
+			ReleaseNotes = parameters.parseGitLog(NoteFormat.Markdown),
 			Packages = new Dictionary<string, string>
             {
                 { 
