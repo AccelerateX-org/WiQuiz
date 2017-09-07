@@ -107,7 +107,7 @@ public class CheeseCake
 
         if (format == NoteFormat.Plain)
         {
-            log += string.Format("Change History: Last {0} Commit(s)\n\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
+            log += string.Format("Changelog: Last {0} Commit(s)\n\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
             foreach (var item in GitLog)
             {
                 log += string.Format("Sha: {0} - {1} ({2}) - {3} - {4} \n", item.Sha, item.Author.Name, item.Author.Email, item.Author.When, item.MessageShort);
@@ -115,7 +115,7 @@ public class CheeseCake
         }
 
         if (format == NoteFormat.Markdown) {
-            log += string.Format("### Change History: Last {0} Commit(s)\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
+            log += string.Format("### Changelog: Last {0} Commit(s)\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
             foreach (var item in GitLog)
             {
                 log += string.Format("* __{0}__ (Commit: [{1}]({2}))\n", item.MessageShort, item.Sha, Repository.CommitUrl + item.Sha);  

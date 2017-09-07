@@ -9,11 +9,11 @@ public static class KitchenAid
 		
             if (project.Type != "{2150E333-8FDC-42A3-9474-1A3956D46DE8}") {
                 
-            ctx.Information("Cleaning {0} @ {1}", project.Path, parameters.Configuration);
+            ctx.Information("Cleaning {0}", project.Path);
                 
             var dir = project.Path.GetDirectory();
-            ctx.CleanDirectories(dir + "/bin/" + parameters.Configuration);
-            ctx.CleanDirectories(dir + "/obj/" + parameters.Configuration);
+            ctx.CleanDirectories(dir + "/bin");
+            ctx.CleanDirectories(dir + "/obj");
 		
 		    }
 	    }
