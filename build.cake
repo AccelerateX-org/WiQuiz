@@ -13,8 +13,11 @@ var configuration = Argument("configuration", "Debug");
 #tool "nuget:?package=ReportUnit"
 #tool "nuget:?package=OctopusTools"
 #tool "nuget:?package=GitVersion.CommandLine"
+#tool "nuget:?package=GitReleaseNotes"
 
 #addin "Cake.Figlet"
+#addin nuget:?package=Cake.Git
+
 
 //////////////////////////////////////////////////////////////////////
 // EXTERNAL SCRIPTS
@@ -38,6 +41,8 @@ var projects = solution.Projects;
 
 var inputPath = "./Sources/WiQuest/WIQuest.Web/obj/octopacked";
 var outputPath = "./Output";
+
+var packageNotes = null;
 
 // Get some nice cheese cake
 CheeseCake parameters = CheeseCake.getRecipe(Context, BuildSystem, runMode);
@@ -69,6 +74,9 @@ Setup(context =>
 
 	parameters.setBuildVersion(WhichCake.getVersion(Context, parameters: parameters));
 
+	parameters.setGitLog(depth: 10);
+	packageNotes = parameters.parseGitLog();
+
 	Information("\nBuilding version {0} of {1} (Configuration: {2}, Target: {3}) using version {4} of Cake.",
     	parameters.BuildVersion.SemVersion,
         projectName,
@@ -87,7 +95,7 @@ Teardown(context =>
 });		
 
 
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////-Notes/////////////////////////////////
 // TASKS
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -144,12 +152,60 @@ Task("Clean-Output-Directories")
 	}
 );
 
+Task("Generate-Package-Notes")
+	.IsDependentOn("Clean-Output-Directories")
+	.Does(() => 
+	{
+		var file = parameters.OutputPath + "/packagenotes.txt";
+		System.IO.File.Create(file).Dispose();
+		System.IO.File.WriteAllText(file, packageNotes);
+	}
+);
+
+Task("Generate-Release-Notes")
+	.IsDependentOn("Clean-Output-Directories")
+	.IsDependentOn("Generate-Package-Notes")
+	.Does(() => 
+	{
+			// Using GitReleaseNotes() fails with ErrorCode 2 -> Workaround; should be refactored
+			// Credit: https://github.com/mwhelan/Specify/blob/master/build.cake
+			// Credit: http://www.michael-whelan.net/continuous-delivery-github-cake-gittools-appveyor/
+			
+			var releaseNotesExitCode = StartProcess(@"tools\GitReleaseNotes\tools\gitreleasenotes.exe", 
+				new ProcessSettings 
+				{ 
+					Arguments = String.Format(". /OutputFile {0}/releasenotes.md /Version {1} /RepoBranch {2} /verbose /AllTags /AllLabels", 
+												parameters.OutputPath,
+												parameters.BuildVersion.SemVersion,
+												"build-delivery") 
+				});
+
+
+			/*var releaseNote = ParseReleaseNotes(outputPath + "/releasenotes.md");
+			Information("Version: {0}", releaseNote.Version);
+			foreach(var note in releaseNote.Notes)
+			{
+    			Information("\t{0}", note);
+			}*/
+	
+	/*if (string.IsNullOrEmpty(System.IO.File.ReadAllText("./artifacts/releasenotes.md")))
+		System.IO.File.WriteAllText("./artifacts/releasenotes.md", "No issues closed since last release");*/
+
+		if (releaseNotesExitCode != 0) 
+		{
+			throw new Exception("Failed to generate release notes");
+		}
+	}
+);
+
 Task("Build-Package")
 	.IsDependentOn("Clean-Output-Directories")
+	.IsDependentOn("Generate-Package-Notes")
 	.Does(() => 
 	{
 		parameters.BuildSettings.WithProperty("RunOctoPack", "true");
 		parameters.BuildSettings.WithProperty("OctoPackPackageVersion", parameters.BuildVersion.SemVersion);
+		parameters.BuildSettings.WithProperty("OctoPackReleaseNotesFile", "../../../" + parameters.OutputPath + "/packagenotes.txt");
 		
 		MSBuild(solutionPath, parameters.BuildSettings);
 		
@@ -182,6 +238,7 @@ Task("Create-Release-From-Package")
         	Server = parameters.OctopusDeploy.Url,
         	ApiKey = parameters.OctopusDeploy.ApiKey,
         	ReleaseNumber = parameters.BuildVersion.SemVersion,
+			ReleaseNotes = packageNotes,
 			Packages = new Dictionary<string, string>
             {
                 { 

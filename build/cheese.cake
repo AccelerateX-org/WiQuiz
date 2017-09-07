@@ -2,6 +2,8 @@
 
 public class CheeseCake 
 {
+    private ICakeContext _context;
+    
     // Mode
     public RunMode Mode { get; private set; }
 
@@ -25,6 +27,8 @@ public class CheeseCake
     public string PackageFile { get; private set; }
 
     // Git Information
+    public ICollection<GitCommit> GitLog { get; private set; }
+    public int GitLogDepth { get; private set; }
     public bool IsPullRequest { get; private set; }
 
     // Git Version
@@ -78,12 +82,30 @@ public class CheeseCake
     }
 
     public void setPackageFile(string project, string version) {
-        PackageFile = System.String.Format(PackageFilePattern, project, version);
+        PackageFile = String.Format(PackageFilePattern, project, version);
     }
     
     public void setBuildVersion(WhichCake version)
     {
         BuildVersion = version;
+    }
+
+    public void setGitLog(int depth) 
+    {
+        GitLogDepth = depth;
+        GitLog = _context.GitLog("./", depth);
+    }
+
+    public string parseGitLog() 
+    {
+        var log = string.Format("Change History: Last {0} Commit(s)\n\n", GitLog.Count() > 1 ? GitLog.Count().ToString() : "");
+        foreach (var item in GitLog)
+        {
+            log += string.Format("Sha: {0} - {1} ({2}) - {3} \n", item.Sha, item.Author.Name, item.Author.Email, item.Author.When);
+            log += "\t - " + item.MessageShort + " \n\n";
+        }
+
+        return log;
     }
     
     public static CheeseCake getRecipe(ICakeContext ctx, BuildSystem buildSystem, RunMode mode = RunMode.Production) 
@@ -94,6 +116,7 @@ public class CheeseCake
         }   
         
         return new CheeseCake {
+            _context = ctx,
             Mode = mode,
             Target = ctx.Argument("target", "default"),
             Configuration = ctx.Argument("configuration", "release"),
