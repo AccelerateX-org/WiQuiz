@@ -74,6 +74,9 @@ Setup(context =>
 	
 	EnsureDirectoryExists(outputPath);
 
+	// TODO: Refactor
+	EnsureDirectoryExists("./TestResults");
+
 	if (parameters.IsLocalBuild) {
 		Information("This is a local build! Build configuration was automatically set from {0} to {1} \n", parameters.Configuration, localBuildConfiguration);
 		parameters.setConfiguration(localBuildConfiguration);
