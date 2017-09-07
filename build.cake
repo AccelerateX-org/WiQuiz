@@ -190,8 +190,8 @@ Task("Upload-Coverage")
     );
 
     var settings = new CodecovSettings {
-        Files = new[] { "TestResults\coverage.xml" },
-        EnvironmentVariables = new Dictionary<string,string> { { "APPVEYOR_BUILD_VERSION", buildVersion } }
+        Files = new[] { "TestResults/coverage.xml" },
+        //EnvironmentVariables = new Dictionary<string,string> { { "APPVEYOR_BUILD_VERSION", buildVersion } }
     };
 	
 	Codecov(settings);
