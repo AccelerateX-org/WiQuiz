@@ -172,7 +172,7 @@ Task("Calculate-Coverage")
     	.WithFilter("+[WIQuest*]*")
     	.WithFilter("-[WIQuest*.Test]*"));
 
-		//Workaround
+		//Workaround - To be Removed
 		ReportGenerator("./TestResults/coverage.xml", "./TestResults");
 });
 
