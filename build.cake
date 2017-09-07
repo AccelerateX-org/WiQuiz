@@ -42,7 +42,7 @@ var projects = solution.Projects;
 var inputPath = "./Sources/WiQuest/WIQuest.Web/obj/octopacked";
 var outputPath = "./Output";
 
-var packageNotes = null;
+var packageNotes = "";
 
 // Get some nice cheese cake
 CheeseCake parameters = CheeseCake.getRecipe(Context, BuildSystem, runMode);
