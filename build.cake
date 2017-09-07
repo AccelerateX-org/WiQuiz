@@ -185,7 +185,7 @@ Task("Upload-Coverage")
         parameters.BuildVersion.SemVersion,
         BuildSystem.AppVeyor.Environment.Build.Version
     );
-	
+
     var settings = new CodecovSettings {
         Files = new[] { "coverage.xml" },
         EnvironmentVariables = new Dictionary<string,string> { { "APPVEYOR_BUILD_VERSION", buildVersion } }
@@ -335,6 +335,7 @@ Task("Default")
 
 Task("AppVeyor")
 	.IsDependentOn("Deploy-Package")
+	.IsDependentOn("Upload-Coverage");
     .IsDependentOn("Upload-Artifacts");
 
 RunTarget(target);
