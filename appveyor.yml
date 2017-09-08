@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.1.{build}
 
 #---------------------------------#
 #    environment configuration    #
@@ -14,16 +14,15 @@ environment:
     secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
         
 build_script:
-    - ps: .\build.ps1 -Target "AppVeyor" -Configuration "Debug"
+    - ps: .\build.ps1 -target "AppVeyor" -configuration "Debug"
 
 test: off
 
 cache:
-    #-  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
-    -  .\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
 
-notifications:
-  - provider: HipChat
-    auth_token:
-      secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
-    room: RPS-TestRoom
+#notifications:
+  #- provider: HipChat
+    #auth_token:
+      #secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
+    #room: RPS-TestRoom
