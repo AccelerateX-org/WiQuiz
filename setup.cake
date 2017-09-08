@@ -18,8 +18,6 @@ BuildParameters.SetParameters(context: Context,
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
-                            testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Test]*");
-
-BuildAdjustments.Set(context: Context);    
+                            testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]*");
 
 Build.Run();
