@@ -12,6 +12,7 @@ platform:
 environment:
   OCTO_API_KEY:
     secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
+  CODECOV_REPO_TOKEN: 88b2cef6-4771-46c3-87f8-61ea318bb925
         
 build_script:
     - ps: .\build.ps1 -target "AppVeyor" -configuration "Debug"
