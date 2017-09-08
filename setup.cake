@@ -5,7 +5,7 @@ Environment.SetVariableNames();
 BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Sources",
-                            title: "WiQuiz",
+                            title: "WIQuest",
                             repositoryOwner: "AccelerateX-org",
                             repositoryName: "WiQuiz",
                             appVeyorAccountName: "AccelerateX");
@@ -13,3 +13,5 @@ BuildParameters.SetParameters(context: Context,
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context);
+
+Build.Run();
