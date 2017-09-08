@@ -1,4 +1,4 @@
-version: 0.1.{build}
+version: 1.0.{build}
 
 #---------------------------------#
 #    environment configuration    #
@@ -19,7 +19,7 @@ build_script:
 test: off
 
 cache:
-    -  .Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
 
 #notifications:
   #- provider: HipChat
