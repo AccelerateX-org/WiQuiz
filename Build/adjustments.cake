@@ -34,11 +34,11 @@ public class BuildAdjustments
                 // Upload to AppVeyor if Build System
                 if(BuildParameters.IsRunningOnAppVeyor)
                 {
-                    if (FileExists(unitTestZip)) 
+                    if (_context.FileExists(unitTestZip)) 
                     {
                         _context.AppVeyor.UploadArtifact(unitTestZip);
                     }
-                    if (FileExists(codeCoverageZip)) 
+                    if (_context.FileExists(codeCoverageZip)) 
                     {
                         _context.AppVeyor.UploadArtifact(codeCoverageZip);
                     }
