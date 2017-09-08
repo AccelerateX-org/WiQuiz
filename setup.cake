@@ -14,4 +14,8 @@ BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context);
 
+BuildParameters.Tasks.DupFinderTask.ContinueOnError();
+BuildParameters.Tasks.InspectCodeTask.ContinueOnError();
+BuildParameters.Tasks.TestxUnitTask.ContinueOnError();
+
 Build.Run();

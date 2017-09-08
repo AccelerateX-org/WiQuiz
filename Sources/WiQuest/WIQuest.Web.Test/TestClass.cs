@@ -3,7 +3,7 @@ using System.Linq;
 using Xunit;
 using WIQuest.Web.Utils;
 
-namespace WIQuest.Web.Test
+namespace WIQuest.Web.Tests
 {
     public class TestClass
     {

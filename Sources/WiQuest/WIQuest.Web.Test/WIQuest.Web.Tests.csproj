@@ -7,8 +7,8 @@
     <ProjectGuid>{D787B71A-8FD7-46F7-94DB-D8BA5090F358}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WIQuest.Web.Test</RootNamespace>
-    <AssemblyName>WIQuest.Web.Test</AssemblyName>
+    <RootNamespace>WIQuest.Web.Tests</RootNamespace>
+    <AssemblyName>WIQuest.Web.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
