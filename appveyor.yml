@@ -12,9 +12,6 @@ platform:
 environment:
   OCTO_API_KEY:
     secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
-
-install:
-    - ps: .\build\update_cake.ps1
         
 build_script:
     - ps: .\build.ps1 -Target "AppVeyor" -Configuration "Debug"
