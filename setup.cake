@@ -9,12 +9,12 @@ BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Sources",
                             title: "WIQuest",
-                            repositoryOwner: "AccelerateX-org",
+                            repositoryOwner: "wpankratz",
                             repositoryName: "WiQuiz",
-                            appVeyorAccountName: "AccelerateX",
+                            appVeyorAccountName: "wpankratz",
                             shouldRunDupFinder: false,
                             shouldRunInspectCode: false);
-
+                            
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
