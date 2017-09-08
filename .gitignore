@@ -253,3 +253,4 @@ paket-files/
 
 # Cake Build Tool folder
 tools/
+BuildArtifacts/

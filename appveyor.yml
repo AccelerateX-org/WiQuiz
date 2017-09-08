@@ -9,20 +9,21 @@ image: Visual Studio 2017
 platform:
   - Any CPU
 
-install:
-    - ps: .\obtain_cake.ps1
+environment:
+  OCTO_API_KEY:
+    secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
+  CODECOV_REPO_TOKEN: 88b2cef6-4771-46c3-87f8-61ea318bb925
         
 build_script:
-    - ps: .\build.ps1
+    - ps: .\build.ps1 -target "AppVeyor" -configuration "Debug"
 
 test: off
 
 cache:
-    -  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
-    -  .\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
 
-notifications:
-  - provider: HipChat
-    auth_token:
-      secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
-    room: RPS-TestRoom
+#notifications:
+  #- provider: HipChat
+    #auth_token:
+      #secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
+    #room: RPS-TestRoom
