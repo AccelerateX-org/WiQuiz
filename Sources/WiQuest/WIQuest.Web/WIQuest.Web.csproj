@@ -647,7 +647,6 @@
     <Content Include="Areas\Admin\Views\Question\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Question\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Question\Index.cshtml" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Areas\Admin\Views\Answer\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Answer\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Answer\Details.cshtml" />
@@ -662,7 +661,6 @@
     <Content Include="Areas\Quest\Views\Quiz\Index.cshtml" />
     <Content Include="Areas\Quest\Views\Quiz\_Question.cshtml" />
     <Content Include="Areas\Quest\Views\Quiz\_EndOfQuiz.cshtml" />
-    <Content Include="ClassDiagram2.cd" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />

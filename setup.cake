@@ -1,4 +1,5 @@
 #load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease"
+#load "./Build/targets.cake"
 #load "./Build/adjustments.cake"
 #load "./Build/package.cake"
 #load "./Build/deploy.cake"
@@ -19,5 +20,7 @@ BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]*");
+
+ScmRepository.setRepositoryDetails();                          
 
 Build.Run();

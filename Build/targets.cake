@@ -1,6 +1,6 @@
 Task("Developer-Build")
     .IsDependentOn("Build")
-    .IsDependentOn("Test")
-    .IsDependentOn("AppVeyor");
+    .IsDependentOn("Test-xUnit")
+    .IsDependentOn("Octopus-Packaging");
 
 

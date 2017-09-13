@@ -35,11 +35,14 @@ BuildParameters.Tasks.TestxUnitTask
         Zip(codeCoverageReport, codeCoverageZip);
 
         // Upload to AppVeyor if Build System
-        if (BuildParameters.IsRunningOnAppVeyor) {
-            if (FileExists(unitTestZip)) {
+        if (BuildParameters.IsRunningOnAppVeyor) 
+        {
+            if (FileExists(unitTestZip)) 
+            {
                 AppVeyor.UploadArtifact(unitTestZip);
             }
-            if (FileExists(codeCoverageZip)) {
+            if (FileExists(codeCoverageZip)) 
+            {
                 AppVeyor.UploadArtifact(codeCoverageZip);
             }
         }
