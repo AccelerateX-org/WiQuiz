@@ -21,6 +21,7 @@ BuildParameters.PrintParameters(Context);
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]*");
 
-ScmRepository.setRepositoryDetails();                          
+ScmRepository.SetRepositoryDetails();
+RpsApi.SetCredentials(Context);
 
 Build.Run();

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Octopus Deployment Package via MSBuild Task
+// Octopus Deploy - Package via MSBuild Task
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Pre-Package-CleanUp")
@@ -80,6 +80,7 @@ Task("Build-Package")
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Octopus-Packaging")
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
     .IsDependentOn("Build-Package");
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -124,7 +125,7 @@ public static class ScmRepository
     public static string Url { get; private set; }
     public static string CommitUrl { get; private set; }
 
-    public static void setRepositoryDetails() {
+    public static void SetRepositoryDetails() {
 		Url = string.Format("https://github.com/{0}/{1}", BuildParameters.RepositoryOwner, BuildParameters.RepositoryName);
 		CommitUrl = Url + "/commit/";
 	}

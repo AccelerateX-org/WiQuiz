@@ -10,9 +10,10 @@ platform:
   - Any CPU
 
 environment:
+  OCTO_URL: https://cd.acceleratex.org/octopus
   OCTO_API_KEY:
-    secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
-  CODECOV_REPO_TOKEN: 88b2cef6-4771-46c3-87f8-61ea318bb925
+    secure: sAYNDdEDWd7zvV2sA8Zd5c0uj03QOfOYMFMJ3R5nBBg=
+  CODECOV_REPO_TOKEN: QyV03kT19Ued5C/izPA5gf59wu0O+ezp1FWSp20ryyUBo5ZzSklvLcvqeJviuue1
         
 build_script:
     - ps: .\build.ps1 -target "Developer-Build" -configuration "Debug"
