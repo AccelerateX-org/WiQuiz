@@ -62,7 +62,7 @@ public static class RpsApi
             throw new ArgumentNullException("Missing context");
         }  
         Octopus = new ApiCredentials(
-            url: context.EnvironmentVariable("OCTO_API_URL"),
+            url: context.EnvironmentVariable("OCTO_URL"),
             apiKey: context.EnvironmentVariable("OCTO_API_KEY")
         );
     }
