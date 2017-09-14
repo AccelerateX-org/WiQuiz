@@ -32,7 +32,8 @@ Task("Create-Release-From-Package")
 			Packages = new Dictionary<string, string>
             {
                 { 
-					projectName, BuildParameters.Version.SemVersion 
+					BuildParameters.RepositoryName, 
+					BuildParameters.Version.SemVersion 
 				}
             },
       	});
