@@ -1,4 +1,7 @@
 #load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease"
+
+#tool "nuget:?package=OctopusTools&version=4.22.1"
+
 #load "./Build/targets.cake"
 #load "./Build/adjustments.cake"
 #load "./Build/package.cake"

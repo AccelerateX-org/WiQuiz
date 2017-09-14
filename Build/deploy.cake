@@ -1,5 +1,3 @@
-#tool "nuget:?package=OctopusTools"
-
 ///////////////////////////////////////////////////////////////////////////////
 // Octopus Deploy - Deployment
 ///////////////////////////////////////////////////////////////////////////////
@@ -19,6 +17,50 @@ Task("Push-To-Package-Feed")
 	}
 );
 
+Task("Create-Release-From-Package")
+	.WithCriteria(() => !BuildParameters.IsLocalBuild)
+    .WithCriteria(() => BuildParameters.IsMainRepository)
+	.IsDependentOn("Push-To-Package-Feed")
+	.Does(() => 
+	{
+		OctoCreateRelease(BuildParameters.RepositoryName, new CreateReleaseSettings 
+		{
+        	Server = RpsApi.Octopus.Url,
+        	ApiKey = RpsApi.Octopus.ApiKey,
+        	ReleaseNumber = BuildParameters.Version.SemVersion,
+			ReleaseNotes = GetGitLog(format: NoteFormat.Markdown, depth: 10),
+			Packages = new Dictionary<string, string>
+            {
+                { 
+					projectName, BuildParameters.Version.SemVersion 
+				}
+            },
+      	});
+	}	
+);
+
+Task("Deploy-Package")
+	.WithCriteria(() => !BuildParameters.IsLocalBuild)
+    .WithCriteria(() => BuildParameters.IsMainRepository)
+	.IsDependentOn("Push-To-Package-Feed")
+	.IsDependentOn("Create-Release-From-Package")
+	.Does(() => 
+	{
+		OctoDeployRelease
+		(
+			RpsApi.Octopus.Url, 
+			RpsApi.Octopus.ApiKey, 
+			BuildParameters.RepositoryName, 
+			"Dev",
+			BuildParameters.Version.SemVersion, 
+			new OctopusDeployReleaseDeploymentSettings 
+			{
+        		ShowProgress = true
+    		}
+		);
+	}	
+);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Target Definiton
@@ -27,7 +69,9 @@ Task("Push-To-Package-Feed")
 
 Task("Octopus-Deployment")
     .WithCriteria(() => !BuildParameters.IsPullRequest)
-    .IsDependentOn("Push-To-Package-Feed");
+    .IsDependentOn("Push-To-Package-Feed")
+	.IsDependentOn("Create-Release-From-Package")
+	.IsDependentOn("Deploy-Package");	
 
 
 ///////////////////////////////////////////////////////////////////////////////
