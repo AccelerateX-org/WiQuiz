@@ -2,6 +2,7 @@
 // Octopus Deploy - Package via MSBuild Task
 ///////////////////////////////////////////////////////////////////////////////
 
+
 Task("Pre-Package-CleanUp")
 	.Does(() =>
 	{
@@ -29,6 +30,7 @@ Task("Pre-Package-CleanUp")
 	}
 );
 
+
 Task("Generate-Changelog")
 	.IsDependentOn("Clean")
 	.Does(() =>
@@ -37,13 +39,11 @@ Task("Generate-Changelog")
 
 		var file = BuildParameters.Paths.Directories.Build.ToString() + "/Changelog.txt";
 		System.IO.File.Create(file).Dispose();
-		System.IO.File.WriteAllText(file, GetGitLog(
-				format: NoteFormat.Plain,
-				depth: 10
-			)
+		System.IO.File.WriteAllText(file, RPS. ParseGitLog(format: NoteFormat.Plain)
 		);
 	}
 );
+
 
 Task("Build-Package")
 	.IsDependentOn("Clean")
@@ -59,7 +59,7 @@ Task("Build-Package")
                 .SetConfiguration(BuildParameters.Configuration)
                 .WithTarget("Build")
 				.WithProperty("RunOctoPack", "true")
-				.WithProperty("OctoPackPackageVersion", BuildParameters.Version.SemVersion)
+				.WithProperty("OctoPackPackageVersion", RPS.BuildVersion)
 				.WithProperty("OctoPackReleaseNotesFile", MakeAbsolute(BuildParameters.Paths.Directories.Build) + "/Changelog.txt")
 				.WithProperty("OctoPackPublishPackageToFileShare", MakeAbsolute(BuildParameters.Paths.Directories.PublishedApplications).ToString());
 
@@ -75,60 +75,15 @@ Task("Build-Package")
 	}
 );
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Target Definiton
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Octopus-Packaging")
 	.WithCriteria(() => !BuildParameters.IsPullRequest)
+	.IsDependentOn("Clean")
+	.IsDependentOn("Restore")
+	.IsDependentOn("Pre-Package-CleanUp")
+	.IsDependentOn("Generate-Changelog")
     .IsDependentOn("Build-Package");
-
-///////////////////////////////////////////////////////////////////////////////
-// Helpers
-///////////////////////////////////////////////////////////////////////////////    
-	
-public string GetGitLog(NoteFormat format, int depth = 10) 
-{
-	var gitLog = GitLog("./", depth);
-	
-	var log = "";
-
-    if (format == NoteFormat.Plain)
-    {
-    	log += string.Format("Changelog: Last {0} Commit(s)\n\n", gitLog.Count() > 1 ? gitLog.Count().ToString() : "");
-    	foreach (var item in gitLog)
-    	{
-    		log += string.Format("Sha: {0} - {1} ({2}) - {3} - {4} \n", item.Sha, item.Author.Name, item.Author.Email, item.Author.When, item.MessageShort);
-    	}
-	}
-
-	if (format == NoteFormat.Markdown) {
-		log += string.Format("### Changelog: Last {0} Commit(s)\n", gitLog.Count() > 1 ? gitLog.Count().ToString() : "");
-		foreach (var item in gitLog)
-		{
-			log += string.Format("* __{0}__ (Commit: [{1}]({2}))\n", item.MessageShort, item.Sha, ScmRepository.CommitUrl + item.Sha);  
-			log += string.Format("  * Author: {0} ([{1}](mailto:{1}))\n", item.Author.Name, item.Author.Email);
-			log += string.Format("  * Date: {0}\n", item.Author.When);
-		}            
-	}
-
-	return log;
-}
-
-public enum NoteFormat {
-    Plain,
-    Markdown
-}
-
-public static class ScmRepository
-{
-    public static string Url { get; private set; }
-    public static string CommitUrl { get; private set; }
-
-    public static void SetRepositoryDetails() {
-		Url = string.Format("https://github.com/{0}/{1}", BuildParameters.RepositoryOwner, BuildParameters.RepositoryName);
-		CommitUrl = Url + "/commit/";
-	}
-}
-
-    	

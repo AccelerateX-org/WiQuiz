@@ -1,7 +1,10 @@
 #load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease"
 
+#addin "nuget:?package=Octopus.Client&version=4.22.1"
+
 #tool "nuget:?package=OctopusTools&version=4.22.1"
 
+#load "./Build/rps.cake"
 #load "./Build/targets.cake"
 #load "./Build/adjustments.cake"
 #load "./Build/package.cake"
@@ -24,7 +27,6 @@ BuildParameters.PrintParameters(Context);
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]*");
 
-ScmRepository.SetRepositoryDetails();
-RpsApi.SetCredentials(Context);
+RPS.Init(context: Context);
 
 Build.Run();

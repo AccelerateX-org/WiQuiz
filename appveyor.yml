@@ -22,6 +22,7 @@ test: off
 
 cache:
     -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .\tools -> .\tools\packages.config, .\setup.cake 
 
 #notifications:
   #- provider: HipChat

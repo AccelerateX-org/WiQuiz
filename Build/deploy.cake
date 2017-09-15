@@ -9,7 +9,7 @@ Task("Push-To-Package-Feed")
 	.IsDependentOn("Build-Package")
 	.Does(() => 
 	{
-        OctoPush(RpsApi.Octopus.Url, RpsApi.Octopus.ApiKey, GetFiles(BuildParameters.Paths.Directories.PublishedApplications + "/*.nupkg"),
+        OctoPush(RPS.Api.Octopus.Endpoint, RPS.Api.Octopus.ApiKey, GetFiles(BuildParameters.Paths.Directories.PublishedApplications + "/*.nupkg"),
       		new OctopusPushSettings {
         		ReplaceExisting = true
       		}
@@ -25,15 +25,15 @@ Task("Create-Release-From-Package")
 	{
 		OctoCreateRelease(BuildParameters.RepositoryName, new CreateReleaseSettings 
 		{
-        	Server = RpsApi.Octopus.Url,
-        	ApiKey = RpsApi.Octopus.ApiKey,
-        	ReleaseNumber = BuildParameters.Version.SemVersion,
-			ReleaseNotes = GetGitLog(format: NoteFormat.Markdown, depth: 10),
+        	Server = RPS.Api.Octopus.Endpoint,
+        	ApiKey = RPS.Api.Octopus.ApiKey,
+        	ReleaseNumber = RPS.BuildVersion,
+			ReleaseNotes = RPS. ParseGitLog(format: NoteFormat.Markdown),
 			Packages = new Dictionary<string, string>
             {
                 { 
 					BuildParameters.RepositoryName, 
-					BuildParameters.Version.SemVersion 
+					RPS.BuildVersion
 				}
             },
       	});
@@ -49,16 +49,21 @@ Task("Deploy-Package")
 	{
 		OctoDeployRelease
 		(
-			RpsApi.Octopus.Url, 
-			RpsApi.Octopus.ApiKey, 
+			RPS.Api.Octopus.Endpoint, 
+			RPS.Api.Octopus.ApiKey, 
 			BuildParameters.RepositoryName, 
 			"Dev",
-			BuildParameters.Version.SemVersion, 
+			RPS.BuildVersion, 
 			new OctopusDeployReleaseDeploymentSettings 
 			{
         		ShowProgress = true
     		}
 		);
+        
+		var client = RPS.Octopus;
+        client.Connect();
+
+        Information(client.GetDeploymentInformation(RPS.BuildVersion).Target);
 	}	
 );
 
@@ -72,112 +77,4 @@ Task("Octopus-Deployment")
     .WithCriteria(() => !BuildParameters.IsPullRequest)
     .IsDependentOn("Push-To-Package-Feed")
 	.IsDependentOn("Create-Release-From-Package")
-	.IsDependentOn("Deploy-Package");	
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Helpers
-///////////////////////////////////////////////////////////////////////////////    
-
-
-public class ApiCredentials
-{
-    public string Url { get; private set; }
-    public string ApiKey { get; private set; }
-    public string UserName { get; private set; }
-    public string Password { get; private set; }
-
-    public ApiCredentials(string url, string apiKey, string userName = null, string password = null)
-    {
-        Url = url;
-        ApiKey = apiKey;
-        UserName = userName;
-        Password = password;
-    }
-}
-
-public static class RpsApi
-{
-    public static ApiCredentials Octopus { get; private set; }
-
-    public static void SetCredentials(ICakeContext context) 
-    {
-        if (context == null) 
-        {
-            throw new ArgumentNullException("Missing context");
-        }  
-        Octopus = new ApiCredentials(
-            url: context.EnvironmentVariable("OCTO_URL"),
-            apiKey: context.EnvironmentVariable("OCTO_API_KEY")
-        );
-    }
-}
-
-
-
-
-
-/*
-
-
-
-
-
-
-Task("Push-To-Package-Feed")
-	.WithCriteria(parameters.ShouldPublishToFeed)
-	.WithCriteria(!parameters.IsLocalBuild)
-	.IsDependentOn("Build-Package")
-	.Does(() => 
-	{
-		OctoPush(parameters.OctopusDeploy.Url, parameters.OctopusDeploy.ApiKey, new FilePath(parameters.PackageOutput),
-      		new OctopusPushSettings {
-        		ReplaceExisting = true
-      		}
-		);
-	}
-);
-
-Task("Create-Release-From-Package")
-	.WithCriteria(parameters.ShouldDeploy)
-	.WithCriteria(!parameters.IsLocalBuild)
-	.IsDependentOn("Push-To-Package-Feed")
-	.Does(() => 
-	{
-		OctoCreateRelease(projectName, new CreateReleaseSettings 
-		{
-        	Server = parameters.OctopusDeploy.Url,
-        	ApiKey = parameters.OctopusDeploy.ApiKey,
-        	ReleaseNumber = parameters.BuildVersion.SemVersion,
-			ReleaseNotes = parameters.parseGitLog(NoteFormat.Markdown),
-			Packages = new Dictionary<string, string>
-            {
-                { 
-					projectName, parameters.BuildVersion.SemVersion 
-				}
-            },
-      	});
-	}	
-);
-
-Task("Deploy-Package")
-	.WithCriteria(parameters.ShouldDeploy)
-	.WithCriteria(!parameters.IsLocalBuild)
-	.IsDependentOn("Push-To-Package-Feed")
-	.IsDependentOn("Create-Release-From-Package")
-	.Does(() => 
-	{
-		OctoDeployRelease
-		(
-			parameters.OctopusDeploy.Url, 
-			parameters.OctopusDeploy.ApiKey, 
-			projectName, 
-			"Dev",
-			parameters.BuildVersion.SemVersion, 
-			new OctopusDeployReleaseDeploymentSettings 
-			{
-        		ShowProgress = true
-    		}
-		);
-	}	
-);*/
+	.IsDependentOn("Deploy-Package");
