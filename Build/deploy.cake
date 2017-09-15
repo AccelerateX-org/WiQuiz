@@ -63,7 +63,7 @@ Task("Deploy-Package")
 		var client = RPS.Octopus;
         client.Connect();
 
-        Information(client.GetDeploymentInformation(RPS.BuildVersion).Target);
+        Information("Target: " + client.GetDeploymentInformation(RPS.BuildVersion).Target);
 	}	
 );
 
