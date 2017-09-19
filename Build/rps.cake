@@ -162,7 +162,7 @@ public class OctopusApiClient
     {
         if (deployedVersion.IsNullOrEmpty()) 
         {
-            throw new ArgumentNullException("Missing Arguments @ GetDeploymentInformation()");
+            throw new ArgumentNullException("Missing Arguments @ OctopusApiClient.GetDeploymentInformation()");
         }
 
         if (_repository == null) 

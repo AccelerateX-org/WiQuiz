@@ -19,6 +19,7 @@ BuildParameters.SetParameters(context: Context,
                             repositoryOwner: "wpankratz",
                             repositoryName: "WiQuiz",
                             appVeyorAccountName: "wpankratz",
+                            shouldExecuteGitLink: false,
                             shouldRunDupFinder: false,
                             shouldRunInspectCode: false);
                             
