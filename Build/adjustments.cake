@@ -1,7 +1,19 @@
+///////////////////////////////////////////////////////////////////////////////
+// Supress breaking the Build
+///////////////////////////////////////////////////////////////////////////////
+
 BuildParameters.Tasks.DupFinderTask.ContinueOnError();
 BuildParameters.Tasks.InspectCodeTask.ContinueOnError();
 
+///////////////////////////////////////////////////////////////////////////////
+// Generate reports of processed test results
+// Workaround: Reports nevertheless tests failed
+///////////////////////////////////////////////////////////////////////////////
+
 BuildParameters.Tasks.TestxUnitTask
+    .Does(() => {
+        // TODO
+	})
     .OnError(exception => {
         var reportSubDir = "/Report";
         var unitTestZip = BuildParameters.Paths.Directories.xUnitTestResults.CombineWithFilePath("UnitTestReport.zip");
@@ -15,8 +27,7 @@ BuildParameters.Tasks.TestxUnitTask
         // Generate Code Coverage Report
         var codeCoverageReport = BuildParameters.Paths.Directories.TestCoverage + reportSubDir;
         ReportGenerator(BuildParameters.Paths.Files.TestCoverageOutputFilePath, codeCoverageReport);
-
-        // Zip Report Files
+  
         Information("Zipping Unit Test Results...");
         Zip(xUnitTestReport, unitTestZip);
 
@@ -24,12 +35,21 @@ BuildParameters.Tasks.TestxUnitTask
         Zip(codeCoverageReport, codeCoverageZip);
 
         // Upload to AppVeyor if Build System
-        if (BuildParameters.IsRunningOnAppVeyor) {
-            if (FileExists(unitTestZip)) {
+        if (BuildParameters.IsRunningOnAppVeyor) 
+        {
+            if (FileExists(unitTestZip)) 
+            {
                 AppVeyor.UploadArtifact(unitTestZip);
             }
-            if (FileExists(codeCoverageZip)) {
+            if (FileExists(codeCoverageZip)) 
+            {
                 AppVeyor.UploadArtifact(codeCoverageZip);
             }
         }
  });
+
+// Zip Report Files
+public void ZipReportFiles()
+{
+    // TODO
+}

@@ -1,4 +1,11 @@
 #load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease"
+
+#addin "nuget:?package=Octopus.Client&version=4.22.1"
+
+#tool "nuget:?package=OctopusTools&version=4.22.1"
+
+#load "./Build/rps.cake"
+#load "./Build/targets.cake"
 #load "./Build/adjustments.cake"
 #load "./Build/package.cake"
 #load "./Build/deploy.cake"
@@ -9,15 +16,17 @@ BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Sources",
                             title: "WIQuest",
-                            repositoryOwner: "AccelerateX-org",
+                            repositoryOwner: "wpankratz",
                             repositoryName: "WiQuiz",
-                            appVeyorAccountName: "AccelerateX",
+                            appVeyorAccountName: "wpankratz",
                             shouldRunDupFinder: false,
                             shouldRunInspectCode: false);
-
+                            
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]*");
+
+RPS.Init(context: Context);
 
 Build.Run();
