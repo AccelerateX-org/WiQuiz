@@ -63,7 +63,7 @@ public static class RPS
     {
         if (context == null) 
         {
-            throw new ArgumentNullException("Missing context");
+            throw new ArgumentNullException("Missing context @ RPS.Init()");
         }
         
         var gitHubUrlPattern = "https://github.com/{0}/{1}{2}";
@@ -147,7 +147,7 @@ public class OctopusApiClient
     {
         if (endpoint.IsNullOrEmpty() || apiKey.IsNullOrEmpty()) 
         {
-            throw new ArgumentNullException("Missing Arguments");
+            throw new ArgumentNullException("Missing Arguments @ OctopusApiClient()");
         }
 
         _endpoint = endpoint;
@@ -162,7 +162,7 @@ public class OctopusApiClient
     {
         if (deployedVersion.IsNullOrEmpty()) 
         {
-            throw new ArgumentNullException("Missing Arguments");
+            throw new ArgumentNullException("Missing Arguments @ GetDeploymentInformation()");
         }
 
         if (_repository == null) 
