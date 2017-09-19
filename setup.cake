@@ -1,4 +1,4 @@
-#load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease&version=0.3.0-unstable0276"
+#load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease&version=0.3.0-unstable0278"
 
 #addin "nuget:?package=Octopus.Client&version=4.22.1"
 
@@ -15,6 +15,7 @@ Environment.SetVariableNames();
 BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Sources",
+                            integrationTestScriptPath: ".", // Workaround: NULL Exception
                             title: "WIQuest",
                             repositoryOwner: "wpankratz",
                             repositoryName: "WiQuiz",
