@@ -83,7 +83,10 @@ public static class RPS
         Vcs = new VcsRepository(github: githubVcs);
         GitLog = context.GitLog(repositoryDirectoryPath, repositoryCommitCount);
         _version = buildVersion;
-        Octopus = new OctopusApiClient(octoApi.Endpoint, octoApi.ApiKey);
+        if (!BuildParameters.IsLocalBuild) 
+        {
+            Octopus = new OctopusApiClient(octoApi.Endpoint, octoApi.ApiKey);
+        }
     }
 
 

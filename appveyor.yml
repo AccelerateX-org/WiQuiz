@@ -16,7 +16,7 @@ environment:
   CODECOV_REPO_TOKEN: QyV03kT19Ued5C/izPA5gf59wu0O+ezp1FWSp20ryyUBo5ZzSklvLcvqeJviuue1
         
 build_script:
-    - ps: .\build.ps1 -target "Developer-Build" -configuration "Debug"
+    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"
 
 test: off
 

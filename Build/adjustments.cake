@@ -7,29 +7,29 @@ BuildParameters.Tasks.InspectCodeTask.ContinueOnError();
 
 ///////////////////////////////////////////////////////////////////////////////
 // Generate reports of processed test results
-// Workaround: Reports nevertheless tests failed
+// Workaround: Reports nevertheless tests are failing
 ///////////////////////////////////////////////////////////////////////////////
 
-BuildParameters.Tasks.TestxUnitTask
+BuildParameters.Tasks.TestNUnitTask
     .Does(() => {
         // TODO
 	})
     .OnError(exception => {
         var reportSubDir = "/Report";
-        var unitTestZip = BuildParameters.Paths.Directories.xUnitTestResults.CombineWithFilePath("UnitTestReport.zip");
+        var unitTestZip = BuildParameters.Paths.Directories.NUnitTestResults.CombineWithFilePath("UnitTestReport.zip");
         var codeCoverageZip = BuildParameters.Paths.Directories.TestCoverage.CombineWithFilePath("CodeCoverageReport.zip");
 
         // Generate Unit Test Report
-        var xUnitTestReport = BuildParameters.Paths.Directories.xUnitTestResults + reportSubDir;
-        EnsureDirectoryExists(xUnitTestReport);
-        ReportUnit(BuildParameters.Paths.Directories.xUnitTestResults, xUnitTestReport, new ReportUnitSettings());
+        var NUnitTestReport = BuildParameters.Paths.Directories.NUnitTestResults + reportSubDir;
+        EnsureDirectoryExists(NUnitTestReport);
+        ReportUnit(BuildParameters.Paths.Directories.NUnitTestResults, NUnitTestReport, new ReportUnitSettings());
 
         // Generate Code Coverage Report
         var codeCoverageReport = BuildParameters.Paths.Directories.TestCoverage + reportSubDir;
         ReportGenerator(BuildParameters.Paths.Files.TestCoverageOutputFilePath, codeCoverageReport);
   
         Information("Zipping Unit Test Results...");
-        Zip(xUnitTestReport, unitTestZip);
+        Zip(NUnitTestReport, unitTestZip);
 
         Information("Zipping Code Coverage Results...");
         Zip(codeCoverageReport, codeCoverageZip);
@@ -46,6 +46,8 @@ BuildParameters.Tasks.TestxUnitTask
                 AppVeyor.UploadArtifact(codeCoverageZip);
             }
         }
+
+        throw exception;
  });
 
 // Zip Report Files

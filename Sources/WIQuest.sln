@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIQuest.Web", "WIQuest\WIQuest.Web\WIQuest.Web.csproj", "{409A02DB-941E-4708-89A4-1A883E56D0FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIQuest.Web.Tests", "WiQuest\WIQuest.Web.Test\WIQuest.Web.Tests.csproj", "{D787B71A-8FD7-46F7-94DB-D8BA5090F358}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIQuest.Web.Tests", "WiQuest\WIQuest.Web.Tests\WIQuest.Web.Tests.csproj", "{D787B71A-8FD7-46F7-94DB-D8BA5090F358}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WIQuest.Web.UaTests", "WiQuest\WIQuest.Web.UaTests\WIQuest.Web.UaTests.csproj", "{7283D354-0D2B-4BB2-B261-20B814AECDDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D787B71A-8FD7-46F7-94DB-D8BA5090F358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D787B71A-8FD7-46F7-94DB-D8BA5090F358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D787B71A-8FD7-46F7-94DB-D8BA5090F358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7283D354-0D2B-4BB2-B261-20B814AECDDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7283D354-0D2B-4BB2-B261-20B814AECDDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7283D354-0D2B-4BB2-B261-20B814AECDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7283D354-0D2B-4BB2-B261-20B814AECDDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
