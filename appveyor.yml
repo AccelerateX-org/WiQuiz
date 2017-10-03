@@ -12,8 +12,7 @@ platform:
 environment:
   OCTO_URL: https://cd.acceleratex.org/octopus
   OCTO_API_KEY:
-    secure: sAYNDdEDWd7zvV2sA8Zd5c0uj03QOfOYMFMJ3R5nBBg=
-  CODECOV_REPO_TOKEN: QyV03kT19Ued5C/izPA5gf59wu0O+ezp1FWSp20ryyUBo5ZzSklvLcvqeJviuue1
+    secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
         
 build_script:
     - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"
