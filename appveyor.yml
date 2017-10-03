@@ -9,20 +9,23 @@ image: Visual Studio 2017
 platform:
   - Any CPU
 
-install:
-    - ps: .\obtain_cake.ps1
+environment:
+  OCTO_URL: https://cd.acceleratex.org/octopus
+  OCTO_API_KEY:
+    secure: sAYNDdEDWd7zvV2sA8Zd5c0uj03QOfOYMFMJ3R5nBBg=
+  CODECOV_REPO_TOKEN: QyV03kT19Ued5C/izPA5gf59wu0O+ezp1FWSp20ryyUBo5ZzSklvLcvqeJviuue1
         
 build_script:
-    - ps: .\build.ps1
+    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"
 
 test: off
 
 cache:
-    -  .\Sources\WiQuest\WIQuest.Web\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
-    -  .\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
+    -  .\tools -> .\tools\packages.config, .\setup.cake 
 
-notifications:
-  - provider: HipChat
-    auth_token:
-      secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
-    room: RPS-TestRoom
+#notifications:
+  #- provider: HipChat
+    #auth_token:
+      #secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
+    #room: RPS-TestRoom

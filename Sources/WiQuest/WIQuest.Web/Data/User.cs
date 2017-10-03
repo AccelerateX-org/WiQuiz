@@ -75,7 +75,10 @@ namespace WIQuest.Web.Data
         /// <summary>
         /// Wenn gesetzt, dann gibt es zu diesem Benutzer ein Benutzuerkonto
         /// </summary>
-        public string UserId { get; set; }
+        
+
+        // This Property is causing faulty queries, due to the fact that there is no corresponsive coloumn in database --> Migration issue     
+        public string UserId { get; set; } 
 
         /// <summary>
         /// Geschlecht

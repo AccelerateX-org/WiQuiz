@@ -129,6 +129,7 @@ namespace WIQuest.Web.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false, identity: true),
+                        UserId  = c.String(nullable: true),
                         Geschlecht = c.Int(nullable: false),
                         Altersgruppe = c.Int(nullable: false),
                         Hochschulzugangsberechtigung = c.Int(nullable: false),
