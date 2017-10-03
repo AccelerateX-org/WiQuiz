@@ -31,6 +31,13 @@ BuildParameters.Tasks.TestNUnitTask
 	}))
     .OnError(exception => {
         ReportFiles();
+
+        if(BuildParameters.IsRunningOnAppVeyor)
+        {
+            AppVeyor.AddMessage("Unit Tests failed!", AppVeyorMessageCategoryType.Error, "Consider Test-Output for further information.");
+        }
+
+
         throw exception;
  });
 
