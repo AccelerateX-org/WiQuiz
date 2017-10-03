@@ -15,7 +15,6 @@ namespace WIQuest.Web.Tests
         }
 
         [Test]
-        [Ignore("Ignored")]
         public void FailingTest()
         {
             Assert.AreEqual(5, Add(2, 2));
