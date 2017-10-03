@@ -38,7 +38,7 @@ branches:
     track-merge-target: false
   hotfix(es)?[/-]:
     mode: ContinuousDeployment
-    tag: beta
+    tag: hotfix
     increment: Patch
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
