@@ -6,6 +6,7 @@
 Task("Push-To-Package-Feed")
 	.WithCriteria(() => !BuildParameters.IsLocalBuild)
     .WithCriteria(() => BuildParameters.IsMainRepository)
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.IsDependentOn("Build-Package")
 	.Does(() => 
 	{
@@ -20,6 +21,7 @@ Task("Push-To-Package-Feed")
 Task("Create-Release-From-Package")
 	.WithCriteria(() => !BuildParameters.IsLocalBuild)
     .WithCriteria(() => BuildParameters.IsMainRepository)
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.IsDependentOn("Push-To-Package-Feed")
 	.Does(() => 
 	{
@@ -43,6 +45,7 @@ Task("Create-Release-From-Package")
 Task("Deploy-Package")
 	.WithCriteria(() => !BuildParameters.IsLocalBuild)
     .WithCriteria(() => BuildParameters.IsMainRepository)
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.IsDependentOn("Push-To-Package-Feed")
 	.IsDependentOn("Create-Release-From-Package")
 	.Does(() => 
