@@ -12,7 +12,10 @@ BuildParameters.Tasks.InspectCodeTask.ContinueOnError();
 
 BuildParameters.Tasks.TestNUnitTask
     .Does(() => {
-        // TODO
+        if (BuildParameters.IsRunningOnAppVeyor) 
+        {
+            BuildSystem.AppVeyor.UploadTestResults(BuildParameters.Paths.Directories.NUnitTestResults, AppVeyorTestResultsType.NUnit3);
+        }
 	})
     .OnError(exception => {
         var reportSubDir = "/Report";
