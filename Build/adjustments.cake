@@ -10,13 +10,32 @@ BuildParameters.Tasks.InspectCodeTask.ContinueOnError();
 // Workaround: Reports nevertheless tests are failing
 ///////////////////////////////////////////////////////////////////////////////
 
+BuildParameters.Tasks.TestNUnitTask.Task.Actions.Clear();
 BuildParameters.Tasks.TestNUnitTask
-    .Does(() => {
-        if (BuildParameters.IsRunningOnAppVeyor) 
+    .Does(() => RequireTool(NUnitTool, () => {
+        EnsureDirectoryExists(BuildParameters.Paths.Directories.NUnitTestResults);
+
+        OpenCover(tool => {
+            tool.NUnit3(GetFiles(BuildParameters.Paths.Directories.PublishedNUnitTests + (BuildParameters.TestFilePattern ?? "/**/*Tests.dll")), new NUnit3Settings {
+                NoResults = false,
+                Work = BuildParameters.Paths.Directories.NUnitTestResults
+            });
+        },
+        BuildParameters.Paths.Files.TestCoverageOutputFilePath,
+        new OpenCoverSettings { ReturnTargetCodeOffset = 0 }
+            .WithFilter(ToolSettings.TestCoverageFilter)
+            .ExcludeByAttribute(ToolSettings.TestCoverageExcludeByAttribute)
+            .ExcludeByFile(ToolSettings.TestCoverageExcludeByFile));
+
+        if(BuildParameters.IsRunningOnAppVeyor)
         {
-            BuildSystem.AppVeyor.UploadTestResults(BuildParameters.Paths.Directories.NUnitTestResults, AppVeyorTestResultsType.NUnit3);
-        }
-	})
+            // Upload artifact to AppVeyor.
+            AppVeyor.UploadTestResults(BuildParameters.Paths.Directories.NUnitTestResults + "/TestResult.xml", AppVeyorTestResultsType.NUnit3);
+        }    
+
+        // TODO: Need to think about how to bring this out in a generic way for all Test Frameworks
+        ReportGenerator(BuildParameters.Paths.Files.TestCoverageOutputFilePath, BuildParameters.Paths.Directories.TestCoverage);
+	}))
     .OnError(exception => {
         var reportSubDir = "/Report";
         var unitTestZip = BuildParameters.Paths.Directories.NUnitTestResults.CombineWithFilePath("UnitTestReport.zip");
