@@ -8,7 +8,7 @@ namespace WIQuest.Web.UaTests.Base
 {
     public class UaTestBaseClass
     {
-        private readonly IWebDriver _driver;
+        private IWebDriver _driver;
         public IWebDriver Driver { get;  private set; }
 
         private readonly bool _isLocalMode;
