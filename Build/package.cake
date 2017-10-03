@@ -4,6 +4,7 @@
 
 
 Task("Pre-Package-CleanUp")
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.Does(() =>
 	{
 		Information("Cleaning...");
@@ -33,6 +34,7 @@ Task("Pre-Package-CleanUp")
 
 Task("Generate-Changelog")
 	.IsDependentOn("Clean")
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.Does(() =>
 	{
 		EnsureDirectoryExists(BuildParameters.Paths.Directories.Build);
@@ -50,6 +52,7 @@ Task("Build-Package")
 	.IsDependentOn("Restore")
 	.IsDependentOn("Pre-Package-CleanUp")
 	.IsDependentOn("Generate-Changelog")
+	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.Does(() => 
 	{
 		var msbuildSettings = new MSBuildSettings()
