@@ -1,8 +1,6 @@
-version: 1.0.{build}
+version: 1.0.{build}-{branch}
 
-#---------------------------------#
-#    environment configuration    #
-#---------------------------------#
+skip_tags: true
 
 image: Visual Studio 2017 
 
@@ -13,15 +11,58 @@ environment:
   OCTO_URL: https://cd.acceleratex.org/octopus
   OCTO_API_KEY:
     secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
-        
-build_script:
-    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"
 
 test: off
 
 cache:
     -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
-    -  .\tools -> .\tools\packages.config, .\setup.cake 
+    -  .\tools -> .\tools\packages.config, .\setup.cake
+
+build_script:
+    - ps: .\build.ps1 -target "PrBuild" -configuration "Release"
+
+for:
+
+# override common settings
+-
+  branches:
+    only:
+      - /features?[/-]/
+      - /dev(elop)?(ment)?$/
+    
+  build_script:
+    - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
+
+-
+  branches:
+    only:
+      - /hotfix(es)?[/-]/
+      - /releases?[/-]/
+      - master
+    
+  build_script:
+    - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"
+
+-
+  branches:
+    only:
+      - /.*/
+    
+  build_script:
+    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #notifications:
   #- provider: HipChat
