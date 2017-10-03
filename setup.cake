@@ -17,9 +17,9 @@ BuildParameters.SetParameters(context: Context,
                             integrationTestScriptPath: ".", // Workaround: NULL Exception
                             testFilePattern: "/**/*.Tests.dll",
                             title: "WIQuest",
-                            repositoryOwner: "wpankratz",
+                            repositoryOwner: "AccelerateX-org",
                             repositoryName: "WiQuiz",
-                            appVeyorAccountName: "wpankratz",
+                            appVeyorAccountName: "AccelerateX",
                             shouldExecuteGitLink: false,
                             shouldRunDupFinder: false,
                             shouldRunInspectCode: false);
