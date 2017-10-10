@@ -5,6 +5,7 @@ using Owin;
 [assembly: OwinStartupAttribute(typeof(WIQuest.Web.Startup))]
 namespace WIQuest.Web
 {
+    // Test
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
