@@ -14,6 +14,16 @@ namespace WIQuest.Web.Tests
             Assert.AreEqual(4, Add(2, 2));
         }
 
+        public void PassingTest2()
+        {
+            Assert.AreEqual(4, Add(2, 2));
+        }
+
+        public void PassingTest3()
+        {
+            Assert.AreEqual(4, Add(2, 2));
+        }
+
         [Test]
         public void FailingTest()
         {
