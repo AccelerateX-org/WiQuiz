@@ -90,8 +90,12 @@ Task("Deploy-Package")
 			
 			var client = RPS.Octopus;
 			client.Connect();
+			
+			//Set Deployment Target as BaseURL for UAT
+			RPS.UatTargetUrl = client.GetDeploymentInformation(RPS.BuildVersion).Target;
 
-			Information("Target: " + client.GetDeploymentInformation(RPS.BuildVersion).Target);
+			Information("Target: " + RPS.UatTargetUrl);
+
 		}	
 	)
 	.OnError(exception =>

@@ -40,16 +40,15 @@ BuildParameters.Tasks.TestNUnitTask
             AppVeyor.AddMessage("Unit Tests failed!", AppVeyorMessageCategoryType.Error, "Consider Test-Output for further information.");
         }
 
-
         throw exception;
- });
+    });
 
 // Report Files
 public void ReportFiles()
 {
     if(BuildParameters.IsRunningOnAppVeyor)
     {
-        // Upload artifact to AppVeyor.
+        // Upload results to AppVeyor.
         AppVeyor.UploadTestResults(BuildParameters.Paths.Directories.NUnitTestResults + "/TestResult.xml", AppVeyorTestResultsType.NUnit3);
     }    
     

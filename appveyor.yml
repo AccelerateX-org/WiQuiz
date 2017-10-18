@@ -22,6 +22,9 @@ environment:
     secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw= # Encrypted variable: Go to "Encrypt data" page in account menu to encrypt data.
   COVERALLS_REPO_TOKEN:
     secure: 2OjkSU6B/L4mV45BKR5iOH2jpf/p9CwOUWdTPTpKlTOWtTQbC65LP+jLrhAr5eIr  
+  SL_USERNAME: ax_team
+  SL_API_KEY:
+    secure: VLNNEt3qzDJ+8bQegF4tXbCJL31rU0QZWBZTO8+sL8u2TyfZxJkN5RW1oeKHAqji  
 
 # Only build non-tagged commits
 skip_tags: true

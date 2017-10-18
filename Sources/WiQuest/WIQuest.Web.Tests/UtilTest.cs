@@ -6,15 +6,8 @@ using WIQuest.Web.Utils;
 namespace WIQuest.Web.Tests
 {
     [TestFixture]
-    public class TestClass
+    public class UtilTest
     {
-        [Test]
-        [Ignore("FailingTest")]
-        public void FailingTest()
-        {
-            Assert.AreEqual(5, Add(2, 2));
-        }
-
         [Test]
         public void AmIReallyShufflingEveryday()
         {
@@ -30,11 +23,6 @@ namespace WIQuest.Web.Tests
 
             // List should now differ
             Assert.False(numbersToCompare.Intersect(numbersToShuffle).SequenceEqual(numbersToShuffle));
-        }
-
-        static int Add(int x, int y)
-        {
-            return x + y;
         }
     }
 }
