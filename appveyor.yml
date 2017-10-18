@@ -1,29 +1,57 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format (will be overwritten by GitVersion)
 version: 1.0.{build}-{branch}
 
-skip_tags: true
-
+# VM-Image
 image: Visual Studio 2017 
 
-platform:
-  - Any CPU
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform: Any CPU
 
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# environment variables
 environment:
   OCTO_URL: https://cd.acceleratex.org/octopus
   OCTO_API_KEY:
-    secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw=
+    secure: A/6Iyybo2hmkKL8/9zmxdNoxHFneMWE0AK0J4f3Viyw= # Encrypted variable: Go to "Encrypt data" page in account menu to encrypt data.
+  COVERALLS_REPO_TOKEN:
+    secure: 2OjkSU6B/L4mV45BKR5iOH2jpf/p9CwOUWdTPTpKlTOWtTQbC65LP+jLrhAr5eIr  
 
-test: off
+# Only build non-tagged commits
+skip_tags: true
 
+# build cache to preserve files/folders between builds
 cache:
-    -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config
-    -  .\tools -> .\tools\packages.config, .\setup.cake
+    -  .\Sources\packages -> .\Sources\WiQuest\WIQuest.Web\packages.config  # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
+    -  .\tools -> .\tools\packages.config, .\setup.cake  # preserve "tools" directory in the root of build folder but will reset it if packages.config or setup.cake is modified
 
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+# run custom scripts instead of automatic MSBuild
 build_script:
     - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
 
+#---------------------------------#
+#   general tests configuration   #
+#---------------------------------#
 
-# Override common settings
-# Read: https://www.appveyor.com/blog/2017/08/01/sharing-configuration-between-branches-in-appveyor-yml/
+# disable automatic tests
+test: off    
+
+#---------------------------------#
+#     override common settings    #
+#        branches to build        #
+#---------------------------------#
+# See: https://www.appveyor.com/blog/2017/08/01/sharing-configuration-between-branches-in-appveyor-yml/
+
 for:
 -
   branches:
@@ -31,6 +59,10 @@ for:
       - /features?[/-]/
       - /dev(elop)?(ment)?$/
     
+  #---------------------------------#
+  #       build configuration       #
+  #---------------------------------#
+  
   build_script:
     - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
 
@@ -39,7 +71,11 @@ for:
     only:
       - /hotfix(es)?[/-]/
       - /releases?[/-]/
-    
+
+  #---------------------------------#
+  #       build configuration       #
+  #---------------------------------#  
+  
   build_script:
     - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"
 
@@ -48,28 +84,25 @@ for:
     only:
       - master
 
-  skip_non_tags: true
+  # Only build tagged commits like releases
+  # skip_non_tags: true
 
+# Fallback: Other branches, which are not specified above
 -
   branches:
     only:
       - /.*/
-    
+
+  #---------------------------------#
+  #       build configuration       #
+  #---------------------------------#
+
   build_script:
-    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"    
+    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"   
 
-
-
-
-
-
-
-
-
-
-
-
-
+#---------------------------------#
+#         notifications           #
+#---------------------------------#
 
 #notifications:
   #- provider: HipChat
