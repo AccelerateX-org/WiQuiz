@@ -84,6 +84,13 @@ for:
     only:
       - master
 
+  #---------------------------------#
+  #       build configuration       #
+  #---------------------------------#  
+  
+  build_script:
+    - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"    
+
   # Only build tagged commits like releases
   # skip_non_tags: true
 
