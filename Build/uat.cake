@@ -29,7 +29,7 @@ Task("Test-NUnit-UAT")
             if(BuildParameters.IsRunningOnAppVeyor)
             {
                 // Upload results to AppVeyor.
-                AppVeyor.UploadTestResults(uatResults + "/TestResult.xml", AppVeyorTestResultsType.NUnit3);
+                AppVeyor.UploadTestResults(BuildParameters.Paths.Directories.NUnitTestResults + "/UAT/TestResult.xml", AppVeyorTestResultsType.NUnit3);
                 AppVeyor.AddMessage("User Accaptance Tests failed!", AppVeyorMessageCategoryType.Error, "Consider Test-Output for further information.");
             }
            
