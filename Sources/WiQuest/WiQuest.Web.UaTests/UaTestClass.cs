@@ -5,8 +5,8 @@ using WIQuest.Web.UaTests.Base;
 
 namespace WiQuest.Web.UaTests
 {
-    [TestFixture("Chrome", "61.0", "Windows 10", "1280x720", "", "")]
-    [TestFixture("Firefox", "55.0", "Windows 10", "1280x720", "", "")]
+    [TestFixture("Chrome", "61.0", "Windows 10", "1280x1024", "", "")]
+    [TestFixture("Firefox", "55.0", "Windows 10", "1280x1024", "", "")]
     public class UaTestClass : UaTestBaseClass
     {
         public UaTestClass(string browser, string version, string os, string screenResultion, string deviceName, string deviceOrientation) 
@@ -14,7 +14,7 @@ namespace WiQuest.Web.UaTests
 
 
         [Test]
-        public void RegisterUserTest()
+        public void A_RegisterUserTest()
         {
             Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
@@ -32,7 +32,7 @@ namespace WiQuest.Web.UaTests
         }
 
         [Test]
-        public void LogoutUserTest()
+        public void B_LogoutUserTest()
         {
             Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Log off")).Click();
@@ -41,7 +41,7 @@ namespace WiQuest.Web.UaTests
         }
 
         [Test]
-        public void LoginUserTest()
+        public void C_LoginUserTest()
         {
             Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
