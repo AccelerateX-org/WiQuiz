@@ -6,6 +6,6 @@ Task("DevBuild")
 Task("KpiBuild")
     .IsDependentOn("Build")
     .IsDependentOn("Test-NUnit")
-    .IsDependentOn("Upload-Coveralls-Report")
+    .IsDependentOn("Upload-Coveralls")
     .IsDependentOn("Octopus-Packaging")
     .IsDependentOn("Octopus-Deployment");

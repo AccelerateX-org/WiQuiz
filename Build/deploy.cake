@@ -9,14 +9,27 @@ Task("Push-To-Package-Feed")
 	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.IsDependentOn("Build-Package")
 	.Does(() => 
-	{
-        OctoPush(RPS.Api.Octopus.Endpoint, RPS.Api.Octopus.ApiKey, GetFiles(BuildParameters.Paths.Directories.PublishedApplications + "/*.nupkg"),
-      		new OctopusPushSettings {
-        		ReplaceExisting = true
-      		}
-		);
-	}
-);
+		{
+			OctoPush(RPS.Api.Octopus.Endpoint, RPS.Api.Octopus.ApiKey, GetFiles(BuildParameters.Paths.Directories.PublishedApplications + "/*.nupkg"),
+				new OctopusPushSettings {
+					ReplaceExisting = true
+				}
+			);
+		}
+	)
+	.OnError(exception =>
+		{
+			Error(exception.Message);
+			Information("Push-To-Package-Feed Task failed, but continuing with next Task...");
+			
+			if(BuildParameters.IsRunningOnAppVeyor)
+			{
+				AppVeyor.AddMessage("Pushing to Package Feed failed!", AppVeyorMessageCategoryType.Warning, "Please manually upload Artefact to Octopus Deploy");
+			}
+			
+			publishingError = true;
+		}
+	);
 
 Task("Create-Release-From-Package")
 	.WithCriteria(() => !BuildParameters.IsLocalBuild)
@@ -24,22 +37,35 @@ Task("Create-Release-From-Package")
 	.WithCriteria(() => !BuildParameters.IsPullRequest)
 	.IsDependentOn("Push-To-Package-Feed")
 	.Does(() => 
-	{
-		OctoCreateRelease(BuildParameters.RepositoryName, new CreateReleaseSettings 
 		{
-        	Server = RPS.Api.Octopus.Endpoint,
-        	ApiKey = RPS.Api.Octopus.ApiKey,
-        	ReleaseNumber = RPS.BuildVersion,
-			ReleaseNotesFile = MakeAbsolute(BuildParameters.Paths.Directories.Build) + "/Changelog.md",
-			Packages = new Dictionary<string, string>
-            {
-                { 
-					BuildParameters.RepositoryName, RPS.BuildVersion
-				}
-            },
-      	});
-	}	
-);
+			OctoCreateRelease(BuildParameters.RepositoryName, new CreateReleaseSettings 
+			{
+				Server = RPS.Api.Octopus.Endpoint,
+				ApiKey = RPS.Api.Octopus.ApiKey,
+				ReleaseNumber = RPS.BuildVersion,
+				ReleaseNotesFile = MakeAbsolute(BuildParameters.Paths.Directories.Build) + "/Changelog.md",
+				Packages = new Dictionary<string, string>
+				{
+					{ 
+						BuildParameters.RepositoryName, RPS.BuildVersion
+					}
+				},
+			});
+		}	
+	)
+	.OnError(exception =>
+		{
+			Error(exception.Message);
+			Information("Create-Release-From-Package Task failed, but continuing with next Task...");
+			
+			if(BuildParameters.IsRunningOnAppVeyor)
+			{
+				AppVeyor.AddMessage("Creating a Release from Package failed!", AppVeyorMessageCategoryType.Warning, "Please manually create a Release on Octopus Deploy");
+			}
+			
+			publishingError = true;
+		}
+	);
 
 Task("Deploy-Package")
 	.WithCriteria(() => !BuildParameters.IsLocalBuild)
@@ -48,26 +74,39 @@ Task("Deploy-Package")
 	.IsDependentOn("Push-To-Package-Feed")
 	.IsDependentOn("Create-Release-From-Package")
 	.Does(() => 
-	{
-		OctoDeployRelease
-		(
-			RPS.Api.Octopus.Endpoint, 
-			RPS.Api.Octopus.ApiKey, 
-			BuildParameters.RepositoryName, 
-			"Dev",
-			RPS.BuildVersion, 
-			new OctopusDeployReleaseDeploymentSettings 
-			{
-        		ShowProgress = true
-    		}
-		);
-        
-		var client = RPS.Octopus;
-        client.Connect();
+		{
+			OctoDeployRelease
+			(
+				RPS.Api.Octopus.Endpoint, 
+				RPS.Api.Octopus.ApiKey, 
+				BuildParameters.RepositoryName, 
+				"Dev",
+				RPS.BuildVersion, 
+				new OctopusDeployReleaseDeploymentSettings 
+				{
+					ShowProgress = true
+				}
+			);
+			
+			var client = RPS.Octopus;
+			client.Connect();
 
-        Information("Target: " + client.GetDeploymentInformation(RPS.BuildVersion).Target);
-	}	
-);
+			Information("Target: " + client.GetDeploymentInformation(RPS.BuildVersion).Target);
+		}	
+	)
+	.OnError(exception =>
+		{
+			Error(exception.Message);
+			Information("Deploy-Package Task failed, but continuing with next Task...");
+			
+			if(BuildParameters.IsRunningOnAppVeyor)
+			{
+				AppVeyor.AddMessage("Deployment of Package failed!", AppVeyorMessageCategoryType.Warning, "Please manually deploy the Release on Octopus Deploy");
+			}
+			
+			publishingError = true;
+		}
+	);	
 
 
 ///////////////////////////////////////////////////////////////////////////////
