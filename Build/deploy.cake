@@ -34,8 +34,7 @@ Task("Create-Release-From-Package")
 			Packages = new Dictionary<string, string>
             {
                 { 
-					BuildParameters.RepositoryName, 
-					RPS.BuildVersion
+					BuildParameters.RepositoryName, RPS.BuildVersion
 				}
             },
       	});

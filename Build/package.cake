@@ -43,10 +43,10 @@ Task("Generate-Changelog")
 		var mdChangelog = BuildParameters.Paths.Directories.Build.ToString() + "/Changelog.md";
 		
 		System.IO.File.Create(plainChangelog).Dispose();
-		System.IO.File.WriteAllText(file, RPS.ParseGitLog(format: NoteFormat.Plain));
+		System.IO.File.WriteAllText(plainChangelog, RPS.ParseGitLog(format: NoteFormat.Plain));
 		
 		System.IO.File.Create(mdChangelog).Dispose();
-		System.IO.File.WriteAllText(file, RPS.ParseGitLog(format: NoteFormat.Markdown));
+		System.IO.File.WriteAllText(mdChangelog, RPS.ParseGitLog(format: NoteFormat.Markdown));
 	}
 );
 
