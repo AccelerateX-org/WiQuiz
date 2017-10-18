@@ -111,8 +111,8 @@ for:
 #         notifications           #
 #---------------------------------#
 
-#notifications:
-  #- provider: HipChat
-    #auth_token:
-      #secure: M5azVDnrp04fX9usXZVqdhcB/KGHrZ1Nv4GH+gu102w=
-    #room: RPS-TestRoom
+notifications:
+  - provider: HipChat
+    auth_token:
+      secure: hG/wHKbRlbItYwN95to5vI07AVbc6EQOpmqfQdRO5yDEqWdpG2EFo3HOrxzc7Lli
+    room: wiQuiz - Entwicklung
