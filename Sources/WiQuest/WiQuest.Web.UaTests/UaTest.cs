@@ -50,7 +50,6 @@ namespace WiQuest.Web.UaTests
             Driver.FindElement(By.Id("Password")).SendKeys("test#12345!ABC");
             Driver.FindElement(By.CssSelector("input.btn.btn-default")).Click();
             Assert.AreEqual("Hello TestUser!", Driver.FindElement(By.CssSelector("a[title=\"Manage\"]")).Text);
-
         }
     }
 }
