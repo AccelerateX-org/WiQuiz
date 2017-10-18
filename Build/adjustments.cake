@@ -92,9 +92,7 @@ public void ReportFiles()
 // See: tools/Cake.Recipe/Content/coveralls.cake
 ///////////////////////////////////////////////////////////////////////////////
 
-BuildParameters.Tasks.UploadCoverallsReportTask.Task.Actions.Clear();
-
-BuildParameters.Tasks.UploadCoverallsReportTask
+Task("Upload-Coveralls")
     .WithCriteria(() => FileExists(BuildParameters.Paths.Files.TestCoverageOutputFilePath))
     .WithCriteria(() => !BuildParameters.IsLocalBuild)
     .WithCriteria(() => BuildParameters.IsMainRepository)
@@ -110,11 +108,11 @@ BuildParameters.Tasks.UploadCoverallsReportTask
         {
             Warning("Unable to publish to Coveralls, as necessary credentials are not available");
         }
-    })
-).OnError (exception =>
-{
-    Error(exception.Message);
-    Information("Upload-Coveralls-Report Task failed, but continuing with next Task...");
-    publishingError = true;
-});
+    }))
+    .OnError(exception =>
+    {
+        Error(exception.Message);
+        Information("Upload-Coveralls-Report Task failed, but continuing with next Task...");
+        publishingError = true;
+    });
  
