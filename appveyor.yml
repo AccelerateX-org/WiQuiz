@@ -19,11 +19,12 @@ cache:
     -  .\tools -> .\tools\packages.config, .\setup.cake
 
 build_script:
-    - ps: .\build.ps1 -target "PrBuild" -configuration "Release"
+    - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
 
+
+# Override common settings
+# Read: https://www.appveyor.com/blog/2017/08/01/sharing-configuration-between-branches-in-appveyor-yml/
 for:
-
-# override common settings
 -
   branches:
     only:
@@ -38,10 +39,16 @@ for:
     only:
       - /hotfix(es)?[/-]/
       - /releases?[/-]/
-      - master
     
   build_script:
     - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"
+
+-
+  branches:
+    only:
+      - master
+
+  skip_non_tags: true
 
 -
   branches:
