@@ -12,7 +12,6 @@ namespace WiQuest.Web.UaTests
         public UaTest(string browser, string version, string os, string screenResultion, string deviceName, string deviceOrientation) 
             : base(browser, version, os, screenResultion, deviceName, deviceOrientation, applicationName: "WIQuest.Web") { }
 
-
         [Test]
         public void A_RegisterUserTest()
         {

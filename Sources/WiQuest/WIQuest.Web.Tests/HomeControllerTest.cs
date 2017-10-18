@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using WIQuest.Web.Controllers;
 
-
 namespace WIQuest.Web.Tests
 {
     [TestFixture]
