@@ -7,9 +7,9 @@ namespace WiQuest.Web.UaTests
 {
     [TestFixture("Chrome", "61.0", "Windows 10", "1280x1024", "", "")]
     //[TestFixture("Firefox", "55.0", "Windows 10", "1280x1024", "", "")]
-    public class UaTestClass : UaTestBaseClass
+    public class UaTest : UaTestBaseClass
     {
-        public UaTestClass(string browser, string version, string os, string screenResultion, string deviceName, string deviceOrientation) 
+        public UaTest(string browser, string version, string os, string screenResultion, string deviceName, string deviceOrientation) 
             : base(browser, version, os, screenResultion, deviceName, deviceOrientation, applicationName: "WIQuest.Web") { }
 
 

@@ -114,7 +114,8 @@ namespace WIQuest.Web.UaTests.Base
 
             try
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("job-info={'build':'mybuild', 'passed':" + passed + "}");
+                ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
+                ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-build=" + _build);
             }
             finally
             {
