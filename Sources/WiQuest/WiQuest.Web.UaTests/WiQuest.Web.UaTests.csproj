@@ -55,7 +55,7 @@
     <Compile Include="$(SolutionDir)\SolutionInfo.cs" Condition="Exists('$(SolutionDir)\SolutionInfo.cs')">
       <link>Properties\SolutionInfo.cs</link>
     </Compile>
-    <Compile Include="UaTestClass.cs" />
+    <Compile Include="UaTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

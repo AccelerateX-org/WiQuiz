@@ -50,7 +50,7 @@
     <Compile Include="$(SolutionDir)\SolutionInfo.cs" Condition="Exists('$(SolutionDir)\SolutionInfo.cs')">
       <link>Properties\SolutionInfo.cs</link>
     </Compile>
-    <Compile Include="TestClass.cs" />
+    <Compile Include="UtilTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
