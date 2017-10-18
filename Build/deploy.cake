@@ -30,7 +30,7 @@ Task("Create-Release-From-Package")
         	Server = RPS.Api.Octopus.Endpoint,
         	ApiKey = RPS.Api.Octopus.ApiKey,
         	ReleaseNumber = RPS.BuildVersion,
-			ReleaseNotes = RPS. ParseGitLog(format: NoteFormat.Markdown),
+			ReleaseNotesFile = MakeAbsolute(BuildParameters.Paths.Directories.Build) + "/Changelog.md",
 			Packages = new Dictionary<string, string>
             {
                 { 

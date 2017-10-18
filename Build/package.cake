@@ -39,10 +39,14 @@ Task("Generate-Changelog")
 	{
 		EnsureDirectoryExists(BuildParameters.Paths.Directories.Build);
 
-		var file = BuildParameters.Paths.Directories.Build.ToString() + "/Changelog.txt";
-		System.IO.File.Create(file).Dispose();
-		System.IO.File.WriteAllText(file, RPS. ParseGitLog(format: NoteFormat.Plain)
-		);
+		var plainChangelog = BuildParameters.Paths.Directories.Build.ToString() + "/Changelog.txt";
+		var mdChangelog = BuildParameters.Paths.Directories.Build.ToString() + "/Changelog.md";
+		
+		System.IO.File.Create(plainChangelog).Dispose();
+		System.IO.File.WriteAllText(file, RPS.ParseGitLog(format: NoteFormat.Plain));
+		
+		System.IO.File.Create(mdChangelog).Dispose();
+		System.IO.File.WriteAllText(file, RPS.ParseGitLog(format: NoteFormat.Markdown));
 	}
 );
 
