@@ -4,8 +4,6 @@
 
 `WiQuiz` is a Quiz system that adopts fitness and gaming approaches for multipurpose academic scenarios.
 
-[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/AccelerateX-org/WiQuiz/blob/master/LICENSE)
-
 ## Build Status
 
 |Develop|Master|Latest|
@@ -49,5 +47,12 @@
     <td><a href="https://www.codefactor.io/repository/github/acceleratex-org/wiquiz/overview/master"><img src="https://www.codefactor.io/repository/github/acceleratex-org/wiquiz/badge/master" /></a></td>
   </tr>
 </table>
+
+## License / Legal note ##
+
+[![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/AccelerateX-org/WiQuiz/blob/master/LICENSE)
+
+This package is licensed under MIT license. See LICENSE for details.
+
 
 
