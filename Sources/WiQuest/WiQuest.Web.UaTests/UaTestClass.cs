@@ -5,8 +5,8 @@ using WIQuest.Web.UaTests.Base;
 
 namespace WiQuest.Web.UaTests
 {
-    [TestFixture("Chrome", "61.0", "Windows 10", "1920x1080", "", "")]
-    [TestFixture("Firefox", "55.0", "Windows 10", "1920x1080", "", "")]
+    [TestFixture("Chrome", "61.0", "Windows 10", "1280x720", "", "")]
+    [TestFixture("Firefox", "55.0", "Windows 10", "1280x720", "", "")]
     public class UaTestClass : UaTestBaseClass
     {
         public UaTestClass(string browser, string version, string os, string screenResultion, string deviceName, string deviceOrientation) 
@@ -16,7 +16,7 @@ namespace WiQuest.Web.UaTests
         [Test]
         public void RegisterUserTest()
         {
-            Driver.Navigate().GoToUrl(BaseUrl + "/WiQuiz/Development/Dev");
+            Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
             Driver.FindElement(By.LinkText("Register as a new user")).Click();
             Driver.FindElement(By.Id("UserName")).Clear();
@@ -34,7 +34,7 @@ namespace WiQuest.Web.UaTests
         [Test]
         public void LogoutUserTest()
         {
-            Driver.Navigate().GoToUrl(BaseUrl + "/WiQuiz/Development/Dev/Quiz/Home");
+            Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Log off")).Click();
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
             Assert.AreEqual("Log in.", Driver.FindElement(By.XPath("//h2")).Text);
@@ -43,7 +43,7 @@ namespace WiQuest.Web.UaTests
         [Test]
         public void LoginUserTest()
         {
-            Driver.Navigate().GoToUrl(BaseUrl + "/WiQuiz/Development/Dev");
+            Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
             Driver.FindElement(By.Id("Email")).Clear();
             Driver.FindElement(By.Id("Email")).SendKeys("TestUser");
