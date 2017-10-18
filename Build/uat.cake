@@ -13,7 +13,8 @@ Task("Test-NUnit-UAT")
                 Work = uatResults,
                 EnvironmentVariables = new Dictionary<string, string> 
                 {
-                    { "SL_BASE_URL", RPS.UatTargetUrl }
+                    { "SL_BASE_URL", RPS.UatTargetUrl },
+                    { "SL_BUILD", RPS.BuildVersion }
                 }
             });
 

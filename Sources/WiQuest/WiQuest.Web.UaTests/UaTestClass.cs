@@ -6,7 +6,7 @@ using WIQuest.Web.UaTests.Base;
 namespace WiQuest.Web.UaTests
 {
     [TestFixture("Chrome", "61.0", "Windows 10", "1280x1024", "", "")]
-    [TestFixture("Firefox", "55.0", "Windows 10", "1280x1024", "", "")]
+    //[TestFixture("Firefox", "55.0", "Windows 10", "1280x1024", "", "")]
     public class UaTestClass : UaTestBaseClass
     {
         public UaTestClass(string browser, string version, string os, string screenResultion, string deviceName, string deviceOrientation) 
@@ -26,22 +26,22 @@ namespace WiQuest.Web.UaTests
             Driver.FindElement(By.Id("ConfirmPassword")).Clear();
             Driver.FindElement(By.Id("ConfirmPassword")).SendKeys("test#12345!ABC");
             Driver.FindElement(By.CssSelector("input.btn.btn-default")).Click();
-            Driver.Navigate().GoToUrl(BaseUrl + "/WiQuiz/Development/Dev");
+            Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
             Assert.AreEqual("Hello TestUser!", Driver.FindElement(By.CssSelector("a[title=\"Manage\"]")).Text);
         }
 
-        [Test]
+        /*[Test]
         public void B_LogoutUserTest()
         {
-            Driver.Navigate().GoToUrl(BaseUrl);
+            Driver.Navigate().GoToUrl(BaseUrl + "/Quiz/Home");
             Driver.FindElement(By.LinkText("Log off")).Click();
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
             Assert.AreEqual("Log in.", Driver.FindElement(By.XPath("//h2")).Text);
-        }
+        }*/
 
         [Test]
-        public void C_LoginUserTest()
+        public void B_LoginUserTest()
         {
             Driver.Navigate().GoToUrl(BaseUrl);
             Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();

@@ -20,6 +20,7 @@ namespace WIQuest.Web.UaTests.Base
 
         private readonly string _sauceLabsUserName;
         private readonly string _sauceLabsAccessKey;
+        private readonly string _build;
 
         private readonly string _browser;
         private readonly string _version;
@@ -46,7 +47,8 @@ namespace WIQuest.Web.UaTests.Base
             {
                 _sauceLabsUserName = Environment.GetEnvironmentVariable("SL_USERNAME");
                 _sauceLabsAccessKey = Environment.GetEnvironmentVariable("SL_API_KEY");
-                
+                _build = Environment.GetEnvironmentVariable("SL_BUILD");
+
                 if (string.IsNullOrEmpty(_sauceLabsUserName) || string.IsNullOrEmpty(_sauceLabsAccessKey))
                 {
                     _isLocalMode = true;
@@ -112,7 +114,7 @@ namespace WIQuest.Web.UaTests.Base
 
             try
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("sauce:job-result=" + (passed ? "passed" : "failed"));
+                ((IJavaScriptExecutor)_driver).ExecuteScript("job-info={'build':'mybuild', 'passed':" + passed + "}");
             }
             finally
             {
