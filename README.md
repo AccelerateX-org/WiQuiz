@@ -32,7 +32,7 @@
     <td>Master</td>
   </tr>
   <tr>
-    <td>-</td>
+    <td></td>
     <td><a class="badge-align" href="https://www.codacy.com/app/AccelerateX/WiQuiz"><img src="https://api.codacy.com/project/badge/Grade/81ca006a936044db9aca341b9c3af312"/></a></td>
   </tr>
   <tr>
