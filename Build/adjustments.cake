@@ -6,11 +6,14 @@ BuildParameters.Tasks.DupFinderTask.ContinueOnError();
 BuildParameters.Tasks.InspectCodeTask.ContinueOnError();
 
 ///////////////////////////////////////////////////////////////////////////////
+// Customized Test Task
 // Generate reports of processed test results
 // Workaround: Reports nevertheless tests are failing
+// Source: tools/Cake.Recipe/Content/testing.cake
 ///////////////////////////////////////////////////////////////////////////////
 
 BuildParameters.Tasks.TestNUnitTask.Task.Actions.Clear();
+
 BuildParameters.Tasks.TestNUnitTask
     .Does(() => RequireTool(NUnitTool, () => {
         EnsureDirectoryExists(BuildParameters.Paths.Directories.NUnitTestResults);
@@ -82,3 +85,36 @@ public void ReportFiles()
         }
      }    
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Customized Coveralls Task
+// Upload reports even on PR
+// See: tools/Cake.Recipe/Content/coveralls.cake
+///////////////////////////////////////////////////////////////////////////////
+
+BuildParameters.Tasks.UploadCoverallsReportTask.Task.Actions.Clear();
+
+BuildParameters.Tasks.UploadCoverallsReportTask
+    .WithCriteria(() => FileExists(BuildParameters.Paths.Files.TestCoverageOutputFilePath))
+    .WithCriteria(() => !BuildParameters.IsLocalBuild)
+    .WithCriteria(() => BuildParameters.IsMainRepository)
+    .Does(() => RequireTool(CoverallsTool, () => {
+        if(BuildParameters.CanPublishToCoveralls)
+        {
+            CoverallsIo(BuildParameters.Paths.Files.TestCoverageOutputFilePath, new CoverallsIoSettings()
+            {
+                RepoToken = BuildParameters.Coveralls.RepoToken
+            });
+        }
+        else
+        {
+            Warning("Unable to publish to Coveralls, as necessary credentials are not available");
+        }
+    })
+).OnError (exception =>
+{
+    Error(exception.Message);
+    Information("Upload-Coveralls-Report Task failed, but continuing with next Task...");
+    publishingError = true;
+});
+ 
