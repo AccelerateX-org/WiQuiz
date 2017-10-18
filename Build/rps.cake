@@ -20,6 +20,8 @@ public static class RPS
 
     public static OctopusApiClient Octopus { get; private set; }
 
+    public static string UatTargetUrl { get; set; }
+
     public static string ParseGitLog(NoteFormat format) 
     {
         var log = "";

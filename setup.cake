@@ -8,6 +8,7 @@
 #load "./Build/adjustments.cake"
 #load "./Build/package.cake"
 #load "./Build/deploy.cake"
+#load "./Build/uat.cake"
 
 Environment.SetVariableNames();
 
