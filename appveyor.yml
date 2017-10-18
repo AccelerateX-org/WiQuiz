@@ -61,10 +61,6 @@ for:
     only:
       - /features?[/-]/
     
-  #---------------------------------#
-  #       build configuration       #
-  #---------------------------------#
-  
   build_script:
     - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
 
@@ -74,10 +70,6 @@ for:
       - /hotfix(es)?[/-]/
       - /releases?[/-]/
       - /dev(elop)?(ment)?$/
-
-  #---------------------------------#
-  #       build configuration       #
-  #---------------------------------#  
   
   build_script:
     - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"
@@ -86,26 +78,18 @@ for:
   branches:
     only:
       - master
-
-  #---------------------------------#
-  #       build configuration       #
-  #---------------------------------#  
   
   build_script:
     - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"    
 
   # Only build tagged commits like releases
-  # skip_non_tags: true
+  skip_non_tags: true
 
 # Fallback: Other branches, which are not specified above
 -
   branches:
     only:
       - /.*/
-
-  #---------------------------------#
-  #       build configuration       #
-  #---------------------------------#
 
   build_script:
     - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"   
