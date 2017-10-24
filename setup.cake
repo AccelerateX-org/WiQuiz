@@ -11,6 +11,7 @@
 #load "./Build/uat.cake"
 
 Information(Figlet("RPS"));
+Warning("Rocket Production System");
 
 
 Environment.SetVariableNames();
