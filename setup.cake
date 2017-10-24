@@ -7,8 +7,11 @@
 #load "./Build/targets.cake"
 #load "./Build/adjustments.cake"
 #load "./Build/package.cake"
-#load "./Build/deploy.cake"
+#load "./Build/deployment.cake"
 #load "./Build/uat.cake"
+
+Information(Figlet("RPS"));
+
 
 Environment.SetVariableNames();
 
@@ -30,6 +33,17 @@ BuildParameters.PrintParameters(Context);
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]* -[WIQuest*.UaTests]*");
 
-RPS.Init(context: Context);
+RPS.Init(context: Context,
+        buildSystem: BuildSystem,
+        uaTestFilePattern: "/**/*.UaTests.dll",
+        branchDeployment: new BranchDeployment() 
+        {
+            Master = "Staging",
+            Develop = "Dev",
+            Feature = "Dev",
+            Release = "QA",
+            Hotfix = "Staging",
+            Support = "Staging"
+        });
 
 Build.Run();

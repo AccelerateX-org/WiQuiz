@@ -80,7 +80,7 @@ Task("Deploy-Package")
 				RPS.Api.Octopus.Endpoint, 
 				RPS.Api.Octopus.ApiKey, 
 				BuildParameters.RepositoryName, 
-				"Dev",
+				RPS.GetDeploymentEnvironment(),
 				RPS.BuildVersion, 
 				new OctopusDeployReleaseDeploymentSettings 
 				{

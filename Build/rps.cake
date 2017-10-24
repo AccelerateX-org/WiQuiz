@@ -3,7 +3,11 @@ using Octopus.Client.Model;
 
 public static class RPS
 {
+    private static ICakeContext _context { get; set; }
     private static string _version { get; set; }
+    private static BranchDeployment _branchEnvironments { get; set; }
+    private static BuildSystem _buildSystem { get; set;}
+
     public static string BuildVersion 
     { 
         get
@@ -21,6 +25,8 @@ public static class RPS
     public static OctopusApiClient Octopus { get; private set; }
 
     public static string UatTargetUrl { get; set; }
+
+    public static string UaTestFilePattern { get; private set; }
 
     public static string ParseGitLog(NoteFormat format) 
     {
@@ -52,22 +58,62 @@ public static class RPS
         return log;        
     }
 
+    public static string GetDeploymentEnvironment() {
+        var IsFeatureBranch = _buildSystem.AppVeyor.Environment.Repository.Branch.StartsWith("feature", StringComparison.OrdinalIgnoreCase);
+        var IsSupportBranch = _buildSystem.AppVeyor.Environment.Repository.Branch.StartsWith("support", StringComparison.OrdinalIgnoreCase);
+        var env = "Dev";
+        
+        if (BuildParameters.IsMasterBranch) 
+        {
+            env = _branchEnvironments.Master;
+        }
+        if (BuildParameters.IsDevelopBranch) 
+        {
+            env = _branchEnvironments.Develop;
+        }        
+        if (IsFeatureBranch) 
+        {
+            env = _branchEnvironments.Feature;
+        }
+        if (BuildParameters.IsReleaseBranch) 
+        {
+            env = _branchEnvironments.Release;
+        }        
+        if (BuildParameters.IsHotFixBranch) 
+        {
+            env = _branchEnvironments.Hotfix;
+        }   
+        if (IsSupportBranch) 
+        {
+            env = _branchEnvironments.Support;
+        }           
+
+        return env;
+    }
+
     public static void Init(
         ICakeContext context,
+        BuildSystem buildSystem,
         string repositoryDirectoryPath = "./",
         int repositoryCommitCount = 10,
         string repositoryUrl = null,
         string repositoryCommitUrl = null,
         string buildVersion = null,
         string octopusEndpoint = null,
-        string octopusApiKey = null
+        string octopusApiKey = null,
+        string uaTestFilePattern = null,
+        BranchDeployment branchDeployment = null
         )
     {
         if (context == null) 
         {
             throw new ArgumentNullException("Missing context @ RPS.Init()");
         }
-        
+
+        _context = context;
+        _buildSystem = buildSystem;
+        _version = buildVersion;
+
         var gitHubUrlPattern = "https://github.com/{0}/{1}{2}";
         
         VcsProvider githubVcs = new VcsProvider(
@@ -83,8 +129,13 @@ public static class RPS
 
         Api = new ApiRepository(octopus: octoApi);
         Vcs = new VcsRepository(github: githubVcs);
+        
         GitLog = context.GitLog(repositoryDirectoryPath, repositoryCommitCount);
-        _version = buildVersion;
+
+        UaTestFilePattern = uaTestFilePattern;
+
+        _branchEnvironments  = branchDeployment;
+        
         if (!BuildParameters.IsLocalBuild && !BuildParameters.IsPullRequest)
         {
             Octopus = new OctopusApiClient(octoApi.Endpoint, octoApi.ApiKey);
@@ -245,6 +296,16 @@ public class DeploymentModel
     public string Target { get; set; }
 
     public bool Success { get; set; }
+}
+
+public class BranchDeployment
+{
+    public string Master { get; set; }
+    public string Develop { get; set; }
+    public string Feature { get; set; }
+    public string Release { get; set; }
+    public string Hotfix { get; set; }
+    public string Support { get; set; }    
 }
 
 public enum NoteFormat {

@@ -8,7 +8,7 @@ Task("Test-NUnit-UAT")
             var uatResults = BuildParameters.Paths.Directories.NUnitTestResults + "/UAT";
             EnsureDirectoryExists(uatResults);
 
-            NUnit3(GetFiles(BuildParameters.Paths.Directories.PublishedNUnitTests + "/**/*.UaTests.dll"), new NUnit3Settings {
+            NUnit3(GetFiles(BuildParameters.Paths.Directories.PublishedNUnitTests + (RPS.UaTestFilePattern ?? "/**/*.UaTests.dll")), new NUnit3Settings {
                 NoResults = false,
                 Work = uatResults,
                 EnvironmentVariables = new Dictionary<string, string> 
@@ -35,4 +35,4 @@ Task("Test-NUnit-UAT")
            
             throw exception;
 
-        });  
+        });
