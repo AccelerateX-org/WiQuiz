@@ -28,12 +28,7 @@
     <td colspan="2"><b>Codacy</b></td>
   </tr>
   <tr>
-    <td>Develop</td>
-    <td>Master</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><a class="badge-align" href="https://www.codacy.com/app/AccelerateX/WiQuiz"><img src="https://api.codacy.com/project/badge/Grade/81ca006a936044db9aca341b9c3af312"/></a></td>
+    <td colspan="2" style="text-align:center"><a class="badge-align" href="https://www.codacy.com/app/AccelerateX/WiQuiz"><img src="https://api.codacy.com/project/badge/Grade/43806396296e4db5bc7056d7f7e9489e"/></a></td>
   </tr>
   <tr>
     <td colspan="2"><b>CodeFactor</b></td>
