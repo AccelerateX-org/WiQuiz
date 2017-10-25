@@ -119,7 +119,7 @@ notifications:
     auth_token:
       secure: H6lOXWlvI0RxIds6xMuFCrkAI8xEn322qHOFDPOmYzO90v0zfZ0+HTx2wp+z30tv
     room: wiQuiz - RPS
-- provider: GitHubPullRequest
+  - provider: GitHubPullRequest
     auth_token:
       secure: BH3GjE8/qC3qqVcntcerjQHRbrP5DxniaxtVuowtn+x2ULSypOEsYUVlFKmZrfmZ
     template: "{{#passed}}:white_check_mark:{{/passed}}{{#failed}}:x:{{/failed}} [Build {{&projectName}} {{buildVersion}} {{status}}]({{buildUrl}}) (commit {{commitUrl}} by @{{&commitAuthorUsername}})"
