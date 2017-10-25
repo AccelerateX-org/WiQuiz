@@ -3,7 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using WIQuest.Web.Utils;
 
-namespace WIQuest.Web.Tests
+namespace WIQuest.Web.Test
 {
     [TestFixture]
     public class UtilTest

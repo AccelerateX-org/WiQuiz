@@ -8,8 +8,8 @@
     <ProjectGuid>{7283D354-0D2B-4BB2-B261-20B814AECDDF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WiQuest.Web.UaTests</RootNamespace>
-    <AssemblyName>WiQuest.Web.UaTests</AssemblyName>
+    <RootNamespace>WiQuest.Web.UaTest</RootNamespace>
+    <AssemblyName>WiQuest.Web.UaTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>

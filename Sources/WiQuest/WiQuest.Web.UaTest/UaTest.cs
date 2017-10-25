@@ -1,9 +1,9 @@
 ﻿using System;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using WIQuest.Web.UaTests.Base;
+using WIQuest.Web.UaTest.Base;
 
-namespace WiQuest.Web.UaTests
+namespace WiQuest.Web.UaTest
 {
     [TestFixture("Chrome", "61.0", "Windows 10", "1280x1024", "", "")]
     //[TestFixture("Firefox", "55.0", "Windows 10", "1280x1024", "", "")]

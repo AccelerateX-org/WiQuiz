@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using WIQuest.Web.Controllers;
 
-namespace WIQuest.Web.Tests
+namespace WIQuest.Web.Test
 {
     [TestFixture]
     public class HomeControllerTest

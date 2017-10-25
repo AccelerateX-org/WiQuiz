@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
-namespace WIQuest.Web.UaTests.Base
+namespace WIQuest.Web.UaTest.Base
 {
     public abstract class UaTestBaseClass
     {
