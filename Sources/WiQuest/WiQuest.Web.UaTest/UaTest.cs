@@ -30,15 +30,6 @@ namespace WiQuest.Web.UaTests
             Assert.AreEqual("Hello TestUser!", Driver.FindElement(By.CssSelector("a[title=\"Manage\"]")).Text);
         }
 
-        /*[Test]
-        public void B_LogoutUserTest()
-        {
-            Driver.Navigate().GoToUrl(BaseUrl + "/Quiz/Home");
-            Driver.FindElement(By.LinkText("Log off")).Click();
-            Driver.FindElement(By.LinkText("Zur Anmeldung/Registrierung »")).Click();
-            Assert.AreEqual("Log in.", Driver.FindElement(By.XPath("//h2")).Text);
-        }*/
-
         [Test]
         public void B_LoginUserTest()
         {

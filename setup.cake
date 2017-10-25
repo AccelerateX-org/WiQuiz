@@ -5,7 +5,7 @@
 
 #load "./Build/rps.cake"
 #load "./Build/targets.cake"
-#load "./Build/adjustments.cake"
+#load "./Build/testing.cake"
 #load "./Build/package.cake"
 #load "./Build/deployment.cake"
 #load "./Build/uat.cake"
@@ -20,7 +20,7 @@ BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./Sources",
                             integrationTestScriptPath: ".", // Workaround: NULL Exception
-                            testFilePattern: "/**/*.Tests.dll",
+                            testFilePattern: "/**/*.Test.dll",
                             title: "WIQuest",
                             repositoryOwner: "AccelerateX-org",
                             repositoryName: "WiQuiz",
@@ -32,13 +32,17 @@ BuildParameters.SetParameters(context: Context,
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
-                            testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Tests]* -[WIQuest*.UaTests]*");
+                            testCoverageFilter: "+[WIQuest*]* -[WIQuest*.Test]* -[WIQuest*.UaTest]*");
 
 RPS.Init(context: Context,
         buildSystem: BuildSystem,
-        uaTestFilePattern: "/**/*.UaTests.dll",
+        uaTestFilePattern: "/**/*.UaTest.dll",
+        shouldRunUnitTest: true,
+        shouldRunUaTest: true,
+        shouldDeploy: true,
         branchDeployment: new BranchDeployment() 
         {
+            Tag = "Staging",
             Master = "Staging",
             Develop = "Dev",
             Feature = "Dev",
@@ -46,5 +50,10 @@ RPS.Init(context: Context,
             Hotfix = "Staging",
             Support = "Staging"
         });
+
+if (BuildParameters.IsDevelopBranch && !BuildParameters.IsPullRequest) 
+{
+    RPS.ShouldRunUnitTest = true;
+}
 
 Build.Run();

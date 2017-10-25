@@ -25,7 +25,7 @@
     <td><a href='https://coveralls.io/github/AccelerateX-org/WiQuiz?branch=master'><img src='https://coveralls.io/repos/github/AccelerateX-org/WiQuiz/badge.svg?branch=master' alt='Coverage Status' /></a></td>
   </tr>
   <tr>
-    <td colspan="2"><b>CodeCov</b></td>
+    <td colspan="2"><b>Codacy</b></td>
   </tr>
   <tr>
     <td>Develop</td>

@@ -2,13 +2,16 @@ Task("Test-NUnit-UAT")
 	.WithCriteria(() => !BuildParameters.IsLocalBuild)
     .WithCriteria(() => BuildParameters.IsMainRepository)
 	.WithCriteria(() => !BuildParameters.IsPullRequest)
+    .WithCriteria(() => DirectoryExists(BuildParameters.Paths.Directories.PublishedNUnitTests))
+    .WithCriteria(() => RPS.IsDeployed)
+    .WithCriteria(() => RPS.ShouldRunUaTest)
     .IsDependentOn("Octopus-Deployment")
 	.Does(() => RequireTool(NUnitTool, () => 
 		{
             var uatResults = BuildParameters.Paths.Directories.NUnitTestResults + "/UAT";
             EnsureDirectoryExists(uatResults);
 
-            NUnit3(GetFiles(BuildParameters.Paths.Directories.PublishedNUnitTests + (RPS.UaTestFilePattern ?? "/**/*.UaTests.dll")), new NUnit3Settings {
+            NUnit3(GetFiles(BuildParameters.Paths.Directories.PublishedNUnitTests + (RPS.UaTestFilePattern ?? "/**/*.UaTest.dll")), new NUnit3Settings {
                 NoResults = false,
                 Work = uatResults,
                 EnvironmentVariables = new Dictionary<string, string> 

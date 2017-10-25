@@ -40,7 +40,7 @@ cache:
 
 # run custom scripts instead of automatic MSBuild
 build_script:
-    - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
+    - ps: .\build.ps1 -target "Develop" -configuration "Release"
 
 #---------------------------------#
 #   general tests configuration   #
@@ -62,17 +62,31 @@ for:
       - /features?[/-]/
     
   build_script:
-    - ps: .\build.ps1 -target "DevBuild" -configuration "Release"
+    - ps: .\build.ps1 -target "Develop" -configuration "Release"
+
+  skip_tags: true    
+
+-
+  branches:
+    only:
+      - /releases?[/-]/
+      - /dev(elop)?(ment)?$/
+    
+  build_script:
+    - ps: .\build.ps1 -target "Integrate" -configuration "Release"   
+
+  skip_tags: true  
 
 -
   branches:
     only:
       - /hotfix(es)?[/-]/
-      - /releases?[/-]/
-      - /dev(elop)?(ment)?$/
+      - /support?[/-]/
   
   build_script:
-    - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"
+    - ps: .\build.ps1 -target "Integrate" -configuration "Release"
+
+  skip_tags: false    
 
 -
   branches:
@@ -80,10 +94,12 @@ for:
       - master
   
   build_script:
-    - ps: .\build.ps1 -target "KpiBuild" -configuration "Release"    
+    - ps: .\build.ps1 -target "Approval" -configuration "Release"    
 
   # Only build tagged commits like releases
-  skip_non_tags: true
+  skip_non_tags: false
+
+  skip_tags: false
 
 # Fallback: Other branches, which are not specified above
 -
@@ -92,7 +108,7 @@ for:
       - /.*/
 
   build_script:
-    - ps: .\build.ps1 -target "DevBuild" -configuration "Debug"   
+    - ps: .\build.ps1 -target "Develop" -configuration "Debug"   
 
 #---------------------------------#
 #         notifications           #
@@ -103,3 +119,7 @@ notifications:
     auth_token:
       secure: H6lOXWlvI0RxIds6xMuFCrkAI8xEn322qHOFDPOmYzO90v0zfZ0+HTx2wp+z30tv
     room: wiQuiz - RPS
+- provider: GitHubPullRequest
+    auth_token:
+      secure: BH3GjE8/qC3qqVcntcerjQHRbrP5DxniaxtVuowtn+x2ULSypOEsYUVlFKmZrfmZ
+    template: "{{#passed}}:white_check_mark:{{/passed}}{{#failed}}:x:{{/failed}} [Build {{&projectName}} {{buildVersion}} {{status}}]({{buildUrl}}) (commit {{commitUrl}} by @{{&commitAuthorUsername}})"
