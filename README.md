@@ -5,7 +5,6 @@
 `WiQuiz` is a Quiz system that adopts fitness and gaming approaches for multipurpose academic scenarios.
 
 ## Build Status
-
 |Develop|Master|Latest|
 |:--:|:--:|:--|
 |[![Build status](https://ci.appveyor.com/api/projects/status/lvxy1ivobe94q1e4/branch/develop?svg=true)](https://ci.appveyor.com/project/AccelerateX/wiquiz/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/lvxy1ivobe94q1e4/branch/master?svg=true)](https://ci.appveyor.com/project/AccelerateX/wiquiz/branch/master)|[![Build status](https://ci.appveyor.com/api/projects/status/lvxy1ivobe94q1e4?svg=true)](https://ci.appveyor.com/project/AccelerateX/wiquiz)|
